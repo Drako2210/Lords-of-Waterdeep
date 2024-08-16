@@ -71,6 +71,7 @@ export const LordsOfWaterdeep = {
   setup: (setup) => {
     let players = {};
     let startPlayer = 0;
+    let roundCounter = 0;
     let a = setup.random.Number() * setup.ctx.numPlayers;
     if (a >= 0 && a <= 1) {
       startPlayer = 0;
@@ -149,9 +150,10 @@ export const LordsOfWaterdeep = {
     let buildingPlots = [];
     for (let i = 0; i <= 9; i++) {
       buildingPlots[i] = {
-        buildingCardId: null,
+        building: null,
       };
     }
+    console.log(players[0].leftAgents);
     let gamestate = {
       players: players,
       startPlayer: startPlayer,
@@ -164,6 +166,7 @@ export const LordsOfWaterdeep = {
       intrigueCardsDeck: intrigueCardsDeck,
       openedQuestCards: openedQuestCards,
       openedBuildings: openedBuildings,
+      roundCounter: roundCounter,
     };
     return gamestate;
 
@@ -171,31 +174,36 @@ export const LordsOfWaterdeep = {
   },
   moves: {
     placeAgent: function placeAgent(move, buildingType, plotId) {
-      if (move.players[move.playerID].leftAgents != 0) {
+      // Check if player has Agents
+      if (move.G.players[move.playerID].leftAgents != 0) {
         //if(buildingType=="nonPlayer"){}
+        // Agent auf nonPlayer Building placen
         if (
           buildingType == "nonPlayer" &&
           move.G.buildingList[plotId].occupied == null
         ) {
           move.G.buildingList[plotId].occupied = move.playerID;
           for (let i = 0; i <= 5; i++)
-            move.players[move.playerID].resources[i] +=
+            move.G.players[move.playerID].resources[i] +=
               move.G.buildingList[plotId].reward[i];
-          move.players[move.playerID].leftAgents -= 1;
+          move.G.players[move.playerID].leftAgents -= 1;
         }
+      } else {
+        move.events.endTurn();
       }
+
     },
   },
 
-  /*turn: {
+  turn: {
     order: TurnOrder.DEFAULT,
 
     onBegin: (onBegin) => {},
     onEnd: (onEnd) => {},
 
-    minMoves: 1,
-    maxMoves: 1,
-  }, */
+/*     minMoves: 1,
+    maxMoves: 1, */
+  },
 
   minPlayers: 2,
   maxPlayers: 5,
