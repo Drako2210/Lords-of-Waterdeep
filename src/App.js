@@ -1,15 +1,18 @@
 import { Client } from "boardgame.io/client";
+import { Debug } from "boardgame.io/debug";
 import { Local, SocketIO } from "boardgame.io/multiplayer";
 import { resetOnClicks } from "./canvas";
 import { LordsOfWaterdeep } from "./LordsOfWaterdeep";
 import { drawPicture, onClick } from "./canvas";
 const isMultiplayer = import.meta.env.VITE_REMOTE === "true";
+const multiplayerServer =
+  import.meta.env.VITE_MUTLIPLAYER_SERVER ?? "localhost:8000";
 
 const canvas = document.getElementById("canvas");
 
 const ctx = canvas.getContext("2d");
 const multiplayer = isMultiplayer
-  ? SocketIO({ server: "localhost:8000" })
+  ? SocketIO({ server: multiplayerServer })
   : Local();
 
 class GameClient {
@@ -18,6 +21,12 @@ class GameClient {
 
     this.client = Client({
       game: LordsOfWaterdeep,
+      multiplayer: isMultiplayer ? multiplayer : undefined,
+      debug: {
+        collapseOnLoad: false,
+        hideToggleButton: false,
+        impl: Debug,
+      },
     });
 
     this.client.subscribe((state) => this.update(state));
@@ -39,12 +48,12 @@ class GameClient {
       ctx.fillText(
         "Requirements:" + state.G.openedQuestCards[i].requirements,
         550 + i * 350,
-        150
+        150,
       );
       ctx.fillText(
         "Rewards:" + state.G.openedQuestCards[i].rewards,
         550 + i * 350,
-        170
+        170,
       );
     }
 
@@ -71,7 +80,9 @@ class GameClient {
         }
       }
     }
-    onClick(1025,500,150,75,()=>{this.client.moves.placeAgent("nonPlayer",3)})
+    onClick(1025, 500, 150, 75, () => {
+      this.client.moves.placeAgent("nonPlayer", 3);
+    });
     //Building: Builders Hall
     ctx.fillRect(700, 920, 400, 100);
     //offene nicht gebaute Buildings
@@ -84,12 +95,12 @@ class GameClient {
       ctx.fillText(
         "Rewards:" + state.G.openedBuildings[i].playerReward,
         700 + i * 200,
-        1200
+        1200,
       );
       ctx.fillText(
         "Owner Rewards:" + state.G.openedBuildings[i].ownerReward,
         700 + i * 200,
-        1220
+        1220,
       );
     }
     //Player Cards
@@ -100,9 +111,13 @@ class GameClient {
       ctx.fillRect(100 + 800 * i, 1400, 650, 100);
       ctx.fillStyle = "black";
       // Resources
-      for(let j = 0; j <= 5; j++){
-      ctx.fillText(state.G.players[i].resources[j], 125 + 50 * j + 800 * i, 1450);
-      /* ctx.fillText("Orange:" + state.G.players[i].orange, 175 + 800 * i, 1450);
+      for (let j = 0; j <= 5; j++) {
+        ctx.fillText(
+          state.G.players[i].resources[j],
+          125 + 50 * j + 800 * i,
+          1450,
+        );
+        /* ctx.fillText("Orange:" + state.G.players[i].orange, 175 + 800 * i, 1450);
       ctx.fillText("Black:" + state.G.players[i].black, 225 + 800 * i, 1450);
       ctx.fillText("Purple:" + state.G.players[i].purple, 275 + 800 * i, 1450);
       ctx.fillText("Gold:" + state.G.players[i].gold, 325 + 800 * i, 1450);
@@ -110,7 +125,8 @@ class GameClient {
         "Victory Points:" + state.G.players[i].victorypoints,
         375 + 800 * i,
         1450
-      ) */;}
+      ) */
+      }
       //Quest Cards der SPIELER
       for (let j = 0; j <= state.G.players[i].quests.length - 1; j++) {
         ctx.fillStyle = "white";
@@ -119,18 +135,18 @@ class GameClient {
         ctx.fillText(
           "Type:" + state.G.players[i].quests[j].type,
           150 + i * 800,
-          1600 + j * 200
+          1600 + j * 200,
         );
 
         ctx.fillText(
           "Requirements:" + state.G.players[i].quests[j].requirements,
           150 + i * 800,
-          1625 + j * 200
+          1625 + j * 200,
         );
         ctx.fillText(
           "Rewards:" + state.G.players[i].quests[j].rewards,
           150 + i * 800,
-          1650 + j * 200
+          1650 + j * 200,
         );
       }
 
