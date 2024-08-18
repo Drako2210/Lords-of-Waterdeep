@@ -147,10 +147,12 @@ class GameClient {
           "Rewards:" + state.G.players[i].quests[j].rewards,
           150 + i * 800,
           1650 + j * 200,
-        )
-        onClick(100 + i * 800, 1550 + j * 200, 300, 150,() => {this.client.moves})
+        );
+        onClick(100 + i * 800, 1550 + j * 200, 300, 150, () => {
+          this.client.moves;
+        });
       }
-      function name_ () {}
+      function name_() {}
       for (let j = 0; j <= state.G.players[i].intrigueCards.length - 1; j++) {
         ctx.fillStyle = "white";
         ctx.fillRect(450 + i * 800, 1550 + j * 350, 150, 300);

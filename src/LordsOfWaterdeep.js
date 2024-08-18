@@ -87,21 +87,26 @@ function placeAgent(move, buildingType, plotId) {
   }
 }
 function completeQuest(move, questPosition) {
-  for(let i = 0; i <= 4; i++) {
-    if(move.G.players[move.playerID].resources[i] < move.G.players[move.playerID].quests[questPosition].requirements[i]){
-      return INVALID_MOVE
-    }
-    else{
-        move.G.players[move.playerID].resources[i] -= move.G.players[move.playerID].quests[questPosition].requirements[i]
-        move.G.players[move.playerID].resources[i] += move.G.players[move.playerID].quests[questPosition].reward[i]
+  for (let i = 0; i <= 4; i++) {
+    if (
+      move.G.players[move.playerID].resources[i] <
+      move.G.players[move.playerID].quests[questPosition].requirements[i]
+    ) {
+      return INVALID_MOVE;
+    } else {
+      move.G.players[move.playerID].resources[i] -=
+        move.G.players[move.playerID].quests[questPosition].requirements[i];
+      move.G.players[move.playerID].resources[i] +=
+        move.G.players[move.playerID].quests[questPosition].reward[i];
     }
   }
-  
-  move.G.players[move.playerID].solvedQuests.push(move.G.players[move.playerID].quests.splice(questPosition,1)[0])
+
+  move.G.players[move.playerID].solvedQuests.push(
+    move.G.players[move.playerID].quests.splice(questPosition, 1)[0],
+  );
 
   // instant effects
 }
-
 
 /** @type {Game} */
 export const LordsOfWaterdeep = {
@@ -211,19 +216,18 @@ export const LordsOfWaterdeep = {
     //questList[0].instantEffect(ahfkwf)
   },
   moves: {
-    placeAgent
-    
+    placeAgent,
   },
 
   turn: {
     //order: TurnOrder.DEFAULT,
     stages: {
       completeQuest: {
-        moves: {completeQuest}
-      }
-    }
+        moves: { completeQuest },
+      },
+    },
 
-/*    onBegin: (onBegin) => {},
+    /*    onBegin: (onBegin) => {},
     onEnd: (onEnd) => {},
 
     minMoves: 1,

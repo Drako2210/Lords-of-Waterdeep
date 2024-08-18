@@ -1,40 +1,40 @@
 export const buildingCardsList = [
-    {
-      id: 0,
-      cost: 8,
-      playerReward: [
-        0, 0, 2, 0, 2, 0,
-      ] /*white, orange, black, purple, gold, victorypoints*/,
-      ownerReward: [0, 0, 1, 0, 0, 0],
-      owner: null,
-    },
-    {
-      id: 1,
-      cost: 8,
-      playerReward: [
-        0, 0, 2, 0, 2, 0,
-      ] /*white, orange, black, purple, gold, victorypoints*/,
-      ownerReward: [0, 0, 1, 0, 0, 0],
-      owner: null,
-    },
-    {
-      id: 2,
-      cost: 8,
-      playerReward: [
-        0, 0, 2, 0, 2, 0,
-      ] /*white, orange, black, purple, gold, victorypoints*/,
-      ownerReward: [0, 0, 1, 0, 0, 0],
-      owner: null,
-    },
-    {
-      id: 3,
-      cost: 8,
-      playerReward: [
-        0, 0, 2, 0, 2, 0,
-      ] /*white, orange, black, purple, gold, victorypoints*/,
-      ownerReward: [0, 0, 1, 0, 0, 0],
-      owner: null,
-    },
+  {
+    id: 0,
+    cost: 8,
+    playerReward: [
+      0, 0, 2, 0, 2, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    ownerReward: [0, 0, 1, 0, 0, 0],
+    owner: null,
+  },
+  {
+    id: 1,
+    cost: 8,
+    playerReward: [
+      0, 0, 2, 0, 2, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    ownerReward: [0, 0, 1, 0, 0, 0],
+    owner: null,
+  },
+  {
+    id: 2,
+    cost: 8,
+    playerReward: [
+      0, 0, 2, 0, 2, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    ownerReward: [0, 0, 1, 0, 0, 0],
+    owner: null,
+  },
+  {
+    id: 3,
+    cost: 8,
+    playerReward: [
+      0, 0, 2, 0, 2, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    ownerReward: [0, 0, 1, 0, 0, 0],
+    owner: null,
+  },
 ];
 export const buildingList = [
   {
@@ -64,7 +64,6 @@ export const buildingList = [
     reward: [0, 0, 2, 0, 0, 0],
     instantEffect: null,
     occupied: null,
-    
   },
   {
     id: 4,
@@ -116,157 +115,147 @@ export const buildingList = [
     instantEffect: null,
     occupied: null,
   },
-
-
-
-
-
-
-
-
-  
-  
 ];
-export const intrigueCardsList = []
+export const intrigueCardsList = [];
 export const questCardsList = [
-    {
-      id: 0,
-      type: "Arcana",
-      requirements: [
-        1, 1, 2, 2, 2, 0,
-      ] /*white, orange, black, purple, gold, victorypoints*/,
-      rewards: [
-        0, 0, 0, 0, 0, 20,
-      ] /*white, orange, black, purple, gold, victorypoints*/,
-      //open: false,
-      solved: false,
-      instantEffect: ["drawIntrigueCard"],
-      passiveEffect: {},
-    },
-    {
-      id: 1,
-      type: "Skullduggery",
-      requirements: [
-        0, 0, 3, 0, 6, 0,
-      ] /*white, orange, black, purple, gold, victorypoints*/,
-      rewards: [
-        0, 0, 0, 0, 0, 8,
-      ] /*white, orange, black, purple, gold, victorypoints*/,
-      //open: false,
-      solved: false,
-      instantEffect: ["drawIntrigueCard"], //eigentlich zweimal
-      passiveEffect: {},
-    },
-    {
-      id: 2,
-      type: "Skullduggery",
-      requirements: [
-        0, 0, 3, 0, 6, 0,
-      ] /*white, orange, black, purple, gold, victorypoints*/,
-      rewards: [
-        0, 0, 0, 0, 0, 8,
-      ] /*white, orange, black, purple, gold, victorypoints*/,
-      //open: false,
-      solved: false,
-      instantEffect: ["drawIntrigueCard"], //eigentlich zweimal
-      passiveEffect: {},
-    },
-    {
-      id: 3,
-      type: "Skullduggery",
-      requirements: [
-        0, 0, 3, 0, 6, 0,
-      ] /*white, orange, black, purple, gold, victorypoints*/,
-      rewards: [
-        0, 0, 0, 0, 0, 8,
-      ] /*white, orange, black, purple, gold, victorypoints*/,
-      //open: false,
-      solved: false,
-      instantEffect: ["drawIntrigueCard"], //eigentlich zweimal
-      passiveEffect: {},
-    },
-    {
-      id: 4,
-      type: "Skullduggery",
-      requirements: [
-        0, 0, 3, 0, 6, 0,
-      ] /*white, orange, black, purple, gold, victorypoints*/,
-      rewards: [
-        0, 0, 0, 0, 0, 8,
-      ] /*white, orange, black, purple, gold, victorypoints*/,
-      //open: false,
-      solved: false,
-      instantEffect: ["drawIntrigueCard"], //eigentlich zweimal
-      passiveEffect: {},
-    },
-    {
-      id: 5,
-      type: "Skullduggery",
-      requirements: [
-        0, 0, 3, 0, 6, 0,
-      ] /*white, orange, black, purple, gold, victorypoints*/,
-      rewards: [
-        0, 0, 0, 0, 0, 8,
-      ] /*white, orange, black, purple, gold, victorypoints*/,
-      //open: false,
-      solved: false,
-      instantEffect: ["drawIntrigueCard"], //eigentlich zweimal
-      passiveEffect: {},
-    },
-    {
-      id: 6,
-      type: "Skullduggery",
-      requirements: [
-        0, 0, 3, 0, 6, 0,
-      ] /*white, orange, black, purple, gold, victorypoints*/,
-      rewards: [
-        0, 0, 0, 0, 0, 8,
-      ] /*white, orange, black, purple, gold, victorypoints*/,
-      //open: false,
-      solved: false,
-      instantEffect: ["drawIntrigueCard"], //eigentlich zweimal
-      passiveEffect: {},
-    },
-    {
-      id: 7,
-      type: "Skullduggery",
-      requirements: [
-        0, 0, 3, 0, 6, 0,
-      ] /*white, orange, black, purple, gold, victorypoints*/,
-      rewards: [
-        0, 0, 0, 0, 0, 8,
-      ] /*white, orange, black, purple, gold, victorypoints*/,
-      //open: false,
-      solved: false,
-      instantEffect: ["drawIntrigueCard"], //eigentlich zweimal
-      passiveEffect: {},
-    },
-    {
-      id: 8,
-      type: "Skullduggery",
-      requirements: [
-        0, 0, 3, 0, 6, 0,
-      ] /*white, orange, black, purple, gold, victorypoints*/,
-      rewards: [
-        0, 0, 0, 0, 0, 8,
-      ] /*white, orange, black, purple, gold, victorypoints*/,
-      //open: false,
-      solved: false,
-      instantEffect: ["drawIntrigueCard"], //eigentlich zweimal
-      passiveEffect: {},
-    },
-    {
-      id: 9,
-      type: "Skullduggery",
-      requirements: [
-        0, 0, 3, 0, 6, 0,
-      ] /*white, orange, black, purple, gold, victorypoints*/,
-      rewards: [
-        0, 0, 0, 0, 0, 8,
-      ] /*white, orange, black, purple, gold, victorypoints*/,
-      //open: false,
-      solved: false,
-      instantEffect: ["drawIntrigueCard"], //eigentlich zweimal
-      passiveEffect: {},
-    },
-]
+  {
+    id: 0,
+    type: "Arcana",
+    requirements: [
+      1, 1, 2, 2, 2, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    rewards: [
+      0, 0, 0, 0, 0, 20,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    //open: false,
+    solved: false,
+    instantEffect: ["drawIntrigueCard"],
+    passiveEffect: {},
+  },
+  {
+    id: 1,
+    type: "Skullduggery",
+    requirements: [
+      0, 0, 3, 0, 6, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    rewards: [
+      0, 0, 0, 0, 0, 8,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    //open: false,
+    solved: false,
+    instantEffect: ["drawIntrigueCard"], //eigentlich zweimal
+    passiveEffect: {},
+  },
+  {
+    id: 2,
+    type: "Skullduggery",
+    requirements: [
+      0, 0, 3, 0, 6, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    rewards: [
+      0, 0, 0, 0, 0, 8,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    //open: false,
+    solved: false,
+    instantEffect: ["drawIntrigueCard"], //eigentlich zweimal
+    passiveEffect: {},
+  },
+  {
+    id: 3,
+    type: "Skullduggery",
+    requirements: [
+      0, 0, 3, 0, 6, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    rewards: [
+      0, 0, 0, 0, 0, 8,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    //open: false,
+    solved: false,
+    instantEffect: ["drawIntrigueCard"], //eigentlich zweimal
+    passiveEffect: {},
+  },
+  {
+    id: 4,
+    type: "Skullduggery",
+    requirements: [
+      0, 0, 3, 0, 6, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    rewards: [
+      0, 0, 0, 0, 0, 8,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    //open: false,
+    solved: false,
+    instantEffect: ["drawIntrigueCard"], //eigentlich zweimal
+    passiveEffect: {},
+  },
+  {
+    id: 5,
+    type: "Skullduggery",
+    requirements: [
+      0, 0, 3, 0, 6, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    rewards: [
+      0, 0, 0, 0, 0, 8,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    //open: false,
+    solved: false,
+    instantEffect: ["drawIntrigueCard"], //eigentlich zweimal
+    passiveEffect: {},
+  },
+  {
+    id: 6,
+    type: "Skullduggery",
+    requirements: [
+      0, 0, 3, 0, 6, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    rewards: [
+      0, 0, 0, 0, 0, 8,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    //open: false,
+    solved: false,
+    instantEffect: ["drawIntrigueCard"], //eigentlich zweimal
+    passiveEffect: {},
+  },
+  {
+    id: 7,
+    type: "Skullduggery",
+    requirements: [
+      0, 0, 3, 0, 6, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    rewards: [
+      0, 0, 0, 0, 0, 8,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    //open: false,
+    solved: false,
+    instantEffect: ["drawIntrigueCard"], //eigentlich zweimal
+    passiveEffect: {},
+  },
+  {
+    id: 8,
+    type: "Skullduggery",
+    requirements: [
+      0, 0, 3, 0, 6, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    rewards: [
+      0, 0, 0, 0, 0, 8,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    //open: false,
+    solved: false,
+    instantEffect: ["drawIntrigueCard"], //eigentlich zweimal
+    passiveEffect: {},
+  },
+  {
+    id: 9,
+    type: "Skullduggery",
+    requirements: [
+      0, 0, 3, 0, 6, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    rewards: [
+      0, 0, 0, 0, 0, 8,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    //open: false,
+    solved: false,
+    instantEffect: ["drawIntrigueCard"], //eigentlich zweimal
+    passiveEffect: {},
+  },
+];
