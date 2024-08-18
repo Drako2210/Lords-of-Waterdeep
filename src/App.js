@@ -36,15 +36,18 @@ class GameClient {
   update(state) {
     resetOnClicks();
     console.log(state);
+    console.log(state.ctx.currentPlayer)
     ctx.fillRect(0, 0, 2000, 3000);
     //offene Quests
     ctx.textAlign = "center";
     for (let i = 0; i <= 3; i++) {
       ctx.fillStyle = `rgb(255 255 255)`;
       ctx.fillRect(400 + i * 350, 50, 300, 150);
+      onClick(400 + i * 350, 50, 300, 150, () => {
+        this.client.moves.chooseQuestCard(i);
+      })
       ctx.fillStyle = `rgb(0 0 0)`;
       ctx.fillText(state.G.openedQuestCards[i].type, 450 + i * 350, 100);
-
       ctx.fillText(
         "Requirements:" + state.G.openedQuestCards[i].requirements,
         550 + i * 350,
@@ -71,6 +74,15 @@ class GameClient {
     //Buildings, großes oben in der Mitte
     ctx.fillStyle = `rgb(255 0 0)`;
     ctx.fillRect(625, 350, 550, 100);
+    onClick(625, 350, 550/3, 100, () => {
+      this.client.moves.placeAgent("nonPlayer", 0);
+    });
+    onClick(625 + 550/3, 350, 550/3, 100, () => {
+      this.client.moves.placeAgent("nonPlayer", 1);
+    });
+    onClick(625 + 1100/3, 350, 550/3, 100, () => {
+      this.client.moves.placeAgent("nonPlayer", 2);
+    });
     //Buildings, kleine
     for (let j = 0; j <= 1; j++) {
       for (let i = 0; i <= 2; i++) {
@@ -131,6 +143,11 @@ class GameClient {
       for (let j = 0; j <= state.G.players[i].quests.length - 1; j++) {
         ctx.fillStyle = "white";
         ctx.fillRect(100 + i * 800, 1550 + j * 200, 300, 150);
+        onClick(100 + i * 800, 1550 + j * 200, 300, 150, () => {
+          //console.log(10000)
+          if (i==state.ctx.currentPlayer){
+            this.client.moves.completeQuest(j);
+        }})
         ctx.fillStyle = `rgb(0 0 0)`;
         ctx.fillText(
           "Type:" + state.G.players[i].quests[j].type,
@@ -148,11 +165,9 @@ class GameClient {
           150 + i * 800,
           1650 + j * 200,
         );
-        onClick(100 + i * 800, 1550 + j * 200, 300, 150, () => {
-          this.client.moves;
-        });
+        ;
       }
-      function name_() {}
+      
       for (let j = 0; j <= state.G.players[i].intrigueCards.length - 1; j++) {
         ctx.fillStyle = "white";
         ctx.fillRect(450 + i * 800, 1550 + j * 350, 150, 300);

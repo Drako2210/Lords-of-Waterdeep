@@ -41,21 +41,21 @@ export const buildingList = [
     id: 0,
     name: "Cliffwatch Inn 1",
     reward: [0, 0, 0, 0, 2, 0],
-    instantEffect: null,
+    instantEffect: ["chooseQuestCard"],
     occupied: null, // QuestCard nehmen
   },
   {
     id: 1,
     name: "Cliffwatch Inn 2",
     reward: [0, 0, 0, 0, 0, 0],
-    instantEffect: null,
+    instantEffect: ["chooseQuestCard"],
     occupied: null, // QuestCard nehmen und IntrigueCard ziehen
   },
   {
     id: 2,
     name: "Cliffwatch Inn 3",
     reward: [0, 0, 0, 0, 0, 0],
-    instantEffect: null,
+    instantEffect: ["resetQuestCards", "chooseQuestCard"],
     occupied: null, // reset aller offeniegenden QuestCards
   },
   {
@@ -258,4 +258,75 @@ export const questCardsList = [
     instantEffect: ["drawIntrigueCard"], //eigentlich zweimal
     passiveEffect: {},
   },
+  {
+    id: 10,
+    type: "Arcana",
+    requirements: [
+      1, 1, 2, 2, 2, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    rewards: [
+      0, 0, 0, 0, 0, 20,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    //open: false,
+    solved: false,
+    instantEffect: ["drawIntrigueCard"],
+    passiveEffect: {},
+  },
+  {
+    id: 11,
+    type: "test",
+    requirements: [
+      1, 1, 2, 2, 2, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    rewards: [
+      0, 0, 0, 0, 0, 20,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    //open: false,
+    solved: false,
+    instantEffect: ["drawIntrigueCard"],
+    passiveEffect: {},
+  },
+  {
+    id: 12,
+    type: "test2",
+    requirements: [
+      1, 1, 2, 2, 2, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    rewards: [
+      0, 0, 0, 0, 0, 20,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    //open: false,
+    solved: false,
+    instantEffect: ["drawIntrigueCard"],
+    passiveEffect: {},
+  },
+  {
+    id: 13,
+    type: "test3",
+    requirements: [
+      1, 1, 2, 2, 2, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    rewards: [
+      0, 0, 0, 0, 0, 20,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    //open: false,
+    solved: false,
+    instantEffect: ["drawIntrigueCard"],
+    passiveEffect: {},
+  },
+  {
+    id: 14,
+    type: "paul",
+    requirements: [
+      1, 1, 2, 2, 2, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    rewards: [
+      0, 0, 0, 0, 0, 20,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    //open: false,
+    solved: false,
+    instantEffect: ["drawIntrigueCard"],
+    passiveEffect: {},
+  },
 ];
+

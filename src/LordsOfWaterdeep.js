@@ -1,5 +1,5 @@
 /** @import { Game } from "boardgame.io" */
-import { INVALID_MOVE } from "boardgame.io/core";
+import { INVALID_MOVE,TurnOrder } from "boardgame.io/core";
 import {
   buildingCardsList,
   buildingList,
@@ -36,14 +36,14 @@ function startAgents(numberPlayers) {
 function drawQuestCard(questCardsDeck) {
   return questCardsDeck.shift();
 }
-function drawIntrigueCard(players, id, intrigueCardsDeck) {
+function drawIntrigueCard(move, id, intrigueCardsDeck) {
   //return intrigueCardsDeck.shift();
-  players[id].intrigueCards.push(intrigueCardsDeck.shift());
-}
+  //move.G.players[id].intrigueCards.push(intrigueCardsDeck.shift()); 
+} 
 function drawBuildingCard(buildingCardsDeck) {
   return buildingCardsDeck.shift();
 }
-function openQuestCard() {}
+//function openQuestCard() {}
 
 /*while (true){
     let chosen = Math.floor(Math.random * questList.length) //Chosen wird auf nummer zwischen 0 und letztem element aus questList[] festgelegt
@@ -68,6 +68,7 @@ function openQuestCard() {}
   */
 function placeAgent(move, buildingType, plotId) {
   // Check if player has Agents
+  
   if (move.G.players[move.playerID].leftAgents != 0) {
     //if(buildingType=="nonPlayer"){}
     // Agent auf nonPlayer Building placen
@@ -76,18 +77,54 @@ function placeAgent(move, buildingType, plotId) {
       move.G.buildingList[plotId].occupied == null
     ) {
       move.G.buildingList[plotId].occupied = move.playerID;
-      for (let i = 0; i <= 5; i++)
+      for (let i = 0; i <= 5; i++){
         move.G.players[move.playerID].resources[i] +=
           move.G.buildingList[plotId].reward[i];
+      }
+      const instantEffects = [{name: "resetQuestCards",
+                               effect: function resetQuestCards(move){
+                                move.G.openedQuestCards = [
+                                  drawQuestCard(move.G.questCardsDeck),
+                                  drawQuestCard(move.G.questCardsDeck),
+                                  drawQuestCard(move.G.questCardsDeck),
+                                  drawQuestCard(move.G.questCardsDeck),
+                                ];
+                               }
+                              },
+                              {name: "chooseQuestCard", //player action
+                               effect: function canChooseQuestCards(move){
+                                console.log(1000)
+                                move.events.setStage('chooseQuestCard')
+                               }
+                              },
+                              {name: "setStartPlayer",
+                                effect: function resetQuestCards(move){}
+                              },
+                              {name: "drawIntrigueCard",
+                                effect: function resetQuestCards(move){}
+                              },
+                              {name: "playIntrigueCard", //player action
+                                effect: function resetQuestCards(move){}
+                              },
+                              {name: "buyBuilding", //player action
+                                effect: function resetQuestCards(move){}
+                              },]
+
+      for(let i = 0; i <= instantEffects.length - 1; i++){
+        if(move.G.buildingList[plotId].instantEffect.includes(instantEffects[i].name)){
+          instantEffects[i].effect(move)
+        }
+      }
       move.G.players[move.playerID].leftAgents -= 1;
-      //move.events.setStage(completeQuest)
+      //move.events.setStage('completeQuest')
+    
     }
   } else {
     move.events.endTurn();
   }
 }
 function completeQuest(move, questPosition) {
-  for (let i = 0; i <= 4; i++) {
+  for (let i = 0; i <= 5; i++) {
     if (
       move.G.players[move.playerID].resources[i] <
       move.G.players[move.playerID].quests[questPosition].requirements[i]
@@ -97,7 +134,7 @@ function completeQuest(move, questPosition) {
       move.G.players[move.playerID].resources[i] -=
         move.G.players[move.playerID].quests[questPosition].requirements[i];
       move.G.players[move.playerID].resources[i] +=
-        move.G.players[move.playerID].quests[questPosition].reward[i];
+        move.G.players[move.playerID].quests[questPosition].rewards[i];
     }
   }
 
@@ -106,6 +143,12 @@ function completeQuest(move, questPosition) {
   );
 
   // instant effects
+}
+function chooseQuestCard(move, questCardPosition){
+  console.log("test",   move.G.players[move.playerID].quests, move.G.openedQuestCards[questCardPosition])
+  move.G.players[move.playerID].quests.push(move.G.openedQuestCards[questCardPosition])
+  console.log(move.G.players[move.playerID].quests, move.G.openedQuestCards[questCardPosition])
+  move.G.openedQuestCards[questCardPosition] = drawQuestCard(move.G.questCardsDeck)
 }
 
 /** @type {Game} */
@@ -130,6 +173,10 @@ export const LordsOfWaterdeep = {
     if (a > 4 && a <= 5) {
       startPlayer = 4;
     }
+    let turnOrder =[]
+    for(let i=0;i<=setup.ctx.numPlayers-1;i++){
+      turnOrder.push((i+startPlayer)%setup.ctx.numPlayers)
+    }
     let playerColors = ["Yellow", "Blue", "Red", "Green", "Black"];
     for (let i = 0; i <= setup.ctx.numPlayers - 1; i++) {
       players[i] = {
@@ -144,9 +191,9 @@ export const LordsOfWaterdeep = {
         resources: [
           0,
           0,
+          3,
           0,
-          0,
-          4 + (Math.abs(i - startPlayer) % setup.ctx.numPlayers),
+          6 + (Math.abs(i - startPlayer) % setup.ctx.numPlayers),
           0,
         ],
         /*white, orange, black, purple, gold, victorypoints*/
@@ -210,6 +257,7 @@ export const LordsOfWaterdeep = {
       openedQuestCards: openedQuestCards,
       openedBuildings: openedBuildings,
       roundCounter: roundCounter,
+      turnOrder: turnOrder
     };
     return gamestate;
 
@@ -220,10 +268,13 @@ export const LordsOfWaterdeep = {
   },
 
   turn: {
-    //order: TurnOrder.DEFAULT,
+    order: TurnOrder.CUSTOM_FROM('turnOrder'),
     stages: {
       completeQuest: {
         moves: { completeQuest },
+      },
+      chooseQuestCard: {
+        moves: { chooseQuestCard },
       },
     },
 
