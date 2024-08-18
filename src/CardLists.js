@@ -62,49 +62,49 @@ export const buildingList = [
     id: 3,
     name: "Grinning Lion Tavern",
     reward: [0, 0, 2, 0, 0, 0],
-    instantEffect: null,
+    instantEffect: [],
     occupied: null,
   },
   {
     id: 4,
     name: "The Plinth",
     reward: [1, 0, 0, 0, 0, 0],
-    instantEffect: null,
+    instantEffect: [],
     occupied: null,
   },
   {
     id: 5,
     name: "Aurora's Realms Shop",
     reward: [0, 0, 0, 0, 4, 0],
-    instantEffect: null,
+    instantEffect: [],
     occupied: null,
   },
   {
     id: 6,
     name: "Builder's Hall",
     reward: [0, 0, 0, 0, 0, 0],
-    instantEffect: null,
+    instantEffect: [],
     occupied: null, // build a building
   },
   {
     id: 7,
     name: "Waterdeep Harbor",
     reward: [0, 0, 0, 0, 0, 0],
-    instantEffect: null, //intrigue card playn
+    instantEffect: [], //intrigue card playn
     occupied: null, // besonders
   },
   {
     id: 8,
     name: "Castle Waterdeep",
     reward: [0, 0, 0, 0, 0, 0],
-    instantEffect: null,
+    instantEffect: [],
     occupied: null, // IntrigueCard ziehen und Startspieler ändern
   },
   {
     id: 9,
     name: "Blackstaff Tower",
     reward: [0, 0, 0, 1, 0, 0],
-    instantEffect: null,
+    instantEffect: [],
     occupied: null,
   },
 
@@ -112,7 +112,7 @@ export const buildingList = [
     id: 10,
     name: "Field of Triumph",
     reward: [0, 2, 0, 0, 0, 0],
-    instantEffect: null,
+    instantEffect: [],
     occupied: null,
   },
 ];

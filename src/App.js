@@ -35,8 +35,8 @@ class GameClient {
 
   update(state) {
     resetOnClicks();
-    console.log(state);
-    console.log(state.ctx.currentPlayer)
+    //console.log(state);
+    //console.log(state.ctx.currentPlayer)
     ctx.fillRect(0, 0, 2000, 3000);
     //offene Quests
     ctx.textAlign = "center";
@@ -139,12 +139,26 @@ class GameClient {
         1450
       ) */
       }
+
+      if (state.ctx.activePlayers!=null){
+        if(state.ctx.activePlayers[i]=="completeQuest"){
+        ctx.fillStyle = 'rgb(255 110 74)'
+        ctx.fillRect(275+800*i,1300,300,75)
+        ctx.fillStyle = 'rgb(0 0 0)'
+        ctx.fillText ("Beende den Zug",425+800*i,1350)
+        onClick(275,1300,300,75, () => {
+          if (i==state.ctx.currentPlayer){
+            this.client.moves.completeQuest(undefined);
+        }})
+
+        }
+      }
       //Quest Cards der SPIELER
       for (let j = 0; j <= state.G.players[i].quests.length - 1; j++) {
         ctx.fillStyle = "white";
         ctx.fillRect(100 + i * 800, 1550 + j * 200, 300, 150);
         onClick(100 + i * 800, 1550 + j * 200, 300, 150, () => {
-          //console.log(10000)
+
           if (i==state.ctx.currentPlayer){
             this.client.moves.completeQuest(j);
         }})

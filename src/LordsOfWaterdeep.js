@@ -68,6 +68,7 @@ function drawBuildingCard(buildingCardsDeck) {
   */
 function placeAgent(move, buildingType, plotId) {
   // Check if player has Agents
+
   
   if (move.G.players[move.playerID].leftAgents != 0) {
     //if(buildingType=="nonPlayer"){}
@@ -80,6 +81,11 @@ function placeAgent(move, buildingType, plotId) {
       for (let i = 0; i <= 5; i++){
         move.G.players[move.playerID].resources[i] +=
           move.G.buildingList[plotId].reward[i];
+          
+      }
+      
+      if(move.G.buildingList[plotId].instantEffect[0]==undefined){
+        move.events.setStage('completeQuest')
       }
       const instantEffects = [{name: "resetQuestCards",
                                effect: function resetQuestCards(move){
@@ -93,7 +99,7 @@ function placeAgent(move, buildingType, plotId) {
                               },
                               {name: "chooseQuestCard", //player action
                                effect: function canChooseQuestCards(move){
-                                console.log(1000)
+                                
                                 move.events.setStage('chooseQuestCard')
                                }
                               },
@@ -117,38 +123,42 @@ function placeAgent(move, buildingType, plotId) {
       }
       move.G.players[move.playerID].leftAgents -= 1;
       //move.events.setStage('completeQuest')
-    
+      
     }
   } else {
     move.events.endTurn();
   }
 }
-function completeQuest(move, questPosition) {
-  for (let i = 0; i <= 5; i++) {
-    if (
-      move.G.players[move.playerID].resources[i] <
-      move.G.players[move.playerID].quests[questPosition].requirements[i]
-    ) {
-      return INVALID_MOVE;
-    } else {
-      move.G.players[move.playerID].resources[i] -=
-        move.G.players[move.playerID].quests[questPosition].requirements[i];
-      move.G.players[move.playerID].resources[i] +=
-        move.G.players[move.playerID].quests[questPosition].rewards[i];
+function completeQuest(move, questPosition) { 
+  if(questPosition!=undefined){
+    for (let i = 0; i <= 5; i++) {
+      if (
+        move.G.players[move.playerID].resources[i] <
+        move.G.players[move.playerID].quests[questPosition].requirements[i]
+      ) {
+        return INVALID_MOVE;
+      } else {
+        move.G.players[move.playerID].resources[i] -=
+          move.G.players[move.playerID].quests[questPosition].requirements[i];
+        move.G.players[move.playerID].resources[i] +=
+          move.G.players[move.playerID].quests[questPosition].rewards[i];
+      }
     }
-  }
+  
 
   move.G.players[move.playerID].solvedQuests.push(
     move.G.players[move.playerID].quests.splice(questPosition, 1)[0],
   );
-
+}
+  move.events.endTurn()
   // instant effects
 }
 function chooseQuestCard(move, questCardPosition){
-  console.log("test",   move.G.players[move.playerID].quests, move.G.openedQuestCards[questCardPosition])
+  //console.log("test",   move.G.players[move.playerID].quests, move.G.openedQuestCards[questCardPosition])
   move.G.players[move.playerID].quests.push(move.G.openedQuestCards[questCardPosition])
-  console.log(move.G.players[move.playerID].quests, move.G.openedQuestCards[questCardPosition])
+  //console.log(move.G.players[move.playerID].quests, move.G.openedQuestCards[questCardPosition])
   move.G.openedQuestCards[questCardPosition] = drawQuestCard(move.G.questCardsDeck)
+  move.events.setStage('completeQuest')
 }
 
 /** @type {Game} */
@@ -243,8 +253,7 @@ export const LordsOfWaterdeep = {
         building: null,
       };
     }
-    console.log(players[0].leftAgents);
-    let gamestate = {
+        let gamestate = {
       players: players,
       startPlayer: startPlayer,
       buildingList: buildingList,
