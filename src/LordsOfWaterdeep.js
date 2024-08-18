@@ -1,4 +1,5 @@
 /** @import { Game } from "boardgame.io" */
+import { INVALID_MOVE } from "boardgame.io/core";
 import {
   buildingCardsList,
   buildingList,
@@ -65,6 +66,42 @@ function openQuestCard() {}
   }
 }
   */
+function placeAgent(move, buildingType, plotId) {
+  // Check if player has Agents
+  if (move.G.players[move.playerID].leftAgents != 0) {
+    //if(buildingType=="nonPlayer"){}
+    // Agent auf nonPlayer Building placen
+    if (
+      buildingType == "nonPlayer" &&
+      move.G.buildingList[plotId].occupied == null
+    ) {
+      move.G.buildingList[plotId].occupied = move.playerID;
+      for (let i = 0; i <= 5; i++)
+        move.G.players[move.playerID].resources[i] +=
+          move.G.buildingList[plotId].reward[i];
+      move.G.players[move.playerID].leftAgents -= 1;
+      //move.events.setStage(completeQuest)
+    }
+  } else {
+    move.events.endTurn();
+  }
+}
+function completeQuest(move, questPosition) {
+  for(let i = 0; i <= 4; i++) {
+    if(move.G.players[move.playerID].resources[i] < move.G.players[move.playerID].quests[questPosition].requirements[i]){
+      return INVALID_MOVE
+    }
+    else{
+        move.G.players[move.playerID].resources[i] -= move.G.players[move.playerID].quests[questPosition].requirements[i]
+        move.G.players[move.playerID].resources[i] += move.G.players[move.playerID].quests[questPosition].reward[i]
+    }
+  }
+  
+  move.G.players[move.playerID].solvedQuests.push(move.G.players[move.playerID].quests.splice(questPosition,1)[0])
+
+  // instant effects
+}
+
 
 /** @type {Game} */
 export const LordsOfWaterdeep = {
@@ -110,6 +147,7 @@ export const LordsOfWaterdeep = {
         /*white, orange, black, purple, gold, victorypoints*/
         /* gold: 4 + ((i - startPlayer) % setup.ctx.numPlayers), */
         quests: [],
+        solvedQuests: [],
         intrigueCards: [],
         buildingAmount: 0,
       };
@@ -173,35 +211,22 @@ export const LordsOfWaterdeep = {
     //questList[0].instantEffect(ahfkwf)
   },
   moves: {
-    placeAgent: function placeAgent(move, buildingType, plotId) {
-      // Check if player has Agents
-      if (move.G.players[move.playerID].leftAgents != 0) {
-        //if(buildingType=="nonPlayer"){}
-        // Agent auf nonPlayer Building placen
-        if (
-          buildingType == "nonPlayer" &&
-          move.G.buildingList[plotId].occupied == null
-        ) {
-          move.G.buildingList[plotId].occupied = move.playerID;
-          for (let i = 0; i <= 5; i++)
-            move.G.players[move.playerID].resources[i] +=
-              move.G.buildingList[plotId].reward[i];
-          move.G.players[move.playerID].leftAgents -= 1;
-        }
-      } else {
-        move.events.endTurn();
-      }
-
-    },
+    placeAgent
+    
   },
 
   turn: {
-    order: TurnOrder.DEFAULT,
+    //order: TurnOrder.DEFAULT,
+    stages: {
+      completeQuest: {
+        moves: {completeQuest}
+      }
+    }
 
-    onBegin: (onBegin) => {},
+/*    onBegin: (onBegin) => {},
     onEnd: (onEnd) => {},
 
-/*     minMoves: 1,
+    minMoves: 1,
     maxMoves: 1, */
   },
 
