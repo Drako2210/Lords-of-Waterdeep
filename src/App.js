@@ -139,7 +139,7 @@ class GameClient {
         1450
       ) */
       }
-
+      // Feld für Beenden des Zuges in der completeQuest-Stage
       if (state.ctx.activePlayers!=null){
         if(state.ctx.activePlayers[i]=="completeQuest"){
         ctx.fillStyle = 'rgb(255 110 74)'

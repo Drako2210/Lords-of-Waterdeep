@@ -87,6 +87,7 @@ function placeAgent(move, buildingType, plotId) {
       if(move.G.buildingList[plotId].instantEffect[0]==undefined){
         move.events.setStage('completeQuest')
       }
+      //alle möglichen building instant effects mit name und inhalt der Funktion
       const instantEffects = [{name: "resetQuestCards",
                                effect: function resetQuestCards(move){
                                 move.G.openedQuestCards = [
@@ -129,7 +130,8 @@ function placeAgent(move, buildingType, plotId) {
     move.events.endTurn();
   }
 }
-function completeQuest(move, questPosition) { 
+function completeQuest(move, questPosition) {
+  //undefined ist der Input für Zug beenden
   if(questPosition!=undefined){
     for (let i = 0; i <= 5; i++) {
       if (
@@ -144,8 +146,6 @@ function completeQuest(move, questPosition) {
           move.G.players[move.playerID].quests[questPosition].rewards[i];
       }
     }
-  
-
   move.G.players[move.playerID].solvedQuests.push(
     move.G.players[move.playerID].quests.splice(questPosition, 1)[0],
   );
