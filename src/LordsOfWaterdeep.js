@@ -1,5 +1,5 @@
 /** @import { Game } from "boardgame.io" */
-import { INVALID_MOVE,TurnOrder } from "boardgame.io/core";
+import { INVALID_MOVE, TurnOrder } from "boardgame.io/core";
 import {
   buildingCardsList,
   buildingList,
@@ -38,8 +38,8 @@ function drawQuestCard(questCardsDeck) {
 }
 function drawIntrigueCard(move, id, intrigueCardsDeck) {
   //return intrigueCardsDeck.shift();
-  //move.G.players[id].intrigueCards.push(intrigueCardsDeck.shift()); 
-} 
+  //move.G.players[id].intrigueCards.push(intrigueCardsDeck.shift());
+}
 function drawBuildingCard(buildingCardsDeck) {
   return buildingCardsDeck.shift();
 }
@@ -66,10 +66,38 @@ function drawBuildingCard(buildingCardsDeck) {
   }
 }
   */
+function endRound(move) {
+  let a = true;
+  for (let i = 0; i <= move.ctx.numPlayers - 1; i++) {
+    if (move.G.players[i].leftAgents != 0) {
+      a = false;
+    }
+  }
+
+  if (a == true) {
+    for (let i = 0; i <= move.G.buildingList.length - 1; i++) {
+      move.G.buildingList[i].occupied = null;
+      console.log(move.G.buildingList[i].occupied);
+    }
+    for (let i = 0; i <= move.ctx.numPlayers - 1; i++) {
+      //console.log(move.G.players[i].maxAgents)
+      move.G.players[i].leftAgents = move.G.players[i].maxAgents;
+    }
+    move.G.roundCounter += 1;
+    if (move.G.roundCounter == 5) {
+      for (let i = 0; i <= move.ctx.numPlayers - 1; i++) {
+        move.G.players[i].maxAgents += 1;
+      }
+    }
+
+    for (let i = 0; i <= 2; i++) {
+      // als instant rewards noch hinzufügen
+    }
+  }
+}
 function placeAgent(move, buildingType, plotId) {
   // Check if player has Agents
 
-  
   if (move.G.players[move.playerID].leftAgents != 0) {
     //if(buildingType=="nonPlayer"){}
     // Agent auf nonPlayer Building placen
@@ -78,53 +106,56 @@ function placeAgent(move, buildingType, plotId) {
       move.G.buildingList[plotId].occupied == null
     ) {
       move.G.buildingList[plotId].occupied = move.playerID;
-      for (let i = 0; i <= 5; i++){
+      for (let i = 0; i <= 5; i++) {
         move.G.players[move.playerID].resources[i] +=
           move.G.buildingList[plotId].reward[i];
-          
       }
-      
-      if(move.G.buildingList[plotId].instantEffect[0]==undefined){
-        move.events.setStage('completeQuest')
+
+      if (move.G.buildingList[plotId].instantEffect[0] == undefined) {
+        move.events.setStage("completeQuest");
       }
       //alle möglichen building instant effects mit name und inhalt der Funktion
-      const instantEffects = [{name: "resetQuestCards",
-                               effect: function resetQuestCards(move){
-                                move.G.openedQuestCards = [
-                                  drawQuestCard(move.G.questCardsDeck),
-                                  drawQuestCard(move.G.questCardsDeck),
-                                  drawQuestCard(move.G.questCardsDeck),
-                                  drawQuestCard(move.G.questCardsDeck),
-                                ];
-                               }
-                              },
-                              {name: "chooseQuestCard", //player action
-                               effect: function canChooseQuestCards(move){
-                                
-                                move.events.setStage('chooseQuestCard')
-                               }
-                              },
-                              {name: "setStartPlayer",
-                                effect: function resetQuestCards(move){}
-                              },
-                              {name: "drawIntrigueCard",
-                                effect: function resetQuestCards(move){}
-                              },
-                              {name: "playIntrigueCard", //player action
-                                effect: function resetQuestCards(move){}
-                              },
-                              {name: "buyBuilding", //player action
-                                effect: function resetQuestCards(move){}
-                              },]
+      const instantEffects = [
+        {
+          name: "resetQuestCards",
+          effect: function resetQuestCards(move) {
+            move.G.openedQuestCards = [
+              drawQuestCard(move.G.questCardsDeck),
+              drawQuestCard(move.G.questCardsDeck),
+              drawQuestCard(move.G.questCardsDeck),
+              drawQuestCard(move.G.questCardsDeck),
+            ];
+          },
+        },
+        {
+          name: "chooseQuestCard", //player action
+          effect: function canChooseQuestCards(move) {
+            move.events.setStage("chooseQuestCard");
+          },
+        },
+        { name: "setStartPlayer", effect: function resetQuestCards(move) {} },
+        { name: "drawIntrigueCard", effect: function resetQuestCards(move) {} },
+        {
+          name: "playIntrigueCard", //player action
+          effect: function resetQuestCards(move) {},
+        },
+        {
+          name: "buyBuilding", //player action
+          effect: function resetQuestCards(move) {},
+        },
+      ];
 
-      for(let i = 0; i <= instantEffects.length - 1; i++){
-        if(move.G.buildingList[plotId].instantEffect.includes(instantEffects[i].name)){
-          instantEffects[i].effect(move)
+      for (let i = 0; i <= instantEffects.length - 1; i++) {
+        if (
+          move.G.buildingList[plotId].instantEffect.includes(
+            instantEffects[i].name
+          )
+        ) {
+          instantEffects[i].effect(move);
         }
       }
       move.G.players[move.playerID].leftAgents -= 1;
       //move.events.setStage('completeQuest')
-      
     }
   } else {
     move.events.endTurn();
@@ -132,7 +163,7 @@ function placeAgent(move, buildingType, plotId) {
 }
 function completeQuest(move, questPosition) {
   //undefined ist der Input für Zug beenden
-  if(questPosition!=undefined){
+  if (questPosition != undefined) {
     for (let i = 0; i <= 5; i++) {
       if (
         move.G.players[move.playerID].resources[i] <
@@ -146,19 +177,24 @@ function completeQuest(move, questPosition) {
           move.G.players[move.playerID].quests[questPosition].rewards[i];
       }
     }
-  move.G.players[move.playerID].solvedQuests.push(
-    move.G.players[move.playerID].quests.splice(questPosition, 1)[0],
-  );
-}
-  move.events.endTurn()
+    move.G.players[move.playerID].solvedQuests.push(
+      move.G.players[move.playerID].quests.splice(questPosition, 1)[0]
+    );
+  }
+  endRound(move);
+  move.events.endTurn();
   // instant effects
 }
-function chooseQuestCard(move, questCardPosition){
+function chooseQuestCard(move, questCardPosition) {
   //console.log("test",   move.G.players[move.playerID].quests, move.G.openedQuestCards[questCardPosition])
-  move.G.players[move.playerID].quests.push(move.G.openedQuestCards[questCardPosition])
+  move.G.players[move.playerID].quests.push(
+    move.G.openedQuestCards[questCardPosition]
+  );
   //console.log(move.G.players[move.playerID].quests, move.G.openedQuestCards[questCardPosition])
-  move.G.openedQuestCards[questCardPosition] = drawQuestCard(move.G.questCardsDeck)
-  move.events.setStage('completeQuest')
+  move.G.openedQuestCards[questCardPosition] = drawQuestCard(
+    move.G.questCardsDeck
+  );
+  move.events.setStage("completeQuest");
 }
 
 /** @type {Game} */
@@ -166,7 +202,7 @@ export const LordsOfWaterdeep = {
   setup: (setup) => {
     let players = {};
     let startPlayer = 0;
-    let roundCounter = 0;
+    let roundCounter = 1;
     let a = setup.random.Number() * setup.ctx.numPlayers;
     if (a >= 0 && a <= 1) {
       startPlayer = 0;
@@ -183,16 +219,16 @@ export const LordsOfWaterdeep = {
     if (a > 4 && a <= 5) {
       startPlayer = 4;
     }
-    let turnOrder =[]
-    for(let i=0;i<=setup.ctx.numPlayers-1;i++){
-      turnOrder.push((i+startPlayer)%setup.ctx.numPlayers)
+    let turnOrder = [];
+    for (let i = 0; i <= setup.ctx.numPlayers - 1; i++) {
+      turnOrder.push((i + startPlayer) % setup.ctx.numPlayers);
     }
     let playerColors = ["Yellow", "Blue", "Red", "Green", "Black"];
     for (let i = 0; i <= setup.ctx.numPlayers - 1; i++) {
       players[i] = {
         playerColor: playerColors[i],
-        maxAgents: startAgents(setup.ctx.numPlayers),
-        leftAgents: startAgents(setup.ctx.numPlayers),
+        maxAgents: 1, //startAgents(setup.ctx.numPlayers),
+        leftAgents: 1, //startAgents(setup.ctx.numPlayers),
         /* victorypoints: 0,
         white: 0,
         orange: 0,
@@ -253,7 +289,7 @@ export const LordsOfWaterdeep = {
         building: null,
       };
     }
-        let gamestate = {
+    let gamestate = {
       players: players,
       startPlayer: startPlayer,
       buildingList: buildingList,
@@ -266,7 +302,7 @@ export const LordsOfWaterdeep = {
       openedQuestCards: openedQuestCards,
       openedBuildings: openedBuildings,
       roundCounter: roundCounter,
-      turnOrder: turnOrder
+      turnOrder: turnOrder,
     };
     return gamestate;
 
@@ -277,7 +313,7 @@ export const LordsOfWaterdeep = {
   },
 
   turn: {
-    order: TurnOrder.CUSTOM_FROM('turnOrder'),
+    order: TurnOrder.CUSTOM_FROM("turnOrder"),
     stages: {
       completeQuest: {
         moves: { completeQuest },
@@ -299,5 +335,41 @@ export const LordsOfWaterdeep = {
 
   disableUndo: true,
 
-  // endIf: (endIf) => {},
+  endIf: (endIf) => {
+    console.log(endIf);
+    if (endIf.G.roundCounter == 2) {
+      let vpList =[]
+      for (let i = 0; i <= endIf.ctx.numPlayers - 1; i++) {
+        vpList[i]=endIf.G.players[i].resources[5]
+        vpList[i] += endIf.G.players[i].resources[0];
+        vpList[i] += endIf.G.players[i].resources[1];
+        vpList[i] += endIf.G.players[i].resources[2];
+        vpList[i] += endIf.G.players[i].resources[3];
+        vpList[i] += Math.floor(
+          endIf.G.players[i].resources[4] / 2
+        );
+        console.log(endIf.G.players[i].resources[5]);
+      }
+      let tempHighest = 0;
+      let winnerPosition = 0;
+      let winnerList = [];
+      let ranking = {};
+      for (let j = 1; j <= endIf.ctx.numPlayers; j++) {
+        for (let i = 0; i <= endIf.ctx.numPlayers - j; i++) {
+          if (tempHighest < vpList[i]) {
+            tempHighest = vpList[i];
+            winnerPosition = i;
+          }
+        }
+        winnerList.push(winnerPosition);
+        for (let i = 0; i <= endIf.ctx.numPlayers - 1; i++) {
+          if (tempHighest == vpList[i] && winnerPosition != i) {
+            winnerList.push();
+            console.log(winnerList)
+            
+          }
+        }
+      }
+    }
+  },
 };

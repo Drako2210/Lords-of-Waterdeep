@@ -146,7 +146,7 @@ class GameClient {
         ctx.fillRect(275+800*i,1300,300,75)
         ctx.fillStyle = 'rgb(0 0 0)'
         ctx.fillText ("Beende den Zug",425+800*i,1350)
-        onClick(275,1300,300,75, () => {
+        onClick(275+800*i,1300,300,75, () => {
           if (i==state.ctx.currentPlayer){
             this.client.moves.completeQuest(undefined);
         }})
