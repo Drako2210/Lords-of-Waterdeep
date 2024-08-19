@@ -4,6 +4,8 @@ import { Local, SocketIO } from "boardgame.io/multiplayer";
 import { resetOnClicks } from "./canvas";
 import { LordsOfWaterdeep } from "./LordsOfWaterdeep";
 import { drawPicture, onClick } from "./canvas";
+import { setupLobby } from "./lobby";
+
 const isMultiplayer = import.meta.env.VITE_REMOTE === "true";
 const multiplayerServer =
   import.meta.env.VITE_MUTLIPLAYER_SERVER ?? "localhost:8000";
@@ -16,7 +18,7 @@ const multiplayer = isMultiplayer
   : Local();
 
 class GameClient {
-  constructor(rootElement) {
+  constructor(rootElement, gameParams) {
     this.rootElement = rootElement;
 
     this.client = Client({
@@ -27,9 +29,15 @@ class GameClient {
         hideToggleButton: false,
         impl: Debug,
       },
+      matchID: gameParams?.matchId,
+      playerID: gameParams?.playerId,
+      credentials: gameParams?.playerCredentials,
     });
 
-    this.client.subscribe((state) => this.update(state));
+    this.client.subscribe((state) => {
+      if (state === null) return;
+      this.update(state);
+    });
     this.client.start();
   }
 
@@ -45,7 +53,7 @@ class GameClient {
       ctx.fillRect(400 + i * 350, 50, 300, 150);
       onClick(400 + i * 350, 50, 300, 150, () => {
         this.client.moves.chooseQuestCard(i);
-      })
+      });
       ctx.fillStyle = `rgb(0 0 0)`;
       ctx.fillText(state.G.openedQuestCards[i].type, 450 + i * 350, 100);
       ctx.fillText(
@@ -74,13 +82,13 @@ class GameClient {
     //Buildings, großes oben in der Mitte
     ctx.fillStyle = `rgb(255 0 0)`;
     ctx.fillRect(625, 350, 550, 100);
-    onClick(625, 350, 550/3, 100, () => {
+    onClick(625, 350, 550 / 3, 100, () => {
       this.client.moves.placeAgent("nonPlayer", 0);
     });
-    onClick(625 + 550/3, 350, 550/3, 100, () => {
+    onClick(625 + 550 / 3, 350, 550 / 3, 100, () => {
       this.client.moves.placeAgent("nonPlayer", 1);
     });
-    onClick(625 + 1100/3, 350, 550/3, 100, () => {
+    onClick(625 + 1100 / 3, 350, 550 / 3, 100, () => {
       this.client.moves.placeAgent("nonPlayer", 2);
     });
     //Buildings, kleine
@@ -140,17 +148,17 @@ class GameClient {
       ) */
       }
       // Feld für Beenden des Zuges in der completeQuest-Stage
-      if (state.ctx.activePlayers!=null){
-        if(state.ctx.activePlayers[i]=="completeQuest"){
-        ctx.fillStyle = 'rgb(255 110 74)'
-        ctx.fillRect(275+800*i,1300,300,75)
-        ctx.fillStyle = 'rgb(0 0 0)'
-        ctx.fillText ("Beende den Zug",425+800*i,1350)
-        onClick(275+800*i,1300,300,75, () => {
-          if (i==state.ctx.currentPlayer){
-            this.client.moves.completeQuest(undefined);
-        }})
-
+      if (state.ctx.activePlayers != null) {
+        if (state.ctx.activePlayers[i] == "completeQuest") {
+          ctx.fillStyle = "rgb(255 110 74)";
+          ctx.fillRect(275 + 800 * i, 1300, 300, 75);
+          ctx.fillStyle = "rgb(0 0 0)";
+          ctx.fillText("Beende den Zug", 425 + 800 * i, 1350);
+          onClick(275 + 800 * i, 1300, 300, 75, () => {
+            if (i == state.ctx.currentPlayer) {
+              this.client.moves.completeQuest(undefined);
+            }
+          });
         }
       }
       //Quest Cards der SPIELER
@@ -158,10 +166,10 @@ class GameClient {
         ctx.fillStyle = "white";
         ctx.fillRect(100 + i * 800, 1550 + j * 200, 300, 150);
         onClick(100 + i * 800, 1550 + j * 200, 300, 150, () => {
-
-          if (i==state.ctx.currentPlayer){
+          if (i == state.ctx.currentPlayer) {
             this.client.moves.completeQuest(j);
-        }})
+          }
+        });
         ctx.fillStyle = `rgb(0 0 0)`;
         ctx.fillText(
           "Type:" + state.G.players[i].quests[j].type,
@@ -179,9 +187,8 @@ class GameClient {
           150 + i * 800,
           1650 + j * 200,
         );
-        ;
       }
-      
+
       for (let j = 0; j <= state.G.players[i].intrigueCards.length - 1; j++) {
         ctx.fillStyle = "white";
         ctx.fillRect(450 + i * 800, 1550 + j * 350, 150, 300);
@@ -201,5 +208,8 @@ class GameClient {
     }
   }
 }
-const appElement = document.getElementById("app");
-const app = new GameClient(appElement);
+
+setupLobby(
+  isMultiplayer,
+  (appElement, game) => new GameClient(appElement, game),
+);
