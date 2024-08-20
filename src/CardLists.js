@@ -2,6 +2,7 @@ export const buildingCardsList = [
   {
     id: 0,
     cost: 8,
+    victorypoints:0,
     playerReward: [
       0, 0, 2, 0, 2, 0,
     ] /*white, orange, black, purple, gold, victorypoints*/,
@@ -11,6 +12,7 @@ export const buildingCardsList = [
   {
     id: 1,
     cost: 8,
+    victorypoints:0,
     playerReward: [
       0, 0, 2, 0, 2, 0,
     ] /*white, orange, black, purple, gold, victorypoints*/,
@@ -20,6 +22,7 @@ export const buildingCardsList = [
   {
     id: 2,
     cost: 8,
+    victorypoints:0,
     playerReward: [
       0, 0, 2, 0, 2, 0,
     ] /*white, orange, black, purple, gold, victorypoints*/,
@@ -29,6 +32,7 @@ export const buildingCardsList = [
   {
     id: 3,
     cost: 8,
+    victorypoints:0,
     playerReward: [
       0, 0, 2, 0, 2, 0,
     ] /*white, orange, black, purple, gold, victorypoints*/,
@@ -83,7 +87,7 @@ export const buildingList = [
     id: 6,
     name: "Builder's Hall",
     reward: [0, 0, 0, 0, 0, 0],
-    instantEffect: [],
+    instantEffect: ["buyBuilding"],
     occupied: null, // build a building
   },
   {

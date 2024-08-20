@@ -59,12 +59,12 @@ class GameClient {
       ctx.fillText(
         "Requirements:" + state.G.openedQuestCards[i].requirements,
         550 + i * 350,
-        150,
+        150
       );
       ctx.fillText(
         "Rewards:" + state.G.openedQuestCards[i].rewards,
         550 + i * 350,
-        170,
+        170
       );
     }
 
@@ -105,23 +105,46 @@ class GameClient {
     });
     //Building: Builders Hall
     ctx.fillRect(700, 920, 400, 100);
+    onClick(700, 920, 400, 100, ()=> {
+      this.client.moves.placeAgent("nonPlayer",6)
+    })
     //offene nicht gebaute Buildings
     for (let i = 0; i <= 2; i++) {
       ctx.fillStyle = `rgb(0 255 0)`;
       ctx.fillRect(625 + 200 * i, 1100, 150, 150);
+      if (state.G.openedBuildings[i] != null){
       ctx.fillStyle = "black";
       ctx.fillText(state.G.openedBuildings[i].cost, 675 + i * 200, 1150);
       //ctx.fillStyle = "red";
       ctx.fillText(
         "Rewards:" + state.G.openedBuildings[i].playerReward,
         700 + i * 200,
-        1200,
+        1200
       );
       ctx.fillText(
         "Owner Rewards:" + state.G.openedBuildings[i].ownerReward,
         700 + i * 200,
-        1220,
+        1220
       );
+    }
+      if (state.ctx.activePlayers != null) {
+        if (
+          state.ctx.activePlayers[state.ctx.currentPlayer] == "buyBuilding" &&
+          state.ctx.gameover == undefined
+        ) {
+          onClick(625 + 200 *i, 1100, 150, 150, () => {
+            this.client.moves.buyBuilding(i);
+          });
+          ctx.fillStyle = "rgb(255 110 74)";
+          ctx.fillRect(625, 1300, 300, 75);
+          ctx.fillStyle = "rgb(0 0 0)";
+          ctx.fillText("Baue kein Gebäude", 775, 1350);
+          onClick(625, 1300, 300, 75, () => {
+              this.client.moves.buyBuilding(-1);
+            
+          });
+        }
+      }
     }
     //Player Cards
     for (let i = 0; i <= 1; i++) {
@@ -135,7 +158,7 @@ class GameClient {
         ctx.fillText(
           state.G.players[i].resources[j],
           125 + 50 * j + 800 * i,
-          1450,
+          1450
         );
         /* ctx.fillText("Orange:" + state.G.players[i].orange, 175 + 800 * i, 1450);
       ctx.fillText("Black:" + state.G.players[i].black, 225 + 800 * i, 1450);
@@ -147,9 +170,13 @@ class GameClient {
         1450
       ) */
       }
+
       // Feld für Beenden des Zuges in der completeQuest-Stage
       if (state.ctx.activePlayers != null) {
-        if (state.ctx.activePlayers[i] == "completeQuest") {
+        if (
+          state.ctx.activePlayers[i] == "completeQuest" &&
+          state.ctx.gameover == undefined
+        ) {
           ctx.fillStyle = "rgb(255 110 74)";
           ctx.fillRect(275 + 800 * i, 1300, 300, 75);
           ctx.fillStyle = "rgb(0 0 0)";
@@ -174,18 +201,18 @@ class GameClient {
         ctx.fillText(
           "Type:" + state.G.players[i].quests[j].type,
           150 + i * 800,
-          1600 + j * 200,
+          1600 + j * 200
         );
 
         ctx.fillText(
           "Requirements:" + state.G.players[i].quests[j].requirements,
           150 + i * 800,
-          1625 + j * 200,
+          1625 + j * 200
         );
         ctx.fillText(
           "Rewards:" + state.G.players[i].quests[j].rewards,
           150 + i * 800,
-          1650 + j * 200,
+          1650 + j * 200
         );
       }
 
@@ -206,10 +233,16 @@ class GameClient {
       ); */
       }
     }
+
+    if (state.ctx.gameover != undefined) {
+      console.log(state.ctx.gameover);
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, 2000, 2000);
+    }
   }
 }
 
 setupLobby(
   isMultiplayer,
-  (appElement, game) => new GameClient(appElement, game),
+  (appElement, game) => new GameClient(appElement, game)
 );
