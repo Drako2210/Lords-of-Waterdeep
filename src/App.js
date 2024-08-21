@@ -17,52 +17,71 @@ const multiplayer = isMultiplayer
   ? SocketIO({ server: multiplayerServer })
   : Local();
 
-
-function adventurerIcon (ctx,x,y,color){
-  ctx.fillStyle = color
-  ctx.strokeStyle = "black"
-  let edgeLength = 15
-  let sin60 = Math.sin(Math.PI/3)
-  ctx.beginPath()
-  ctx.moveTo(x,y+edgeLength)
-  ctx.lineTo(x+edgeLength*sin60,y+0.5*edgeLength)
-  ctx.lineTo(x+edgeLength*sin60,y-0.5*edgeLength)
-  ctx.lineTo(x,y-edgeLength)
-  ctx.lineTo(x-edgeLength*sin60,y-0.5*edgeLength)
-  ctx.lineTo(x-edgeLength*sin60,y+0.5*edgeLength)
-  ctx.lineTo(x,y+edgeLength)
-  ctx.fill()
-  ctx.lineTo(x,y)
-  ctx.lineTo(x+edgeLength*sin60,y-0.5*edgeLength)
-  ctx.moveTo(x,y)
-  ctx.lineTo(x-edgeLength*sin60,y-0.5*edgeLength)
-  ctx.stroke()
+function adventurerIcon(ctx, x, y, color) {
+  let preColor = ctx.fillStyle;
+  ctx.fillStyle = color;
+  if (color == "black") {
+    ctx.strokeStyle = "white";
+  } else {
+    ctx.strokeStyle = "black";
   }
-function roundedRect(ctx,x,y,width, height){
-  let radius=(width+height)/10
-
-  ctx.beginPath()
-  ctx.moveTo(x+radius,y)
-  ctx.arcTo(x+width, y,x+width, y+height,radius)
-  ctx.arcTo(x+width, y+height ,x, y+height,radius)
-  ctx.arcTo(x, y+height,x,y,radius)
-  ctx.arcTo(x, y,x+width, y,radius)
-
-  }
-  
-function goldIcon (x,y){
-let edgeLength =27
-ctx.lineWidth=1
-roundedRect(ctx,x-edgeLength/2,y-edgeLength/2,edgeLength,edgeLength)
-
-ctx.fillStyle = 'rgb(255 223 0)'
-ctx.strokeStyle = "black"
-ctx.arc(x,y,edgeLength/6,0,2*Math.PI,true)
-ctx.stroke()
-ctx.fill()
+  let edgeLength = 13;
+  let sin60 = Math.sin(Math.PI / 3);
+  ctx.beginPath();
+  ctx.moveTo(x, y + edgeLength);
+  ctx.lineTo(x + edgeLength * sin60, y + 0.5 * edgeLength);
+  ctx.lineTo(x + edgeLength * sin60, y - 0.5 * edgeLength);
+  ctx.lineTo(x, y - edgeLength);
+  ctx.lineTo(x - edgeLength * sin60, y - 0.5 * edgeLength);
+  ctx.lineTo(x - edgeLength * sin60, y + 0.5 * edgeLength);
+  ctx.lineTo(x, y + edgeLength);
+  ctx.fill();
+  ctx.lineTo(x, y);
+  ctx.lineTo(x + edgeLength * sin60, y - 0.5 * edgeLength);
+  ctx.moveTo(x, y);
+  ctx.lineTo(x - edgeLength * sin60, y - 0.5 * edgeLength);
+  ctx.stroke();
+  ctx.fillStyle = preColor;
+  //console.log(ctx.fillStyle)
 }
-      
-      
+function roundedRect(ctx, x, y, width, height) {
+  let radius = (width + height) / 10;
+
+  ctx.beginPath();
+  ctx.moveTo(x + radius, y);
+  ctx.arcTo(x + width, y, x + width, y + height, radius);
+  ctx.arcTo(x + width, y + height, x, y + height, radius);
+  ctx.arcTo(x, y + height, x, y, radius);
+  ctx.arcTo(x, y, x + width, y, radius);
+}
+
+function goldIcon(ctx, x, y) {
+  let edgeLength = 24;
+  ctx.lineWidth = 1;
+  roundedRect(
+    ctx,
+    x - edgeLength / 2,
+    y - edgeLength / 2,
+    edgeLength,
+    edgeLength
+  );
+  ctx.fillStyle = "rgb(255 223 0)";
+  ctx.strokeStyle = "black";
+  ctx.arc(x, y, edgeLength / 6, 0, 2 * Math.PI, true);
+  ctx.stroke();
+  ctx.fill();
+}
+function adventurerIconList(ctx, inputArray, x, y) {
+  ctx.font = "20px sans-serif";
+  ctx.fillStyle = "rgb(0 0 0)";
+  let adventureColorList = ["white", "orange", "black", "purple"];
+  for (let i = 0; i <= 3; i++) {
+    ctx.fillText(`${inputArray[i]}x`, x - 118 + 53 * i, y + 7);
+    adventurerIcon(ctx, x - 93 + 53 * i, y, adventureColorList[i]);
+  }
+  ctx.fillText(`${inputArray[4]}x`, x - 118 + 212, y + 7);
+  goldIcon(ctx, x - 90 + 53 * 4, y)
+}
 
 class GameClient {
   constructor(rootElement, gameParams) {
@@ -94,20 +113,30 @@ class GameClient {
     //console.log(state.ctx.currentPlayer)
     ctx.fillRect(0, 0, 2000, 3000);
     //offene Quests
-    adventurerIcon(ctx,300,300,"purple")
+    adventurerIcon(ctx, 300, 300, "purple");
     //roundedRect(ctx,320,300,10, 10)
     //ctx.fill()
     //ctx.stroke()
-    goldIcon (300,350)
+    goldIcon(ctx, 300, 350);
+    //questcards auslage
     ctx.textAlign = "center";
     for (let i = 0; i <= 3; i++) {
       ctx.fillStyle = `rgb(255 255 255)`;
       ctx.fillRect(400 + i * 350, 50, 300, 150);
+      // center (550,125)
       onClick(400 + i * 350, 50, 300, 150, () => {
         this.client.moves.chooseQuestCard(i);
       });
       ctx.fillStyle = `rgb(0 0 0)`;
-      ctx.fillText(state.G.openedQuestCards[i].type, 450 + i * 350, 100);
+      adventurerIconList(
+        ctx,
+        state.G.openedQuestCards[i].requirements,
+        550 + i * 350,
+        125
+      );
+      ctx.fillStyle = "black"
+      ctx.fillText(state.G.openedQuestCards[i].name, 550 + i * 350, 90)
+      /* ctx.fillText(state.G.openedQuestCards[i].type, 450 + i * 350, 100);
       ctx.fillText(
         "Requirements:" + state.G.openedQuestCards[i].requirements,
         550 + i * 350,
@@ -117,7 +146,7 @@ class GameClient {
         "Rewards:" + state.G.openedQuestCards[i].rewards,
         550 + i * 350,
         170
-      );
+      ); */
     }
 
     ctx.fillStyle = `rgb(50 50 50)`;
@@ -125,21 +154,38 @@ class GameClient {
     //gebaute PlayerBuilings links und rechts
     for (let i = 0; i <= 9; i++) {
       ctx.fillStyle = `rgb(0 255 255)`;
-      ctx.fillRect(50 + 1550 * Math.floor(i / 5), 250 + i * 200 - 1000 * Math.floor(i / 5), 150, 150);
-      onClick(50 + 1550 * Math.floor(i / 5), 250 + i * 200 - 1000 * Math.floor(i / 5), 150, 150,() => {
-        this.client.moves.placeAgent("player", i);
-      })
+      ctx.fillRect(
+        50 + 1550 * Math.floor(i / 5),
+        250 + i * 200 - 1000 * Math.floor(i / 5),
+        150,
+        150
+      );
+      onClick(
+        50 + 1550 * Math.floor(i / 5),
+        250 + i * 200 - 1000 * Math.floor(i / 5),
+        150,
+        150,
+        () => {
+          this.client.moves.placeAgent("player", i);
+        }
+      );
       if (state.G.buildingPlots[i].building != null) {
         ctx.fillStyle = "black";
-        ctx.fillText("OWNER:" + state.G.buildingPlots[i].building.owner, 100 + 1550 * Math.floor(i / 5), 300 + i * 200 - 1000 * Math.floor(i / 5));
-        
+        ctx.fillText(
+          "OWNER:" + state.G.buildingPlots[i].building.owner,
+          100 + 1550 * Math.floor(i / 5),
+          300 + i * 200 - 1000 * Math.floor(i / 5)
+        );
+
         ctx.fillText(
           "Rewards:" + state.G.buildingPlots[i].building.playerReward,
-          125 + 1550 * Math.floor(i / 5), 350 + i * 200 - 1000 * Math.floor(i / 5)
+          125 + 1550 * Math.floor(i / 5),
+          350 + i * 200 - 1000 * Math.floor(i / 5)
         );
         ctx.fillText(
           "Owner Rewards:" + state.G.buildingPlots[i].building.ownerReward,
-          125 + 1550 * Math.floor(i / 5), 370 + i * 200 - 1000 * Math.floor(i / 5)
+          125 + 1550 * Math.floor(i / 5),
+          370 + i * 200 - 1000 * Math.floor(i / 5)
         );
       }
     }
@@ -298,8 +344,7 @@ class GameClient {
     }
 
     if (state.ctx.gameover != undefined) {
-      resetOnClicks()
-      console.log(state.ctx.gameover);
+      resetOnClicks();
       ctx.fillStyle = "white";
       //ctx.fillRect(0, 0, 2000, 2000);
     }
