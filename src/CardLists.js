@@ -8,6 +8,7 @@ export const buildingCardsList = [
     ] /*white, orange, black, purple, gold, victorypoints*/,
     ownerReward: [0, 0, 1, 0, 0, 0],
     owner: null,
+    occupied: null,
   },
   {
     id: 1,
@@ -18,6 +19,7 @@ export const buildingCardsList = [
     ] /*white, orange, black, purple, gold, victorypoints*/,
     ownerReward: [0, 0, 1, 0, 0, 0],
     owner: null,
+    occupied: null,
   },
   {
     id: 2,
@@ -28,6 +30,7 @@ export const buildingCardsList = [
     ] /*white, orange, black, purple, gold, victorypoints*/,
     ownerReward: [0, 0, 1, 0, 0, 0],
     owner: null,
+    occupied: null,
   },
   {
     id: 3,
@@ -38,6 +41,18 @@ export const buildingCardsList = [
     ] /*white, orange, black, purple, gold, victorypoints*/,
     ownerReward: [0, 0, 1, 0, 0, 0],
     owner: null,
+    occupied: null,
+  },
+  {
+    id: 4,
+    cost: 8,
+    victorypoints:0,
+    playerReward: [
+      0, 0, 2, 0, 2, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    ownerReward: [0, 0, 1, 0, 0, 0],
+    owner: null,
+    occupied: null,
   },
 ];
 export const buildingList = [
@@ -52,7 +67,7 @@ export const buildingList = [
     id: 1,
     name: "Cliffwatch Inn 2",
     reward: [0, 0, 0, 0, 0, 0],
-    instantEffect: ["chooseQuestCard"],
+    instantEffect: ["chooseQuestCard","drawIntrigueCard"],
     occupied: null, // QuestCard nehmen und IntrigueCard ziehen
   },
   {
@@ -101,7 +116,7 @@ export const buildingList = [
     id: 8,
     name: "Castle Waterdeep",
     reward: [0, 0, 0, 0, 0, 0],
-    instantEffect: [],
+    instantEffect: ["setStartPlayer","drawIntrigueCard"],
     occupied: null, // IntrigueCard ziehen und Startspieler ändern
   },
   {

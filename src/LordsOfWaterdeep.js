@@ -92,7 +92,7 @@ function endRound(move) {
 
     for (let i = 0; i <= 2; i++) {
       if (move.G.openedBuildings[i] == null) {
-        move.G.openedBuildings[i] = drawBuildingCard();
+        move.G.openedBuildings[i] = drawBuildingCard(move.G.buildingCardsDeck);
       }
       move.G.openedBuildings[i].victorypoints += 1;
       // als instant rewards noch hinzufügen
@@ -137,7 +137,9 @@ function placeAgent(move, buildingType, plotId) {
             move.events.setStage("chooseQuestCard");
           },
         },
-        { name: "setStartPlayer", effect: function resetQuestCards(move) {} },
+        { name: "setStartPlayer", effect: function resetQuestCards(move) {
+          move.G.startPlayer = move.playerID
+        } },
         { name: "drawIntrigueCard", effect: function resetQuestCards(move) {} },
         {
           name: "playIntrigueCard", //player action
@@ -146,7 +148,6 @@ function placeAgent(move, buildingType, plotId) {
         {
           name: "buyBuilding", //player action
           effect: function canBuyBuilding(move) {
-            console.log(200239)
             move.events.setStage("buyBuilding");
           },
         },
@@ -164,13 +165,76 @@ function placeAgent(move, buildingType, plotId) {
       move.G.players[move.playerID].leftAgents -= 1;
       //move.events.setStage('completeQuest')
     }
-  } else {
+    //Player Buildings
+    else if(buildingType == "player" &&
+      move.G.buildingPlots[plotId].occupied == null
+    ){
+      move.G.buildingPlots[plotId].occupied = move.playerID;
+      for (let i = 0; i <= 5; i++) {
+        move.G.players[move.playerID].resources[i] +=
+          move.G.buildingPlots[plotId].reward[i];
+        move.G.players[move.G.buildingPlots[plotId].owner].resources[i] +=
+          move.G.buildingPlots[plotId].ownerReward[i];
+      }
+
+      /* if (move.G.buildingPlots[plotId].instantEffect[0] == undefined) {
+
+        move.events.setStage("completeQuest");
+      }
+      //alle möglichen building instant effects mit name und inhalt der Funktion
+      const instantEffects = [
+        {
+          name: "resetQuestCards",
+          effect: function resetQuestCards(move) {
+            move.G.openedQuestCards = [
+              drawQuestCard(move.G.questCardsDeck),
+              drawQuestCard(move.G.questCardsDeck),
+              drawQuestCard(move.G.questCardsDeck),
+              drawQuestCard(move.G.questCardsDeck),
+            ];
+          },
+        },
+        {
+          name: "chooseQuestCard", //player action
+          effect: function canChooseQuestCards(move) {
+            move.events.setStage("chooseQuestCard");
+          },
+        },
+        { name: "setStartPlayer", effect: function resetQuestCards(move) {
+          move.G.startPlayer = move.playerID
+        } },
+        { name: "drawIntrigueCard", effect: function resetQuestCards(move) {} },
+        {
+          name: "playIntrigueCard", //player action
+          effect: function resetQuestCards(move) {},
+        },
+        {
+          name: "buyBuilding", //player action
+          effect: function canBuyBuilding(move) {
+            move.events.setStage("buyBuilding");
+          },
+        },
+      ];
+
+      for (let i = 0; i <= instantEffects.length - 1; i++) {
+        if (
+          move.G.buildingList[plotId].instantEffect.includes(
+            instantEffects[i].name
+          )
+        ) {
+          instantEffects[i].effect(move);
+        }
+      } */
+      move.G.players[move.playerID].leftAgents -= 1;
+      //move.events.setStage('completeQuest')
+    }
+    }
+   else {
     move.events.endTurn();
   }
 }
 function buyBuilding(move, plotId) {
   //wert für plotId, wenn der Spieler kein Gebäude bauen will
-  console.log(plotId)
   if (plotId != -1) {
 
     if (
@@ -179,18 +243,20 @@ function buyBuilding(move, plotId) {
         move.G.openedBuildings[plotId].cost
     ) {
       return INVALID_MOVE;
-    } else {
+    }
+    else {
       let i = 0;
-      while (move.G.buildingPlots[i] != null) {
+      while (move.G.buildingPlots[i].buildings != null) {
         i += 1;
       }
+      console.log(i)
       move.G.players[move.playerID].resources[4] -=
         move.G.openedBuildings[plotId].cost;
       move.G.players[move.playerID].resources[5] +=
         move.G.openedBuildings[plotId].victorypoints;
-      move.G.buildingPlots[i] = move.G.openedBuildings[plotId];
+      move.G.buildingPlots[i].building = move.G.openedBuildings[plotId];
       //console.log(move.G.buildingPlots[i])
-      move.G.buildingPlots[i].owner = move.playerID;
+      move.G.buildingPlots[i].building.owner = move.playerID;
       move.G.openedBuildings[plotId] = null;
     }
   }
@@ -377,7 +443,7 @@ export const LordsOfWaterdeep = {
   disableUndo: true,
 
   endIf: (endIf) => {
-    if (endIf.G.roundCounter == 2) {
+    if (endIf.G.roundCounter == 9) {
       let vpList = [];
       for (let i = 0; i <= endIf.ctx.numPlayers - 1; i++) {
         let a = 0;

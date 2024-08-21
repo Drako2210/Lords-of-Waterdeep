@@ -17,6 +17,8 @@ const multiplayer = isMultiplayer
   ? SocketIO({ server: multiplayerServer })
   : Local();
 
+
+
 class GameClient {
   constructor(rootElement, gameParams) {
     this.rootElement = rootElement;
@@ -47,6 +49,7 @@ class GameClient {
     //console.log(state.ctx.currentPlayer)
     ctx.fillRect(0, 0, 2000, 3000);
     //offene Quests
+
     ctx.textAlign = "center";
     for (let i = 0; i <= 3; i++) {
       ctx.fillStyle = `rgb(255 255 255)`;
@@ -70,14 +73,24 @@ class GameClient {
 
     ctx.fillStyle = `rgb(50 50 50)`;
     ctx.fillRect(50, 50, 300, 150);
-    //gebaute PlayerBuilings links
-    ctx.fillStyle = `rgb(0 255 255)`;
-    for (let i = 0; i <= 4; i++) {
-      ctx.fillRect(50, 250 + i * 200, 150, 150);
-    }
-    //gebaute PlayerBuilings rechts
-    for (let i = 0; i <= 4; i++) {
-      ctx.fillRect(1600, 250 + i * 200, 150, 150);
+    //gebaute PlayerBuilings links und rechts
+    for (let i = 0; i <= 9; i++) {
+      ctx.fillStyle = `rgb(0 255 255)`;
+      ctx.fillRect(50 + 1550 * Math.floor(i / 5), 250 + i * 200 - 1000 * Math.floor(i / 5), 150, 150);
+      console.log(state.G.buildingPlots[i].building)
+      if (state.G.buildingPlots[i].building != null) {
+        ctx.fillStyle = "black";
+        ctx.fillText("OWNER:" + state.G.buildingPlots[i].building.owner, 100 + 1550 * Math.floor(i / 5), 300 + i * 200 - 1000 * Math.floor(i / 5));
+        console.log(state.G.buildingPlots[i].building.ownerReward)
+        ctx.fillText(
+          "Rewards:" + state.G.buildingPlots[i].building.playerReward,
+          125 + 1550 * Math.floor(i / 5), 350 + i * 200 - 1000 * Math.floor(i / 5)
+        );
+        ctx.fillText(
+          "Owner Rewards:" + state.G.buildingPlots[i].building.ownerReward,
+          125 + 1550 * Math.floor(i / 5), 370 + i * 200 - 1000 * Math.floor(i / 5)
+        );
+      }
     }
     //Buildings, großes oben in der Mitte
     ctx.fillStyle = `rgb(255 0 0)`;
@@ -105,34 +118,34 @@ class GameClient {
     });
     //Building: Builders Hall
     ctx.fillRect(700, 920, 400, 100);
-    onClick(700, 920, 400, 100, ()=> {
-      this.client.moves.placeAgent("nonPlayer",6)
-    })
+    onClick(700, 920, 400, 100, () => {
+      this.client.moves.placeAgent("nonPlayer", 6);
+    });
     //offene nicht gebaute Buildings
     for (let i = 0; i <= 2; i++) {
       ctx.fillStyle = `rgb(0 255 0)`;
       ctx.fillRect(625 + 200 * i, 1100, 150, 150);
-      if (state.G.openedBuildings[i] != null){
-      ctx.fillStyle = "black";
-      ctx.fillText(state.G.openedBuildings[i].cost, 675 + i * 200, 1150);
-      //ctx.fillStyle = "red";
-      ctx.fillText(
-        "Rewards:" + state.G.openedBuildings[i].playerReward,
-        700 + i * 200,
-        1200
-      );
-      ctx.fillText(
-        "Owner Rewards:" + state.G.openedBuildings[i].ownerReward,
-        700 + i * 200,
-        1220
-      );
-    }
+      if (state.G.openedBuildings[i] != null) {
+        ctx.fillStyle = "black";
+        ctx.fillText(state.G.openedBuildings[i].cost, 675 + i * 200, 1150);
+        //ctx.fillStyle = "red";
+        ctx.fillText(
+          "Rewards:" + state.G.openedBuildings[i].playerReward,
+          700 + i * 200,
+          1200
+        );
+        ctx.fillText(
+          "Owner Rewards:" + state.G.openedBuildings[i].ownerReward,
+          700 + i * 200,
+          1220
+        );
+      }
       if (state.ctx.activePlayers != null) {
         if (
           state.ctx.activePlayers[state.ctx.currentPlayer] == "buyBuilding" &&
           state.ctx.gameover == undefined
         ) {
-          onClick(625 + 200 *i, 1100, 150, 150, () => {
+          onClick(625 + 200 * i, 1100, 150, 150, () => {
             this.client.moves.buyBuilding(i);
           });
           ctx.fillStyle = "rgb(255 110 74)";
@@ -140,8 +153,7 @@ class GameClient {
           ctx.fillStyle = "rgb(0 0 0)";
           ctx.fillText("Baue kein Gebäude", 775, 1350);
           onClick(625, 1300, 300, 75, () => {
-              this.client.moves.buyBuilding(-1);
-            
+            this.client.moves.buyBuilding(-1);
           });
         }
       }
