@@ -171,13 +171,16 @@ function placeAgent(move, buildingType, plotId) {
     ){
       move.G.buildingPlots[plotId].occupied = move.playerID;
       for (let i = 0; i <= 5; i++) {
+        /* move.G.players[move.playerID].resources[i] -=
+          move.G.buildingPlots[plotId].playCost[i]; */
         move.G.players[move.playerID].resources[i] +=
-          move.G.buildingPlots[plotId].reward[i];
-        move.G.players[move.G.buildingPlots[plotId].owner].resources[i] +=
-          move.G.buildingPlots[plotId].ownerReward[i];
+          move.G.buildingPlots[plotId].building.playerReward[i];
+        move.G.players[move.G.buildingPlots[plotId].building.owner].resources[i] +=
+          move.G.buildingPlots[plotId].building.ownerReward[i];
+          
       }
 
-      /* if (move.G.buildingPlots[plotId].instantEffect[0] == undefined) {
+      /* if (move.G.buildingPlots[plotId].building.instantEffect[0] == undefined) {
 
         move.events.setStage("completeQuest");
       }
@@ -185,14 +188,7 @@ function placeAgent(move, buildingType, plotId) {
       const instantEffects = [
         {
           name: "resetQuestCards",
-          effect: function resetQuestCards(move) {
-            move.G.openedQuestCards = [
-              drawQuestCard(move.G.questCardsDeck),
-              drawQuestCard(move.G.questCardsDeck),
-              drawQuestCard(move.G.questCardsDeck),
-              drawQuestCard(move.G.questCardsDeck),
-            ];
-          },
+          effect: function resetQuestCards(move) {}
         },
         {
           name: "chooseQuestCard", //player action
@@ -224,14 +220,14 @@ function placeAgent(move, buildingType, plotId) {
         ) {
           instantEffects[i].effect(move);
         }
-      } */
+      }*/
       move.G.players[move.playerID].leftAgents -= 1;
-      //move.events.setStage('completeQuest')
-    }
+      move.events.setStage('completeQuest') 
     }
    else {
     move.events.endTurn();
   }
+}
 }
 function buyBuilding(move, plotId) {
   //wert für plotId, wenn der Spieler kein Gebäude bauen will
@@ -246,8 +242,9 @@ function buyBuilding(move, plotId) {
     }
     else {
       let i = 0;
-      while (move.G.buildingPlots[i].buildings != null) {
+      while (move.G.buildingPlots[i].building != null) {
         i += 1;
+        
       }
       console.log(i)
       move.G.players[move.playerID].resources[4] -=
@@ -443,7 +440,7 @@ export const LordsOfWaterdeep = {
   disableUndo: true,
 
   endIf: (endIf) => {
-    if (endIf.G.roundCounter == 9) {
+    if (endIf.G.roundCounter == 2) {
       let vpList = [];
       for (let i = 0; i <= endIf.ctx.numPlayers - 1; i++) {
         let a = 0;

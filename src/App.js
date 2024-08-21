@@ -18,6 +18,51 @@ const multiplayer = isMultiplayer
   : Local();
 
 
+function adventurerIcon (ctx,x,y,color){
+  ctx.fillStyle = color
+  ctx.strokeStyle = "black"
+  let edgeLength = 15
+  let sin60 = Math.sin(Math.PI/3)
+  ctx.beginPath()
+  ctx.moveTo(x,y+edgeLength)
+  ctx.lineTo(x+edgeLength*sin60,y+0.5*edgeLength)
+  ctx.lineTo(x+edgeLength*sin60,y-0.5*edgeLength)
+  ctx.lineTo(x,y-edgeLength)
+  ctx.lineTo(x-edgeLength*sin60,y-0.5*edgeLength)
+  ctx.lineTo(x-edgeLength*sin60,y+0.5*edgeLength)
+  ctx.lineTo(x,y+edgeLength)
+  ctx.fill()
+  ctx.lineTo(x,y)
+  ctx.lineTo(x+edgeLength*sin60,y-0.5*edgeLength)
+  ctx.moveTo(x,y)
+  ctx.lineTo(x-edgeLength*sin60,y-0.5*edgeLength)
+  ctx.stroke()
+  }
+function roundedRect(ctx,x,y,width, height){
+  let radius=(width+height)/10
+
+  ctx.beginPath()
+  ctx.moveTo(x+radius,y)
+  ctx.arcTo(x+width, y,x+width, y+height,radius)
+  ctx.arcTo(x+width, y+height ,x, y+height,radius)
+  ctx.arcTo(x, y+height,x,y,radius)
+  ctx.arcTo(x, y,x+width, y,radius)
+
+  }
+  
+function goldIcon (x,y){
+let edgeLength =27
+ctx.lineWidth=1
+roundedRect(ctx,x-edgeLength/2,y-edgeLength/2,edgeLength,edgeLength)
+
+ctx.fillStyle = 'rgb(255 223 0)'
+ctx.strokeStyle = "black"
+ctx.arc(x,y,edgeLength/6,0,2*Math.PI,true)
+ctx.stroke()
+ctx.fill()
+}
+      
+      
 
 class GameClient {
   constructor(rootElement, gameParams) {
@@ -49,7 +94,11 @@ class GameClient {
     //console.log(state.ctx.currentPlayer)
     ctx.fillRect(0, 0, 2000, 3000);
     //offene Quests
-
+    adventurerIcon(ctx,300,300,"purple")
+    //roundedRect(ctx,320,300,10, 10)
+    //ctx.fill()
+    //ctx.stroke()
+    goldIcon (300,350)
     ctx.textAlign = "center";
     for (let i = 0; i <= 3; i++) {
       ctx.fillStyle = `rgb(255 255 255)`;
@@ -77,11 +126,13 @@ class GameClient {
     for (let i = 0; i <= 9; i++) {
       ctx.fillStyle = `rgb(0 255 255)`;
       ctx.fillRect(50 + 1550 * Math.floor(i / 5), 250 + i * 200 - 1000 * Math.floor(i / 5), 150, 150);
-      console.log(state.G.buildingPlots[i].building)
+      onClick(50 + 1550 * Math.floor(i / 5), 250 + i * 200 - 1000 * Math.floor(i / 5), 150, 150,() => {
+        this.client.moves.placeAgent("player", i);
+      })
       if (state.G.buildingPlots[i].building != null) {
         ctx.fillStyle = "black";
         ctx.fillText("OWNER:" + state.G.buildingPlots[i].building.owner, 100 + 1550 * Math.floor(i / 5), 300 + i * 200 - 1000 * Math.floor(i / 5));
-        console.log(state.G.buildingPlots[i].building.ownerReward)
+        
         ctx.fillText(
           "Rewards:" + state.G.buildingPlots[i].building.playerReward,
           125 + 1550 * Math.floor(i / 5), 350 + i * 200 - 1000 * Math.floor(i / 5)
@@ -247,9 +298,10 @@ class GameClient {
     }
 
     if (state.ctx.gameover != undefined) {
+      resetOnClicks()
       console.log(state.ctx.gameover);
       ctx.fillStyle = "white";
-      ctx.fillRect(0, 0, 2000, 2000);
+      //ctx.fillRect(0, 0, 2000, 2000);
     }
   }
 }
