@@ -139,213 +139,409 @@ export const intrigueCardsList = [];
 export const questCardsList = [
   {
     id: 0,
-    type: "Arcana",
+    name: "Take Over Rival Organization",
+    type: "Skullduggery",
     requirements: [
-      1, 1, 2, 2, 2, 0,
+      0, 1, 2, 1, 6, 0,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     rewards: [
-      0, 0, 0, 0, 0, 20,
+      0, 0, 4, 0, 0, 10,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     //open: false,
     solved: false,
-    instantEffect: ["drawIntrigueCard"],
+    instantEffect: [],
     passiveEffect: {},
   },
   {
     id: 1,
-    type: "Skullduggery",
+    name: "Bolster City Guard",
+    type: "Warfare",
     requirements: [
-      0, 0, 3, 0, 6, 0,
+      0, 9, 2, 0, 0, 0,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     rewards: [
-      0, 0, 0, 0, 0, 8,
+      0, 0, 0, 0, 0, 25,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     //open: false,
     solved: false,
-    instantEffect: ["drawIntrigueCard"], //eigentlich zweimal
+    instantEffect: [],
     passiveEffect: {},
   },
   {
     id: 2,
-    type: "Skullduggery",
+    name: "Retrieve Ancient Artifacts",
+    type: "Arcana",
     requirements: [
-      0, 0, 3, 0, 6, 0,
+      0, 2, 1, 2, 0, 0,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     rewards: [
-      0, 0, 0, 0, 0, 8,
+      0, 0, 0, 0, 4, 11,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     //open: false,
     solved: false,
-    instantEffect: ["drawIntrigueCard"], //eigentlich zweimal
+    instantEffect: [],
     passiveEffect: {},
   },
   {
     id: 3,
-    type: "Skullduggery",
+    name: "Domesticate Owlbears",
+    type: "Arcana",
     requirements: [
-      0, 0, 3, 0, 6, 0,
+      1, 0, 0, 2, 0, 0,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     rewards: [
-      0, 0, 0, 0, 0, 8,
+      0, 1, 0, 0, 2, 8,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     //open: false,
     solved: false,
-    instantEffect: ["drawIntrigueCard"], //eigentlich zweimal
+    instantEffect: [],
     passiveEffect: {},
   },
   {
     id: 4,
-    type: "Skullduggery",
+    name: "Host Festival For Sune",
+    type: "Arcana",
     requirements: [
-      0, 0, 3, 0, 6, 0,
+      0, 2, 0, 2, 4, 0,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     rewards: [
-      0, 0, 0, 0, 0, 8,
+      2, 0, 0, 0, 0, 9,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     //open: false,
     solved: false,
-    instantEffect: ["drawIntrigueCard"], //eigentlich zweimal
+    instantEffect: [],
     passiveEffect: {},
   },
   {
     id: 5,
-    type: "Skullduggery",
+    name: "Infiltrate Halaster's Circle",
+    type: "Arcana",
     requirements: [
-      0, 0, 3, 0, 6, 0,
+      0, 0, 0, 5, 2, 0,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     rewards: [
-      0, 0, 0, 0, 0, 8,
+      0, 0, 0, 0, 0, 25,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     //open: false,
     solved: false,
-    instantEffect: ["drawIntrigueCard"], //eigentlich zweimal
+    instantEffect: [],
     passiveEffect: {},
   },
   {
     id: 6,
-    type: "Skullduggery",
+    name: "Recruit For Blackstaff Academy",
+    type: "Arcana",
     requirements: [
-      0, 0, 3, 0, 6, 0,
+      0, 1, 1, 2, 4, 0,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     rewards: [
-      0, 0, 0, 0, 0, 8,
+      0, 0, 0, 3, 0, 6,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     //open: false,
     solved: false,
-    instantEffect: ["drawIntrigueCard"], //eigentlich zweimal
+    instantEffect: [],
     passiveEffect: {},
   },
   {
     id: 7,
-    type: "Skullduggery",
+    name: "Recruit Paladins For Tyr",
+    type: "Piety",
     requirements: [
-      0, 0, 3, 0, 6, 0,
+      2, 4, 0, 0, 4, 0,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     rewards: [
-      0, 0, 0, 0, 0, 8,
+      3, 0, 0, 0, 0, 10,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     //open: false,
     solved: false,
-    instantEffect: ["drawIntrigueCard"], //eigentlich zweimal
+    instantEffect: [],
     passiveEffect: {},
   },
   {
     id: 8,
-    type: "Skullduggery",
+    name: "Perform The Penance Of Duty",
+    type: "Piety",
     requirements: [
-      0, 0, 3, 0, 6, 0,
+      2, 2, 0, 0, 4, 0,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     rewards: [
-      0, 0, 0, 0, 0, 8,
+      1, 1, 0, 0, 0, 12,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     //open: false,
     solved: false,
-    instantEffect: ["drawIntrigueCard"], //eigentlich zweimal
+    instantEffect: [],
     passiveEffect: {},
   },
   {
     id: 9,
-    type: "Skullduggery",
+    name: "Heal Fallen Gray Hand Soldiers",
+    type: "Piety",
     requirements: [
-      0, 0, 3, 0, 6, 0,
+      2, 0, 0, 1, 4, 0,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     rewards: [
-      0, 0, 0, 0, 0, 8,
+      0, 6, 0, 0, 0, 6,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     //open: false,
     solved: false,
-    instantEffect: ["drawIntrigueCard"], //eigentlich zweimal
+    instantEffect: [],
     passiveEffect: {},
   },
   {
     id: 10,
-    type: "Arcana",
+    name: "Eliminate Vampire Coven",
+    type: "Piety",
     requirements: [
-      1, 1, 2, 2, 2, 0,
+      2, 2, 1, 0, 0, 0,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     rewards: [
-      0, 0, 0, 0, 0, 20,
+      0, 0, 0, 0, 4, 11,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     //open: false,
     solved: false,
-    instantEffect: ["drawIntrigueCard"],
+    instantEffect: [],
     passiveEffect: {},
   },
   {
     id: 11,
-    type: "test",
+    name: "Seal Gate To Cyric's Realm",
+    type: "Piety",
     requirements: [
-      1, 1, 2, 2, 2, 0,
+      2, 0, 3, 0, 4, 0,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     rewards: [
       0, 0, 0, 0, 0, 20,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     //open: false,
     solved: false,
-    instantEffect: ["drawIntrigueCard"],
+    instantEffect: [],
     passiveEffect: {},
   },
   {
     id: 12,
-    type: "test2",
+    name: "Spy On The House Of Light",
+    type: "Commerce",
     requirements: [
-      1, 1, 2, 2, 2, 0,
+      1, 0, 3, 1, 8, 0,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     rewards: [
-      0, 0, 0, 0, 0, 20,
+      0, 0, 0, 0, 0, 25,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     //open: false,
     solved: false,
-    instantEffect: ["drawIntrigueCard"],
+    instantEffect: [],
     passiveEffect: {},
   },
   {
     id: 13,
-    type: "test3",
+    name: "Thin The City Watch",
+    type: "Commerce",
     requirements: [
-      1, 1, 2, 2, 2, 0,
+      1, 1, 1, 0, 4, 0,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     rewards: [
-      0, 0, 0, 0, 0, 20,
+      0, 0, 4, 0, 0, 9,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     //open: false,
     solved: false,
-    instantEffect: ["drawIntrigueCard"],
+    instantEffect: [],
     passiveEffect: {},
   },
   {
     id: 14,
-    type: "paul",
+    name: "Expose Cult Corruption",
+    type: "Skullduggery",
     requirements: [
-      1, 1, 2, 2, 2, 0,
+      1, 0, 4, 0, 0, 0,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     rewards: [
-      0, 0, 0, 0, 0, 20,
+      2, 0, 0, 0, 0, 4,
     ] /*white, orange, black, purple, gold, victorypoints*/,
     //open: false,
     solved: false,
-    instantEffect: ["drawIntrigueCard"],
+    instantEffect: [],
+    passiveEffect: {},
+  },
+  {
+    id: 15,
+    name: "Raid On Undermountain",
+    type: "Skullduggery",
+    requirements: [
+      1, 2, 4, 1, 0, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    rewards: [
+      0, 0, 0, 0, 2, 20,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    //open: false,
+    solved: false,
+    instantEffect: [],
+    passiveEffect: {},
+  },
+  {
+    id: 16,
+    name: "Establish Shadow Thieves' Guild",
+    type: "Skullduggery",
+    requirements: [
+      0, 1, 8, 1, 0, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    rewards: [
+      0, 0, 0, 0, 0, 25,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    //open: false,
+    solved: false,
+    instantEffect: [],
+    passiveEffect: {},
+  },
+  {
+    id: 17,
+    name: "Confront The Xanathar",
+    type: "Warfare",
+    requirements: [
+      1, 4, 2, 1, 0, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    rewards: [
+      0, 0, 0, 0, 2, 20,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    //open: false,
+    solved: false,
+    instantEffect: [],
+    passiveEffect: {},
+  },
+  {
+    id: 18,
+    name: "Deliver An Ultimatum",
+    type: "Warfare",
+    requirements: [
+      0, 4, 1, 1, 0, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    rewards: [
+      0, 0, 0, 0, 4, 11,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    //open: false,
+    solved: false,
+    instantEffect: [],
+    passiveEffect: {},
+  },
+  {
+    id: 19,
+    name: "Train Bladesingers",
+    type: "Warfare",
+    requirements: [
+      0, 3, 0, 1, 0, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    rewards: [
+      0, 1, 0, 1, 0, 4,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    //open: false,
+    solved: false,
+    instantEffect: [],
+    passiveEffect: {},
+  },
+  {
+    id: 20,
+    name: "Raid Orc Stronghold",
+    type: "Warfare",
+    requirements: [
+      0, 4, 2, 0, 0, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    rewards: [
+      0, 0, 0, 0, 4, 8,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    //open: false,
+    solved: false,
+    instantEffect: [],
+    passiveEffect: {},
+  },
+  {
+    id: 21,
+    name: "Defeat Uprising From Undermountain",
+    type: "Warfare",
+    requirements: [
+      1, 3, 1, 0, 2, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    rewards: [
+      0, 2, 0, 0, 0, 11,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    //open: false,
+    solved: false,
+    instantEffect: [],
+    passiveEffect: {},
+  },
+  {
+    id: 22,
+    name: "Ambush Artor Morlin",
+    type: "Warfare",
+    requirements: [
+      1, 3, 1, 0, 0, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    rewards: [
+      0, 0, 0, 0, 4, 8,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    //open: false,
+    solved: false,
+    instantEffect: [],
+    passiveEffect: {},
+  },
+  {
+    id: 23,
+    name: "Deliver Weapons To Selune's Temple",
+    type: "Warfare",
+    requirements: [
+      0, 4, 1, 1, 2, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    rewards: [
+      2, 0, 0, 0, 0, 9,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    //open: false,
+    solved: false,
+    instantEffect: [],
+    passiveEffect: {},
+  },
+  {
+    id: 24,
+    name: "Repel Seawraiths",
+    type: "Warfare",
+    requirements: [
+      1, 4, 0, 1, 0, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    rewards: [
+      0, 0, 0, 0, 2, 15,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    //open: false,
+    solved: false,
+    instantEffect: [],
+    passiveEffect: {},
+  },
+  {
+    id: 25,
+    name: "Safeguard Eltorchul Mage",
+    type: "Commerce",
+    requirements: [
+      0, 1, 1, 1, 4, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    rewards: [
+      0, 0, 0, 2, 0, 4,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    //open: false,
+    solved: false,
+    instantEffect: [],
+    passiveEffect: {},
+  },
+  {
+    id: 26,
+    name: "test quest",
+    type: "Commerce",
+    requirements: [
+      0, 0, 0, 0, 0, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    rewards: [
+      0, 0, 0, 0, 0, 0,
+    ] /*white, orange, black, purple, gold, victorypoints*/,
+    //open: false,
+    solved: false,
+    instantEffect: [],
     passiveEffect: {},
   },
 ];
+
 
