@@ -84,7 +84,18 @@ function adventurerIconList(ctx, inputArray, x, y) {
   ctx.fillText(`${inputArray[4]}x`, x - 118 + 212, y + 7);
   goldIcon(ctx, x - 90 + 53 * 4, y);
 }
+function shortedIconList(ctx, inputArray, x, y) {
+  let xPosition = x;
+  for (let j = 0; j <= 4; j++) {
+    let adventureColorList = ["white", "orange", "black", "purple"];
 
+    if (inputArray[j] != 0) {
+      ctx.fillText(`${inputArray[j]}x`, xPosition, y + 7);
+      adventurerIcon(ctx, xPosition + 25, y, adventureColorList[j]);
+      xPosition += 53;
+    }
+  }
+}
 class GameClient {
   constructor(rootElement, gameParams) {
     this.rootElement = rootElement;
@@ -177,7 +188,7 @@ class GameClient {
         150,
         150
       );
-      drawPicture(ctx, "building1.png", 50,50)
+      //drawPicture(ctx, "building1.png", 50,50)
       onClick(
         50 + 1550 * Math.floor(i / 5),
         250 + i * 200 - 1000 * Math.floor(i / 5),
@@ -189,17 +200,30 @@ class GameClient {
       );
       if (state.G.buildingPlots[i].building != null) {
         ctx.fillStyle = "black";
+        //console.log(state.G.buildingPlots[i].building.playerReward);
+        shortedIconList(
+          ctx,
+          state.G.buildingPlots[i].building.playerReward,
+          58 + 1550 * Math.floor(i / 5),
+          320 + i * 200 - 1000 * Math.floor(i / 5)
+        );
+        shortedIconList(
+          ctx,
+          state.G.buildingPlots[i].building.ownerReward,
+          58 + 1550 * Math.floor(i / 5),
+          350 + i * 200 - 1000 * Math.floor(i / 5)
+        );
         ctx.fillText(
           "OWNER:" + state.G.buildingPlots[i].building.owner,
           100 + 1550 * Math.floor(i / 5),
           300 + i * 200 - 1000 * Math.floor(i / 5)
         );
 
-        ctx.fillText(
+        /* ctx.fillText(
           "Rewards:" + state.G.buildingPlots[i].building.playerReward,
           125 + 1550 * Math.floor(i / 5),
           350 + i * 200 - 1000 * Math.floor(i / 5)
-        );
+        ); */
         ctx.fillText(
           "Owner Rewards:" + state.G.buildingPlots[i].building.ownerReward,
           125 + 1550 * Math.floor(i / 5),
@@ -210,11 +234,11 @@ class GameClient {
     //Buildings, großes oben in der Mitte
     ctx.fillStyle = `rgb(255 0 0)`;
     ctx.fillRect(475, 300, 250, 150);
-    ctx.fillStyle=`rgb(235 217 184)`
-    roundedRect(ctx,475-5,300+75,70,70)
-    
-    ctx.fill()
-    ctx.stroke()
+    ctx.fillStyle = `rgb(235 217 184)`;
+    roundedRect(ctx, 475 - 5, 300 + 75, 70, 70);
+
+    ctx.fill();
+    ctx.stroke();
     ctx.fillStyle = `rgb(255 0 0)`;
     if (state.G.buildingList[0].occupied != null) {
       drawPicture(
@@ -248,13 +272,13 @@ class GameClient {
     }
     ctx.fillRect(775, 300, 250, 150);
     ctx.fillRect(1075, 300, 250, 150);
-    ctx.fillStyle=`rgb(235 217 184)`
-    roundedRect(ctx,775,300+75,70,70)
-    ctx.fill()
-    ctx.stroke()
-    roundedRect(ctx,1075,300+75,70,70)
-    ctx.fill()
-    ctx.stroke()
+    ctx.fillStyle = `rgb(235 217 184)`;
+    roundedRect(ctx, 775, 300 + 75, 70, 70);
+    ctx.fill();
+    ctx.stroke();
+    roundedRect(ctx, 1075, 300 + 75, 70, 70);
+    ctx.fill();
+    ctx.stroke();
     ctx.fillStyle = `rgb(255 0 0)`;
     onClick(475, 300, 250, 150, () => {
       this.client.moves.placeAgent("nonPlayer", 0);
@@ -277,96 +301,93 @@ class GameClient {
           buildingPosition = 9 - i;
         }
         ctx.fillRect(400 + j * 750, 480 + i * 180, 250, 150);
-        ctx.fillStyle=`rgb(235 217 184)`
-        roundedRect(ctx,400 + j * 750,480 + i * 180+75,70,70)
-    
-        ctx.fill()
-        ctx.stroke()
-        ctx.fillStyle = `rgb(255 0 0)`; 
+        ctx.fillStyle = `rgb(235 217 184)`;
+        roundedRect(ctx, 400 + j * 750, 480 + i * 180 + 75, 70, 70);
 
-      }
-    }
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = `rgb(255 0 0)`;
 
-    onClick(400 + j * 750, 480 + i * 180, 250, 150, () => {
-      this.client.moves.placeAgent("nonPlayer", buildingPosition);
-    });
-    if (state.G.buildingList[buildingPosition].occupied != null) {
-      drawPicture(
-        ctx,
-        `${
-          playerColors[state.G.buildingList[buildingPosition].occupied]
-        }_agent.png`,
-        400 + j * 750,
-        560 + i * 180,
-        60,
-        60
-      );
-    }
-  }
-}
-    //Building: Builders Hall
-    ctx.fillRect(700, 900, 400, 150);
-    onClick(700, 920, 400, 100, () => {
-      this.client.moves.placeAgent("nonPlayer", 6);
-    });
-    ctx.fillStyle=`rgb(235 217 184)`
-        roundedRect(ctx,700,900+75,70,70)
-        ctx.fill()
-        ctx.stroke()
-        ctx.fillStyle = `rgb(255 0 0)`; 
-
-    //offene nicht gebaute Buildings
-    for (let i = 0; i <= 2; i++) {
-      ctx.fillStyle = `rgb(0 255 0)`;
-      ctx.fillRect(625 + 200 * i, 1100, 150, 150);
-      if (state.G.openedBuildings[i] != null) {
-        ctx.fillStyle = "black";
-        ctx.fillText(state.G.openedBuildings[i].cost, 675 + i * 200, 1150);
-        //ctx.fillStyle = "red";
-        ctx.fillText(
-          "Rewards:" + state.G.openedBuildings[i].playerReward,
-          700 + i * 200,
-          1200
-        );
-        ctx.fillText(
-          "Owner Rewards:" + state.G.openedBuildings[i].ownerReward,
-          700 + i * 200,
-          1220
-        );
-      }
-      if (state.ctx.activePlayers != null) {
-        if (
-          state.ctx.activePlayers[state.ctx.currentPlayer] == "buyBuilding" &&
-          state.ctx.gameover == undefined
-        ) {
-          onClick(625 + 200 * i, 1100, 150, 150, () => {
-            this.client.moves.buyBuilding(i);
-          });
-          ctx.fillStyle = "rgb(255 110 74)";
-          ctx.fillRect(625, 1300, 300, 75);
-          ctx.fillStyle = "rgb(0 0 0)";
-          ctx.fillText("Baue kein Gebäude", 775, 1350);
-          onClick(625, 1300, 300, 75, () => {
-            this.client.moves.buyBuilding(-1);
-          });
+        onClick(400 + j * 750, 480 + i * 180, 250, 150, () => {
+          this.client.moves.placeAgent("nonPlayer", buildingPosition);
+        });
+        if (state.G.buildingList[buildingPosition].occupied != null) {
+          drawPicture(
+            ctx,
+            `${
+              playerColors[state.G.buildingList[buildingPosition].occupied]
+            }_agent.png`,
+            400 + j * 750,
+            560 + i * 180,
+            60,
+            60
+          );
         }
       }
     }
-    //Player Cards
-    for (let i = 0; i <= 1; i++) {
-      ctx.fillStyle = state.G.players[i].playerColor;
-      ctx.fillRect(50 + 800 * i, 1400, 750, 1600);
-      ctx.fillStyle = "white";
-      ctx.fillRect(100 + 800 * i, 1400, 650, 100);
-      ctx.fillStyle = "black";
-      // Resources
-      for (let j = 0; j <= 5; j++) {
-        ctx.fillText(
-          state.G.players[i].resources[j],
-          125 + 50 * j + 800 * i,
-          1450
-        );
-        /* ctx.fillText("Orange:" + state.G.players[i].orange, 175 + 800 * i, 1450);
+      //Building: Builders Hall
+      ctx.fillRect(700, 900, 400, 150);
+      onClick(700, 920, 400, 100, () => {
+        this.client.moves.placeAgent("nonPlayer", 6);
+      });
+      ctx.fillStyle = `rgb(235 217 184)`;
+      roundedRect(ctx, 700, 900 + 75, 70, 70);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = `rgb(255 0 0)`;
+
+      //offene nicht gebaute Buildings
+      for (let i = 0; i <= 2; i++) {
+        ctx.fillStyle = `rgb(0 255 0)`;
+        ctx.fillRect(625 + 200 * i, 1100, 150, 150);
+        if (state.G.openedBuildings[i] != null) {
+          ctx.fillStyle = "black";
+          ctx.fillText(state.G.openedBuildings[i].cost, 675 + i * 200, 1150);
+          //ctx.fillStyle = "red";
+          ctx.fillText(
+            "Rewards:" + state.G.openedBuildings[i].playerReward,
+            700 + i * 200,
+            1200
+          );
+          ctx.fillText(
+            "Owner Rewards:" + state.G.openedBuildings[i].ownerReward,
+            700 + i * 200,
+            1220
+          );
+        }
+        if (state.ctx.activePlayers != null) {
+          if (
+            state.ctx.activePlayers[state.ctx.currentPlayer] == "buyBuilding" &&
+            state.ctx.gameover == undefined
+          ) {
+            onClick(625 + 200 * i, 1100, 150, 150, () => {
+              this.client.moves.buyBuilding(i);
+            });
+            ctx.fillStyle = "rgb(255 110 74)";
+            ctx.fillRect(625, 1300, 300, 75);
+            ctx.fillStyle = "rgb(0 0 0)";
+            ctx.fillText("Baue kein Gebäude", 775, 1350);
+            onClick(625, 1300, 300, 75, () => {
+              this.client.moves.buyBuilding(-1);
+            });
+          }
+        }
+      }
+      //Player Cards
+      for (let i = 0; i <= 1; i++) {
+        ctx.fillStyle = state.G.players[i].playerColor;
+        ctx.fillRect(50 + 800 * i, 1400, 750, 1600);
+        ctx.fillStyle = "white";
+        ctx.fillRect(100 + 800 * i, 1400, 650, 100);
+        ctx.fillStyle = "black";
+        // Resources
+        for (let j = 0; j <= 5; j++) {
+          ctx.fillText(
+            state.G.players[i].resources[j],
+            125 + 50 * j + 800 * i,
+            1450
+          );
+          /* ctx.fillText("Orange:" + state.G.players[i].orange, 175 + 800 * i, 1450);
       ctx.fillText("Black:" + state.G.players[i].black, 225 + 800 * i, 1450);
       ctx.fillText("Purple:" + state.G.players[i].purple, 275 + 800 * i, 1450);
       ctx.fillText("Gold:" + state.G.players[i].gold, 325 + 800 * i, 1450);
@@ -375,71 +396,72 @@ class GameClient {
         375 + 800 * i,
         1450
       ) */
-      }
+        }
 
-      // Feld für Beenden des Zuges in der completeQuest-Stage
-      if (state.ctx.activePlayers != null) {
-        if (
-          state.ctx.activePlayers[i] == "completeQuest" &&
-          state.ctx.gameover == undefined
-        ) {
-          ctx.fillStyle = "rgb(255 110 74)";
-          ctx.fillRect(275 + 800 * i, 1300, 300, 75);
-          ctx.fillStyle = "rgb(0 0 0)";
-          ctx.fillText("Beende den Zug", 425 + 800 * i, 1350);
-          onClick(275 + 800 * i, 1300, 300, 75, () => {
+        // Feld für Beenden des Zuges in der completeQuest-Stage
+
+        if (state.ctx.activePlayers != null) {
+          if (
+            state.ctx.activePlayers[i] == "completeQuest" &&
+            state.ctx.gameover == undefined
+          ) {
+            ctx.fillStyle = "rgb(255 110 74)";
+            ctx.fillRect(275 + 800 * i, 1300, 300, 75);
+            ctx.fillStyle = "rgb(0 0 0)";
+            ctx.fillText("Beende den Zug", 425 + 800 * i, 1350);
+            onClick(275 + 800 * i, 1300, 300, 75, () => {
+              if (i == state.ctx.currentPlayer) {
+                this.client.moves.completeQuest(undefined);
+              }
+            });
+          }
+        }
+        //Quest Cards der SPIELER
+        for (let j = 0; j <= state.G.players[i].quests.length - 1; j++) {
+          ctx.fillStyle = `rgb(255 255 255)`;
+          await drawPicture(
+            ctx,
+            "quest2.png",
+            100 + i * 800,
+            1550 + j * 200,
+            300,
+            150
+          );
+          // center (550,125)
+          //new center(250,1625)
+          onClick(100 + i * 800, 1550 + j * 200, 300, 150, () => {
             if (i == state.ctx.currentPlayer) {
-              this.client.moves.completeQuest(undefined);
+              this.client.moves.completeQuest(j);
             }
           });
-        }
-      }
-      //Quest Cards der SPIELER
-      for (let j = 0; j <= state.G.players[i].quests.length - 1; j++) {
-        ctx.fillStyle = `rgb(255 255 255)`;
-        await drawPicture(
-          ctx,
-          "quest2.png",
-          100 + i * 800,
-          1550 + j * 200,
-          300,
-          150
-        );
-        // center (550,125)
-        //new center(250,1625)
-        onClick(100 + i * 800, 1550 + j * 200, 300, 150, () => {
-          if (i == state.ctx.currentPlayer) {
-            this.client.moves.completeQuest(j);
-          }
-        });
-        ctx.fillStyle = `rgb(0 0 0)`;
-        adventurerIconList(
-          ctx,
-          state.G.players[i].quests[j].requirements,
-          250 + i * 800,
-          1620 + j * 200
-        );
-        adventurerIconList(
-          ctx,
-          state.G.players[i].quests[j].rewards,
-          250 + i * 800,
-          1673 + j * 200
-        );
-        ctx.fillStyle = "black";
-        ctx.font = "bold 20px sans-serif";
-        ctx.fillText(
-          state.G.players[i].quests[j].name,
-          250 + i * 800,
-          1580 + j * 200
-        );
-        ctx.font = "14px sans-serif";
-        ctx.fillText("Requirements", 170 + i * 800, 1603 + j * 200);
-        ctx.fillText("Rewards", 154 + i * 800, 1656 + j * 200);
-        ctx.beginPath();
-        ctx.moveTo(125 + i * 800, 1640 + j * 200);
-        ctx.lineTo(175 + i * 800, 1640 + j * 200);
-        ctx.stroke();
-        /* 
+          ctx.fillStyle = `rgb(0 0 0)`;
+          adventurerIconList(
+            ctx,
+            state.G.players[i].quests[j].requirements,
+            250 + i * 800,
+            1620 + j * 200
+          );
+          adventurerIconList(
+            ctx,
+            state.G.players[i].quests[j].rewards,
+            250 + i * 800,
+            1673 + j * 200
+          );
+          ctx.fillStyle = "black";
+          ctx.font = "bold 20px sans-serif";
+          ctx.fillText(
+            state.G.players[i].quests[j].name,
+            250 + i * 800,
+            1580 + j * 200
+          );
+          ctx.font = "14px sans-serif";
+          ctx.fillText("Requirements", 170 + i * 800, 1603 + j * 200);
+          ctx.fillText("Rewards", 154 + i * 800, 1656 + j * 200);
+          ctx.beginPath();
+          ctx.moveTo(125 + i * 800, 1640 + j * 200);
+          ctx.lineTo(175 + i * 800, 1640 + j * 200);
+          ctx.stroke();
+          /* 
         ctx.fillStyle = "white";
         ctx.fillRect(100 + i * 800, 1550 + j * 200, 300, 150);
         onClick(100 + i * 800, 1550 + j * 200, 300, 150, () => {
@@ -465,13 +487,13 @@ class GameClient {
           1650 + j * 200
         );
       } */
-      }
+        }
 
-      for (let j = 0; j <= state.G.players[i].intrigueCards.length - 1; j++) {
-        ctx.fillStyle = "white";
-        ctx.fillRect(450 + i * 800, 1550 + j * 350, 150, 300);
-        ctx.fillStyle = `rgb(0 0 0)`;
-        /*       ctx.fillText("Type:" + state.G.players[i].quests[j].type, 150 + i * 800, 1600 + j*200);
+        for (let j = 0; j <= state.G.players[i].intrigueCards.length - 1; j++) {
+          ctx.fillStyle = "white";
+          ctx.fillRect(450 + i * 800, 1550 + j * 350, 150, 300);
+          ctx.fillStyle = `rgb(0 0 0)`;
+          /*       ctx.fillText("Type:" + state.G.players[i].quests[j].type, 150 + i * 800, 1600 + j*200);
        ctx.fillText(
         "Requirements:" + state.G.players[i].quests[j].requirements,
         150 + i * 800,
@@ -482,14 +504,15 @@ class GameClient {
         150 + i * 800,
         1650 + j*200
       ); */
+        }
       }
-    }
 
-    if (state.ctx.gameover != undefined) {
-      resetOnClicks();
-      ctx.fillStyle = "white";
-      //ctx.fillRect(0, 0, 2000, 2000);
-    }
+      if (state.ctx.gameover != undefined) {
+        resetOnClicks();
+        ctx.fillStyle = "white";
+        //ctx.fillRect(0, 0, 2000, 2000);
+      }
+    
   }
 }
 
