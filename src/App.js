@@ -260,6 +260,46 @@ class GameClient {
     }
     //Buildings, großes oben in der Mitte
 
+
+    
+
+    onClick(475, 300, 250, 150, () => {
+      this.client.moves.placeAgent("nonPlayer", 0);
+    });
+    await drawPicture(ctx, "prebuilt.png", 475, 300, 250, 150)
+    ctx.fillStyle = "black"
+    ctx.font = "20px arial"
+    ctx.fillText(state.G.buildingList[0].reward, 500, 320)
+    ctx.fillText(state.G.buildingList[0].name, 475, 300)
+    onClick(775, 300, 250, 150, () => {
+      this.client.moves.placeAgent("nonPlayer", 1);
+    });
+    await drawPicture(ctx, "prebuilt.png", 775, 300, 250, 150)
+    ctx.fillStyle = "black"
+    ctx.font = "20px arial"
+    ctx.fillText(state.G.buildingList[0].reward, 500, 320)
+    ctx.fillText(state.G.buildingList[0].name, 475, 300)
+    onClick(1075, 300, 250, 150, () => {
+      this.client.moves.placeAgent("nonPlayer", 2);
+    });
+    await drawPicture(ctx, "prebuilt.png", 1075, 300, 250, 150)
+    ctx.fillStyle = "black"
+    ctx.font = "20px arial"
+    ctx.fillText(state.G.buildingList[0].reward, 500, 320)
+    ctx.fillText(state.G.buildingList[0].name, 475, 300)
+    ctx.fillStyle = `rgb(235 217 184)`;
+    roundedRect(ctx, 475, 300 + 75, 70, 70);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = `rgb(235 217 184)`;
+    roundedRect(ctx, 775, 300 + 75, 70, 70);
+    ctx.fill();
+    ctx.stroke();
+    roundedRect(ctx, 1075, 300 + 75, 70, 70);
+    ctx.fill();
+    ctx.stroke();
+
+
     if (state.G.buildingList[0].occupied != null) {
       drawPicture(
         ctx,
@@ -290,33 +330,9 @@ class GameClient {
         60
       );
     }
-    
-
-    onClick(475, 300, 250, 150, () => {
-      this.client.moves.placeAgent("nonPlayer", 0);
-    });
-    await drawPicture(ctx, "prebuilt.png", 475, 300, 250, 150)
-    onClick(775, 300, 250, 150, () => {
-      this.client.moves.placeAgent("nonPlayer", 1);
-    });
-    await drawPicture(ctx, "prebuilt.png", 775, 300, 250, 150)
-    onClick(1075, 300, 250, 150, () => {
-      this.client.moves.placeAgent("nonPlayer", 2);
-    });
-    await drawPicture(ctx, "prebuilt.png", 1075, 300, 250, 150)
 
   
-    ctx.fillStyle = `rgb(235 217 184)`;
-    roundedRect(ctx, 475, 300 + 75, 70, 70);
-    ctx.fill();
-    ctx.stroke();
-    ctx.fillStyle = `rgb(235 217 184)`;
-    roundedRect(ctx, 775, 300 + 75, 70, 70);
-    ctx.fill();
-    ctx.stroke();
-    roundedRect(ctx, 1075, 300 + 75, 70, 70);
-    ctx.fill();
-    ctx.stroke();
+    
     //Buildings, kleine
 
     for (let j = 0; j <= 1; j++) {
@@ -329,7 +345,12 @@ class GameClient {
           buildingPosition = 9 - i;
         }
         ctx.fillRect(400 + j * 750, 480 + i * 180, 250, 150);
+        
         await drawPicture(ctx, "prebuilt.png", 400 + j * 750, 480 + i * 180, 250, 150)
+        ctx.fillStyle = "black"
+        ctx.font = "20px arial"
+        ctx.fillText(state.G.buildingList[0].reward, 500, 320)
+        ctx.fillText(state.G.buildingList[0].name, 475, 300)
         ctx.fillStyle = `rgb(235 217 184)`;
         roundedRect(ctx, 400 + j * 750, 480 + i * 180 + 75, 70, 70);
 
@@ -360,6 +381,10 @@ class GameClient {
     onClick(700, 920, 400, 100, () => {
       this.client.moves.placeAgent("nonPlayer", 6);
     });
+    ctx.fillStyle = "black"
+    ctx.font = "20px arial"
+    ctx.fillText(state.G.buildingList[0].reward, 500, 320)
+    ctx.fillText(state.G.buildingList[0].name, 475, 300)
     ctx.fillStyle = `rgb(235 217 184)`;
     roundedRect(ctx, 700, 900 + 75, 70, 70);
     ctx.fill();
@@ -369,8 +394,8 @@ class GameClient {
       drawPicture(
         ctx,
         `${playerColors[state.G.buildingList[6].occupied]}_agent.png`,
-        700,
-        920,
+        705,
+        980,
         60,
         60
       );
