@@ -137,15 +137,21 @@ class GameClient {
         550 + i * 350,
         120
       );
-      ctx.fillStyle = "black";
-      ctx.font = "bold 20px sans-serif";
-      ctx.fillText(state.G.openedQuestCards[i].name, 550 + i * 350, 80);
-      ctx.font = "14px sans-serif";
-      ctx.fillText("Requirements", 470 + i * 350, 103);
-      ctx.beginPath();
-      ctx.moveTo(425 + i * 350, 140);
-      ctx.lineTo(675 + i * 350, 140);
-      ctx.stroke();
+      adventurerIconList(
+        ctx,
+        state.G.openedQuestCards[i].rewards,
+        550 + i * 350,
+        173)
+      ctx.fillStyle = "black"
+      ctx.font = "bold 20px sans-serif"
+      ctx.fillText(state.G.openedQuestCards[i].name, 550 + i * 350, 80)
+      ctx.font = "14px sans-serif"
+      ctx.fillText("Requirements", 470 + i * 350, 103)
+      ctx.fillText("Rewards", 454 + i * 350, 156)
+      ctx.beginPath()
+      ctx.moveTo(425+i*350, 140)
+      ctx.lineTo(675+i*350, 140)
+      ctx.stroke()
       /* ctx.fillText(state.G.openedQuestCards[i].type, 450 + i * 350, 100);
       ctx.fillText(
         "Requirements:" + state.G.openedQuestCards[i].requirements,
@@ -255,9 +261,8 @@ class GameClient {
           buildingPosition = 9 - i;
         }
         ctx.fillRect(400 + j * 750, 480 + i * 180, 250, 150);
-        onClick(400 + j * 750, 480 + i * 180, 250, 150, () => {
-          this.client.moves.placeAgent("nonPlayer", buildingPosition);
-        });
+        
+
       }
     }
 
@@ -353,6 +358,38 @@ class GameClient {
       }
       //Quest Cards der SPIELER
       for (let j = 0; j <= state.G.players[i].quests.length - 1; j++) {
+        ctx.fillStyle = `rgb(255 255 255)`;
+        await drawPicture(ctx, "quest2.png", 100 + i * 800, 1550 + j * 200, 300, 150)
+        // center (550,125)
+        //new center(250,1625)
+        onClick(100 + i * 800, 1550 + j * 200, 300, 150, () => {
+          if (i == state.ctx.currentPlayer) {
+            this.client.moves.completeQuest(j);
+          }
+        });
+        ctx.fillStyle = `rgb(0 0 0)`;
+        adventurerIconList(
+          ctx,
+          state.G.players[i].quests[j].requirements,
+          250 + i * 800,
+          1620+j*200
+        );
+        adventurerIconList(
+          ctx,
+          state.G.players[i].quests[j].rewards,
+          250 + i * 800,
+          1673+j*200)
+        ctx.fillStyle = "black"
+        ctx.font = "bold 20px sans-serif"
+        ctx.fillText(state.G.players[i].quests[j].name, 250 + i * 800, 1580+j*200)
+        ctx.font = "14px sans-serif"
+        ctx.fillText("Requirements", 170 + i * 800, 1603+j*200)
+        ctx.fillText("Rewards", 154 + i * 800 , 1656+j*200)
+        ctx.beginPath()
+        ctx.moveTo(125+i*800, 1640+j*200)
+        ctx.lineTo(175+i*800, 1640+j*200)
+        ctx.stroke()
+        /* 
         ctx.fillStyle = "white";
         ctx.fillRect(100 + i * 800, 1550 + j * 200, 300, 150);
         onClick(100 + i * 800, 1550 + j * 200, 300, 150, () => {
@@ -377,7 +414,7 @@ class GameClient {
           150 + i * 800,
           1650 + j * 200
         );
-      }
+      } */}
 
       for (let j = 0; j <= state.G.players[i].intrigueCards.length - 1; j++) {
         ctx.fillStyle = "white";
