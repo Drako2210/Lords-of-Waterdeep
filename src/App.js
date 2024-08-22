@@ -76,6 +76,7 @@ function goldIcon(ctx, x, y) {
   ctx.fillStyle = preColor;
 }
 function adventurerIconList(ctx, inputArray, x, y) {
+  let preFont = ctx.font;
   ctx.font = "20px sans-serif";
   ctx.fillStyle = "rgb(0 0 0)";
   let adventureColorList = ["white", "orange", "black", "purple"];
@@ -85,9 +86,36 @@ function adventurerIconList(ctx, inputArray, x, y) {
   }
   ctx.fillText(`${inputArray[4]}x`, x - 118 + 212, y + 7);
   goldIcon(ctx, x - 90 + 53 * 4, y);
+  ctx.font =preFont
+}
+function victoryPointsIcon(ctx, x, y,amout) {
+  ctx.textAlign = "center"
+  let preFont = ctx.font;
+  let preColor = ctx.fillStyle;
+  ctx.fillStyle = "red";
+  ctx.strokeStyle = "black";
+  let edgeLength = 13;
+  ctx.beginPath();
+  ctx.moveTo(x+10, y+10);
+  ctx.lineTo(x +10 +edgeLength * 0.5, y );
+  ctx.lineTo(x+10, y-10);
+  ctx.lineTo(x-10, y-10);
+  ctx.lineTo(x -10 -edgeLength * 0.5, y );
+  ctx.lineTo(x-10, y+10);
+  ctx.lineTo(x+10, y+10);
+  ctx.fill();
+  ctx.stroke();
+  ctx.font = "bold 18px sans-serif"
+  ctx.fillStyle = "white";
+
+  ctx.fillText(amout,x,y+6)
+  ctx.fillStyle = preColor;
+  ctx.font =preFont
 }
 function shortedIconList(ctx, inputArray, x, y) {
   let xPosition = x;
+  let preFont = ctx.font;
+  ctx.font = "20px sans-serif"
   for (let j = 0; j <= 3; j++) {
     let adventureColorList = ["white", "orange", "black", "purple"];
 
@@ -97,11 +125,20 @@ function shortedIconList(ctx, inputArray, x, y) {
 
       xPosition += 53;
     }
+
+
+    
   }
   if (inputArray[4] != 0) {
     ctx.fillText(`${inputArray[4]}x`, xPosition, y + 7)
     goldIcon(ctx, xPosition + 25, y,)
+    xPosition += 53
   }
+  if (inputArray[5] != 0) {
+    victoryPointsIcon(ctx, xPosition +10, y,inputArray[5])
+  }
+
+  ctx.font =preFont
 }
 class GameClient {
   constructor(rootElement, gameParams) {
@@ -132,14 +169,13 @@ class GameClient {
     //console.log(state);
     //console.log(state.ctx.currentPlayer)
     ctx.fillStyle = "black";
-
+   
     await drawPicture(ctx, "board.png", 0, 0, 2000, 3000);
     //offene Quests
-    adventurerIcon(ctx, 300, 300, "purple");
+    //victoryPointsIcon(ctx,300,300,20)
     //roundedRect(ctx,320,300,10, 10)
     //ctx.fill()
     //ctx.stroke()
-    goldIcon(ctx, 300, 350);
     //questcards auslage
     ctx.textAlign = "center";
     for (let i = 0; i <= 3; i++) {
@@ -150,16 +186,27 @@ class GameClient {
         this.client.moves.chooseQuestCard(i);
       });
       ctx.fillStyle = `rgb(0 0 0)`;
-      adventurerIconList(
+      /* adventurerIconList(
         ctx,
         state.G.openedQuestCards[i].requirements,
         550 + i * 350,
         120
-      );
-      adventurerIconList(
+      ); */
+      shortedIconList(
+        ctx,
+        state.G.openedQuestCards[i].requirements,
+        440 + i * 350,
+        120);
+      /* adventurerIconList(
         ctx,
         state.G.openedQuestCards[i].rewards,
         550 + i * 350,
+        173
+      ); */
+      shortedIconList(
+        ctx,
+        state.G.openedQuestCards[i].rewards,
+        440 + i * 350,
         173
       );
       ctx.fillStyle = "black";
@@ -419,13 +466,14 @@ class GameClient {
       ctx.fillRect(100 + 800 * i, 1400, 650, 100);
       ctx.fillStyle = "black";
       // Resources
-      for (let j = 0; j <= 5; j++) {
+      /* for (let j = 0; j <= 5; j++) {
+        
         ctx.fillText(
           state.G.players[i].resources[j],
           125 + 50 * j + 800 * i,
           1450
-        );
-        /* ctx.fillText("Orange:" + state.G.players[i].orange, 175 + 800 * i, 1450);
+        ); 
+         ctx.fillText("Orange:" + state.G.players[i].orange, 175 + 800 * i, 1450);
       ctx.fillText("Black:" + state.G.players[i].black, 225 + 800 * i, 1450);
       ctx.fillText("Purple:" + state.G.players[i].purple, 275 + 800 * i, 1450);
       ctx.fillText("Gold:" + state.G.players[i].gold, 325 + 800 * i, 1450);
@@ -433,8 +481,10 @@ class GameClient {
         "Victory Points:" + state.G.players[i].victorypoints,
         375 + 800 * i,
         1450
-      ) */
-      }
+      ) 
+      }*/
+      adventurerIconList(ctx,state.G.players[i].resources,250+ 800 * i,1450)
+      victoryPointsIcon(ctx,410+ 800 * i,1450,state.G.players[i].resources[5])
 
       // Feld für Beenden des Zuges in der completeQuest-Stage
 
