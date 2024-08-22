@@ -143,7 +143,7 @@ function placeAgent(move, buildingType, plotId) {
       move.G.buildingList[plotId].occupied == null
     ) {
       move.G.buildingList[plotId].occupied = move.playerID;
-      
+
       for (let i = 0; i <= 5; i++) {
         move.G.players[move.playerID].resources[i] +=
           move.G.buildingList[plotId].reward[i];
@@ -416,7 +416,7 @@ export const LordsOfWaterdeep = {
   disableUndo: true,
 
   endIf: (endIf) => {
-    if (endIf.G.roundCounter == 2) {
+    if (endIf.G.roundCounter == 9) {
       let vpList = [];
       for (let i = 0; i <= endIf.ctx.numPlayers - 1; i++) {
         let a = 0;

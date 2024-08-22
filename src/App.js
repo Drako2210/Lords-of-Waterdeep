@@ -170,7 +170,7 @@ class GameClient {
     ctx.fillRect(50, 50, 300, 150);
     //gebaute PlayerBuilings links und rechts
     for (let i = 0; i <= 9; i++) {
-      ctx.fillStyle = `rgb(0 255 255)`;
+      
       
       await drawPicture(ctx, "building1.png", 50 + 1550 * Math.floor(i / 5),
       250 + i * 200 - 1000 * Math.floor(i / 5), 150,150)
@@ -195,7 +195,7 @@ class GameClient {
       }
 
       if (state.G.buildingPlots[i].building != null) {
-        ctx.fillStyle = "black";
+        ctx.fillStyle = "white";
         ctx.fillText(
           "OWNER:" + state.G.buildingPlots[i].building.owner,
           100 + 1550 * Math.floor(i / 5),
@@ -292,13 +292,22 @@ class GameClient {
     onClick(700, 920, 400, 100, () => {
       this.client.moves.placeAgent("nonPlayer", 6);
     });
+    if (state.G.buildingList[6].occupied != null) {
+      drawPicture(
+        ctx,
+        `${
+          playerColors[state.G.buildingList[6].occupied]
+        }_agent.png`,
+        700, 920, 60, 60
+      );
+    }
     //offene nicht gebaute Buildings
     for (let i = 0; i <= 2; i++) {
-      ctx.fillStyle = `rgb(0 255 0)`;
+      
       
       await drawPicture(ctx, "building1.png", 625 + 200 * i, 1100, 150, 150 )
       if (state.G.openedBuildings[i] != null) {
-        ctx.fillStyle = "black";
+        ctx.fillStyle = "white";
         ctx.fillText(state.G.openedBuildings[i].cost, 675 + i * 200, 1150);
         //ctx.fillStyle = "red";
         ctx.fillText(
