@@ -348,7 +348,7 @@ class GameClient {
     ctx.font = "bold 20px arial"
     //ctx.fillText(state.G.buildingList[0].reward, 500, 320)
     ctx.fillText(state.G.buildingList[1].name, 900, 330)
-    shortedIconList(ctx,state.G.buildingList[0].reward,870,400)
+    shortedIconList(ctx,state.G.buildingList[1].reward,870,400)
     onClick(1075, 300, 250, 150, () => {
       this.client.moves.placeAgent("nonPlayer", 2);
     });
@@ -357,7 +357,7 @@ class GameClient {
     ctx.font = "bold 20px arial"
     //ctx.fillText(state.G.buildingList[0].reward, 500, 320)
     ctx.fillText(state.G.buildingList[2].name, 1200, 330)
-    shortedIconList(ctx,state.G.buildingList[0].reward,1170,400)
+    shortedIconList(ctx,state.G.buildingList[2].reward,1170,400)
     ctx.fillStyle = `rgb(235 217 184)`;
     roundedRect(ctx, 475, 300 + 75, 70, 70);
     ctx.fill();
@@ -419,9 +419,10 @@ class GameClient {
         
         await drawPicture(ctx, "prebuilt.png", 400 + j * 750, 480 + i * 180, 250, 150)
         ctx.fillStyle = "black"
-        ctx.font = "20px arial"
+        ctx.font = "bold 20px arial"
         //ctx.fillText(state.G.buildingList[0].reward, 500, 320)
-        ctx.fillText(state.G.buildingList[buildingPosition].name, 400 + j * 750, 480 + i * 180)
+        ctx.fillText(state.G.buildingList[buildingPosition].name, 525 + j * 750, 510 + i * 180)
+        shortedIconList(ctx,state.G.buildingList[buildingPosition].reward, 525 + j * 750, 600 + i * 180)
         ctx.fillStyle = `rgb(235 217 184)`;
         roundedRect(ctx, 400 + j * 750, 480 + i * 180 + 75, 70, 70);
 
@@ -453,9 +454,11 @@ class GameClient {
       this.client.moves.placeAgent("nonPlayer", 6);
     });
     ctx.fillStyle = "black"
-    ctx.font = "20px arial"
+    ctx.font = "bold 20px arial"
     //ctx.fillText(state.G.buildingList[0].reward, 500, 320)
-    ctx.fillText(state.G.buildingList[0].name, 475, 300)
+    ctx.fillText(state.G.buildingList[6].name, 900, 930)
+    ctx.fillText("Build A Building", 900, 980)
+    ctx.fillText("From Opened Buildings", 900, 1000)
     ctx.fillStyle = `rgb(235 217 184)`;
     roundedRect(ctx, 700, 900 + 75, 70, 70);
     ctx.fill();
