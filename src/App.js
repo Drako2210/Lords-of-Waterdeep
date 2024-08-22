@@ -252,14 +252,7 @@ class GameClient {
       }
     }
     //Buildings, großes oben in der Mitte
-    ctx.fillStyle = `rgb(255 0 0)`;
-    ctx.fillRect(475, 300, 250, 150);
-    ctx.fillStyle = `rgb(235 217 184)`;
-    roundedRect(ctx, 475 - 5, 300 + 75, 70, 70);
 
-    ctx.fill();
-    ctx.stroke();
-    ctx.fillStyle = `rgb(255 0 0)`;
     if (state.G.buildingList[0].occupied != null) {
       drawPicture(
         ctx,
@@ -290,8 +283,26 @@ class GameClient {
         60
       );
     }
-    ctx.fillRect(775, 300, 250, 150);
-    ctx.fillRect(1075, 300, 250, 150);
+    
+
+    onClick(475, 300, 250, 150, () => {
+      this.client.moves.placeAgent("nonPlayer", 0);
+    });
+    await drawPicture(ctx, "prebuilt.png", 475, 300, 250, 150)
+    onClick(775, 300, 250, 150, () => {
+      this.client.moves.placeAgent("nonPlayer", 1);
+    });
+    await drawPicture(ctx, "prebuilt.png", 775, 300, 250, 150)
+    onClick(1075, 300, 250, 150, () => {
+      this.client.moves.placeAgent("nonPlayer", 2);
+    });
+    await drawPicture(ctx, "prebuilt.png", 1075, 300, 250, 150)
+
+  
+    ctx.fillStyle = `rgb(235 217 184)`;
+    roundedRect(ctx, 475, 300 + 75, 70, 70);
+    ctx.fill();
+    ctx.stroke();
     ctx.fillStyle = `rgb(235 217 184)`;
     roundedRect(ctx, 775, 300 + 75, 70, 70);
     ctx.fill();
@@ -299,16 +310,6 @@ class GameClient {
     roundedRect(ctx, 1075, 300 + 75, 70, 70);
     ctx.fill();
     ctx.stroke();
-    ctx.fillStyle = `rgb(255 0 0)`;
-    onClick(475, 300, 250, 150, () => {
-      this.client.moves.placeAgent("nonPlayer", 0);
-    });
-    onClick(775, 300, 250, 150, () => {
-      this.client.moves.placeAgent("nonPlayer", 1);
-    });
-    onClick(1075, 300, 250, 150, () => {
-      this.client.moves.placeAgent("nonPlayer", 2);
-    });
     //Buildings, kleine
 
     for (let j = 0; j <= 1; j++) {
@@ -321,6 +322,7 @@ class GameClient {
           buildingPosition = 9 - i;
         }
         ctx.fillRect(400 + j * 750, 480 + i * 180, 250, 150);
+        await drawPicture(ctx, "prebuilt.png", 400 + j * 750, 480 + i * 180, 250, 150)
         ctx.fillStyle = `rgb(235 217 184)`;
         roundedRect(ctx, 400 + j * 750, 480 + i * 180 + 75, 70, 70);
 
@@ -347,6 +349,7 @@ class GameClient {
     }
     //Building: Builders Hall
     ctx.fillRect(700, 900, 400, 150);
+    await drawPicture(ctx, "prebuilt.png", 700, 900, 400, 150)
     onClick(700, 920, 400, 100, () => {
       this.client.moves.placeAgent("nonPlayer", 6);
     });
