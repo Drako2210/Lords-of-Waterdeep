@@ -315,25 +315,28 @@ class GameClient {
     });
     await drawPicture(ctx, "prebuilt.png", 475, 300, 250, 150)
     ctx.fillStyle = "black"
-    ctx.font = "20px arial"
-    ctx.fillText(state.G.buildingList[0].reward, 500, 320)
-    ctx.fillText(state.G.buildingList[0].name, 475, 300)
+    ctx.font = "bold 20px arial"
+    //ctx.fillText(state.G.buildingList[0].reward, 500, 320)
+    ctx.fillText(state.G.buildingList[0].name, 600, 330)
+    shortedIconList(ctx,state.G.buildingList[0].reward,570,400)
     onClick(775, 300, 250, 150, () => {
       this.client.moves.placeAgent("nonPlayer", 1);
     });
     await drawPicture(ctx, "prebuilt.png", 775, 300, 250, 150)
     ctx.fillStyle = "black"
-    ctx.font = "20px arial"
-    ctx.fillText(state.G.buildingList[0].reward, 500, 320)
-    ctx.fillText(state.G.buildingList[0].name, 475, 300)
+    ctx.font = "bold 20px arial"
+    //ctx.fillText(state.G.buildingList[0].reward, 500, 320)
+    ctx.fillText(state.G.buildingList[1].name, 900, 330)
+    shortedIconList(ctx,state.G.buildingList[0].reward,870,400)
     onClick(1075, 300, 250, 150, () => {
       this.client.moves.placeAgent("nonPlayer", 2);
     });
     await drawPicture(ctx, "prebuilt.png", 1075, 300, 250, 150)
     ctx.fillStyle = "black"
-    ctx.font = "20px arial"
-    ctx.fillText(state.G.buildingList[0].reward, 500, 320)
-    ctx.fillText(state.G.buildingList[0].name, 475, 300)
+    ctx.font = "bold 20px arial"
+    //ctx.fillText(state.G.buildingList[0].reward, 500, 320)
+    ctx.fillText(state.G.buildingList[2].name, 1200, 330)
+    shortedIconList(ctx,state.G.buildingList[0].reward,1170,400)
     ctx.fillStyle = `rgb(235 217 184)`;
     roundedRect(ctx, 475, 300 + 75, 70, 70);
     ctx.fill();
@@ -396,7 +399,7 @@ class GameClient {
         await drawPicture(ctx, "prebuilt.png", 400 + j * 750, 480 + i * 180, 250, 150)
         ctx.fillStyle = "black"
         ctx.font = "20px arial"
-        ctx.fillText(state.G.buildingList[0].reward, 500, 320)
+        //ctx.fillText(state.G.buildingList[0].reward, 500, 320)
         ctx.fillText(state.G.buildingList[0].name, 475, 300)
         ctx.fillStyle = `rgb(235 217 184)`;
         roundedRect(ctx, 400 + j * 750, 480 + i * 180 + 75, 70, 70);
@@ -430,7 +433,7 @@ class GameClient {
     });
     ctx.fillStyle = "black"
     ctx.font = "20px arial"
-    ctx.fillText(state.G.buildingList[0].reward, 500, 320)
+    //ctx.fillText(state.G.buildingList[0].reward, 500, 320)
     ctx.fillText(state.G.buildingList[0].name, 475, 300)
     ctx.fillStyle = `rgb(235 217 184)`;
     roundedRect(ctx, 700, 900 + 75, 70, 70);
