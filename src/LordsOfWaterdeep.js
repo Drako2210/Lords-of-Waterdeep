@@ -143,6 +143,7 @@ function placeAgent(move, buildingType, plotId) {
       move.G.buildingList[plotId].occupied == null
     ) {
       move.G.buildingList[plotId].occupied = move.playerID;
+      
       for (let i = 0; i <= 5; i++) {
         move.G.players[move.playerID].resources[i] +=
           move.G.buildingList[plotId].reward[i];
