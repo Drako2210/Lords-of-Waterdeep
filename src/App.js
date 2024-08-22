@@ -400,7 +400,7 @@ class GameClient {
         ctx.fillStyle = "black"
         ctx.font = "20px arial"
         //ctx.fillText(state.G.buildingList[0].reward, 500, 320)
-        ctx.fillText(state.G.buildingList[0].name, 475, 300)
+        ctx.fillText(state.G.buildingList[buildingPosition].name, 400 + j * 750, 480 + i * 180)
         ctx.fillStyle = `rgb(235 217 184)`;
         roundedRect(ctx, 400 + j * 750, 480 + i * 180 + 75, 70, 70);
 

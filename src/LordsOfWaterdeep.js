@@ -303,8 +303,8 @@ export const LordsOfWaterdeep = {
     for (let i = 0; i <= setup.ctx.numPlayers - 1; i++) {
       players[i] = {
         playerColor: playerColors[i],
-        maxAgents: 1, //startAgents(setup.ctx.numPlayers),
-        leftAgents: 1, //startAgents(setup.ctx.numPlayers),
+        maxAgents: startAgents(setup.ctx.numPlayers),
+        leftAgents: startAgents(setup.ctx.numPlayers),
         /* victorypoints: 0,
         white: 0,
         orange: 0,
