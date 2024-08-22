@@ -86,36 +86,36 @@ function adventurerIconList(ctx, inputArray, x, y) {
   }
   ctx.fillText(`${inputArray[4]}x`, x - 118 + 212, y + 7);
   goldIcon(ctx, x - 90 + 53 * 4, y);
-  ctx.font =preFont
+  ctx.font = preFont;
 }
-function victoryPointsIcon(ctx, x, y,amout) {
-  ctx.textAlign = "center"
+function victoryPointsIcon(ctx, x, y, amout) {
+  ctx.textAlign = "center";
   let preFont = ctx.font;
   let preColor = ctx.fillStyle;
   ctx.fillStyle = "red";
   ctx.strokeStyle = "black";
   let edgeLength = 13;
   ctx.beginPath();
-  ctx.moveTo(x+10, y+10);
-  ctx.lineTo(x +10 +edgeLength * 0.5, y );
-  ctx.lineTo(x+10, y-10);
-  ctx.lineTo(x-10, y-10);
-  ctx.lineTo(x -10 -edgeLength * 0.5, y );
-  ctx.lineTo(x-10, y+10);
-  ctx.lineTo(x+10, y+10);
+  ctx.moveTo(x + 10, y + 10);
+  ctx.lineTo(x + 10 + edgeLength * 0.5, y);
+  ctx.lineTo(x + 10, y - 10);
+  ctx.lineTo(x - 10, y - 10);
+  ctx.lineTo(x - 10 - edgeLength * 0.5, y);
+  ctx.lineTo(x - 10, y + 10);
+  ctx.lineTo(x + 10, y + 10);
   ctx.fill();
   ctx.stroke();
-  ctx.font = "bold 18px sans-serif"
+  ctx.font = "bold 18px sans-serif";
   ctx.fillStyle = "white";
 
-  ctx.fillText(amout,x,y+6)
+  ctx.fillText(amout, x, y + 6);
   ctx.fillStyle = preColor;
-  ctx.font =preFont
+  ctx.font = preFont;
 }
 function shortedIconList(ctx, inputArray, x, y) {
   let xPosition = x;
   let preFont = ctx.font;
-  ctx.font = "20px sans-serif"
+  ctx.font = "20px sans-serif";
   for (let j = 0; j <= 3; j++) {
     let adventureColorList = ["white", "orange", "black", "purple"];
 
@@ -125,21 +125,18 @@ function shortedIconList(ctx, inputArray, x, y) {
 
       xPosition += 53;
     }
-
-
-    
   }
   if (inputArray[4] != 0) {
-    ctx.fillText(`${inputArray[4]}x`, xPosition, y + 7)
-    goldIcon(ctx, xPosition + 25, y,)
-    xPosition += 53
+    ctx.fillText(`${inputArray[4]}x`, xPosition, y + 7);
+    goldIcon(ctx, xPosition + 25, y);
+    xPosition += 53;
   }
   //console.log(inputArray[5])
   if (inputArray[5] != 0) {
-    victoryPointsIcon(ctx, xPosition +10, y,inputArray[5])
+    victoryPointsIcon(ctx, xPosition + 10, y, inputArray[5]);
   }
 
-  ctx.font =preFont
+  ctx.font = preFont;
 }
 
 function playerAdventurerIconList(ctx, inputArray, x, y) {
@@ -151,11 +148,11 @@ function playerAdventurerIconList(ctx, inputArray, x, y) {
     ctx.fillText(`${inputArray[i]}x`, x - 118 + 63 * i, y + 7);
     adventurerIcon(ctx, x - 93 + 63 * i, y, adventureColorList[i]);
   }
-  ctx.fillText(`${inputArray[4]}x`, x - 118 + 4*63, y + 7);
+  ctx.fillText(`${inputArray[4]}x`, x - 118 + 4 * 63, y + 7);
   goldIcon(ctx, x - 90 + 63 * 4, y);
-  victoryPointsIcon(ctx, x - 90 + 59 * 5, y,inputArray[5]);
+  victoryPointsIcon(ctx, x - 90 + 59 * 5, y, inputArray[5]);
 
-  ctx.font =preFont
+  ctx.font = preFont;
 }
 
 class GameClient {
@@ -187,15 +184,8 @@ class GameClient {
     //console.log(state);
     //console.log(state.ctx.currentPlayer)
     ctx.fillStyle = "black";
-   
+
     await drawPicture(ctx, "board.png", 0, 0, 2000, 3000);
-
-
-
-
-
-
-
 
     //questcards auslage
     ctx.textAlign = "center";
@@ -217,7 +207,8 @@ class GameClient {
         ctx,
         state.G.openedQuestCards[i].requirements,
         440 + i * 350,
-        120);
+        120
+      );
       /* adventurerIconList(
         ctx,
         state.G.openedQuestCards[i].rewards,
@@ -273,15 +264,17 @@ class GameClient {
         150,
         150
       );
-      onClick(
-        50 + 1550 * Math.floor(i / 5),
-        250 + i * 200 - 1000 * Math.floor(i / 5),
-        150,
-        150,
-        () => {
-          this.client.moves.placeAgent("player", i);
-        }
-      );
+      if (state.G.buildingPlots[i].occupied === null) {
+        onClick(
+          50 + 1550 * Math.floor(i / 5),
+          250 + i * 200 - 1000 * Math.floor(i / 5),
+          150,
+          150,
+          () => {
+            this.client.moves.placeAgent("player", i);
+          }
+        );
+      }
       if (state.G.buildingPlots[i].occupied != null) {
         drawPicture(
           ctx,
@@ -328,36 +321,38 @@ class GameClient {
     }
     //Buildings, großes oben in der Mitte
 
-
-    
-
-    onClick(475, 300, 250, 150, () => {
-      this.client.moves.placeAgent("nonPlayer", 0);
-    });
-    await drawPicture(ctx, "prebuilt.png", 475, 300, 250, 150)
-    ctx.fillStyle = "black"
-    ctx.font = "bold 20px arial"
+    if (state.G.buildingList[0].occupied==null) {
+      onClick(475, 300, 250, 150, () => {
+        this.client.moves.placeAgent("nonPlayer", 0);
+      });
+    }
+    await drawPicture(ctx, "prebuilt.png", 475, 300, 250, 150);
+    ctx.fillStyle = "black";
+    ctx.font = "bold 20px arial";
     //ctx.fillText(state.G.buildingList[0].reward, 500, 320)
-    ctx.fillText(state.G.buildingList[0].name, 600, 330)
-    shortedIconList(ctx,state.G.buildingList[0].reward,570,400)
-    onClick(775, 300, 250, 150, () => {
-      this.client.moves.placeAgent("nonPlayer", 1);
-    });
-    await drawPicture(ctx, "prebuilt.png", 775, 300, 250, 150)
-    ctx.fillStyle = "black"
-    ctx.font = "bold 20px arial"
+    ctx.fillText(state.G.buildingList[0].name, 600, 330);
+    shortedIconList(ctx, state.G.buildingList[0].reward, 570, 400);
+    if (state.G.buildingList[1].occupied==null) {
+      onClick(775, 300, 250, 150, () => {
+        this.client.moves.placeAgent("nonPlayer", 1);
+      });
+    }
+    await drawPicture(ctx, "prebuilt.png", 775, 300, 250, 150);
+    ctx.fillStyle = "black";
+    ctx.font = "bold 20px arial";
     //ctx.fillText(state.G.buildingList[0].reward, 500, 320)
     ctx.fillText(state.G.buildingList[1].name, 900, 330)
-    shortedIconList(ctx,state.G.buildingList[1].reward,870,400)
-    onClick(1075, 300, 250, 150, () => {
-      this.client.moves.placeAgent("nonPlayer", 2);
-    });
-    await drawPicture(ctx, "prebuilt.png", 1075, 300, 250, 150)
+    shortedIconList(ctx,state.G.buildingList[0].reward,870,400)
+    if (state.G.buildingList[2].occupied==null) {
+      onClick(1075, 300, 250, 150, () => {
+        this.client.moves.placeAgent("nonPlayer", 2);
+      });
+    }    await drawPicture(ctx, "prebuilt.png", 1075, 300, 250, 150)
     ctx.fillStyle = "black"
     ctx.font = "bold 20px arial"
     //ctx.fillText(state.G.buildingList[0].reward, 500, 320)
     ctx.fillText(state.G.buildingList[2].name, 1200, 330)
-    shortedIconList(ctx,state.G.buildingList[2].reward,1170,400)
+    shortedIconList(ctx,state.G.buildingList[0].reward,1170,400)
     ctx.fillStyle = `rgb(235 217 184)`;
     roundedRect(ctx, 475, 300 + 75, 70, 70);
     ctx.fill();
@@ -370,7 +365,6 @@ class GameClient {
     ctx.fill();
     ctx.stroke();
 
-
     if (state.G.buildingList[0].occupied != null) {
       drawPicture(
         ctx,
@@ -380,7 +374,7 @@ class GameClient {
         60,
         60
       );
-    }
+    }400 + j * 750, 480
     if (state.G.buildingList[1].occupied != null) {
       drawPicture(
         ctx,
@@ -402,8 +396,6 @@ class GameClient {
       );
     }
 
-  
-    
     //Buildings, kleine
 
     for (let j = 0; j <= 1; j++) {
@@ -429,10 +421,11 @@ class GameClient {
         ctx.fill();
         ctx.stroke();
         ctx.fillStyle = `rgb(255 0 0)`;
-
-        onClick(400 + j * 750, 480 + i * 180, 250, 150, () => {
-          this.client.moves.placeAgent("nonPlayer", buildingPosition);
-        });
+        if (state.G.buildingList[buildingPosition].occupied==null) {
+          onClick(400 + j * 750, 480 + i * 180, 250, 150, () => {
+            this.client.moves.placeAgent("nonPlayer", buildingPosition);
+          });
+        }
         if (state.G.buildingList[buildingPosition].occupied != null) {
           drawPicture(
             ctx,
@@ -450,15 +443,14 @@ class GameClient {
     //Building: Builders Hall
     ctx.fillRect(700, 900, 400, 150);
     await drawPicture(ctx, "prebuilt.png", 700, 900, 400, 150)
-    onClick(700, 920, 400, 100, () => {
-      this.client.moves.placeAgent("nonPlayer", 6);
-    });
-    ctx.fillStyle = "black"
+    if (state.G.buildingList[6].occupied==null) {
+      onClick(700, 920, 400, 100, () => {
+        this.client.moves.placeAgent("nonPlayer", 6);
+      });
+    }    ctx.fillStyle = "black"
     ctx.font = "bold 20px arial"
     //ctx.fillText(state.G.buildingList[0].reward, 500, 320)
-    ctx.fillText(state.G.buildingList[6].name, 900, 930)
-    ctx.fillText("Build A Building", 900, 980)
-    ctx.fillText("From Opened Buildings", 900, 1000)
+    ctx.fillText(state.G.buildingList[0].name, 475, 300)
     ctx.fillStyle = `rgb(235 217 184)`;
     roundedRect(ctx, 700, 900 + 75, 70, 70);
     ctx.fill();
@@ -489,7 +481,7 @@ class GameClient {
           state.G.openedQuestCards[i].requirements,
           440 + i * 350,
           120); */
-        
+
         ctx.fillText(
           "Rewards:" + state.G.openedBuildings[i].playerReward,
           700 + i * 200,
@@ -544,7 +536,12 @@ class GameClient {
         1450
       ) 
       }*/
-      playerAdventurerIconList(ctx,state.G.players[i].resources,250+ 800 * i,1450)
+      playerAdventurerIconList(
+        ctx,
+        state.G.players[i].resources,
+        250 + 800 * i,
+        1450
+      );
       //victoryPointsIcon(ctx,410+ 800 * i,1450,state.G.players[i].resources[5])
 
       // Feld für Beenden des Zuges in der completeQuest-Stage
@@ -584,7 +581,7 @@ class GameClient {
           }
         });
         ctx.fillStyle = `rgb(0 0 0)`;
-/*         adventurerIconList(
+        /*         adventurerIconList(
           ctx,
           state.G.players[i].quests[j].requirements,
           250 + i * 800,
@@ -600,7 +597,8 @@ class GameClient {
           ctx,
           state.G.players[i].quests[j].requirements,
           140 + i * 800,
-          1620 + j * 200)
+          1620 + j * 200
+        );
         shortedIconList(
           ctx,
           state.G.players[i].quests[j].rewards,
