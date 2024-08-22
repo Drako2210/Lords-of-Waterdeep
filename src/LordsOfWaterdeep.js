@@ -100,6 +100,39 @@ function endRound(move) {
   }
 }
 function placeAgent(move, buildingType, plotId) {
+  const instantEffects = [
+    {
+      name: "resetQuestCards",
+      effect: function resetQuestCards(move) {
+        move.G.openedQuestCards = [
+          drawQuestCard(move.G.questCardsDeck),
+          drawQuestCard(move.G.questCardsDeck),
+          drawQuestCard(move.G.questCardsDeck),
+          drawQuestCard(move.G.questCardsDeck),
+        ];
+      },
+    },
+    {
+      name: "chooseQuestCard", //player action
+      effect: function canChooseQuestCards(move) {
+        move.events.setStage("chooseQuestCard");
+      },
+    },
+    { name: "setStartPlayer", effect: function resetQuestCards(move) {
+      move.G.startPlayer = move.playerID
+    } },
+    { name: "drawIntrigueCard", effect: function resetQuestCards(move) {} },
+    {
+      name: "playIntrigueCard", //player action
+      effect: function resetQuestCards(move) {},
+    },
+    {
+      name: "buyBuilding", //player action
+      effect: function canBuyBuilding(move) {
+        move.events.setStage("buyBuilding");
+      },
+    },
+  ];
   // Check if player has Agents
 
   if (move.G.players[move.playerID].leftAgents != 0) {
@@ -119,39 +152,6 @@ function placeAgent(move, buildingType, plotId) {
         move.events.setStage("completeQuest");
       }
       //alle möglichen building instant effects mit name und inhalt der Funktion
-      const instantEffects = [
-        {
-          name: "resetQuestCards",
-          effect: function resetQuestCards(move) {
-            move.G.openedQuestCards = [
-              drawQuestCard(move.G.questCardsDeck),
-              drawQuestCard(move.G.questCardsDeck),
-              drawQuestCard(move.G.questCardsDeck),
-              drawQuestCard(move.G.questCardsDeck),
-            ];
-          },
-        },
-        {
-          name: "chooseQuestCard", //player action
-          effect: function canChooseQuestCards(move) {
-            move.events.setStage("chooseQuestCard");
-          },
-        },
-        { name: "setStartPlayer", effect: function resetQuestCards(move) {
-          move.G.startPlayer = move.playerID
-        } },
-        { name: "drawIntrigueCard", effect: function resetQuestCards(move) {} },
-        {
-          name: "playIntrigueCard", //player action
-          effect: function resetQuestCards(move) {},
-        },
-        {
-          name: "buyBuilding", //player action
-          effect: function canBuyBuilding(move) {
-            move.events.setStage("buyBuilding");
-          },
-        },
-      ];
 
       for (let i = 0; i <= instantEffects.length - 1; i++) {
         if (
@@ -180,49 +180,23 @@ function placeAgent(move, buildingType, plotId) {
           
       }
 
-      /* if (move.G.buildingPlots[plotId].building.instantEffect[0] == undefined) {
+      if (move.G.buildingPlots[plotId].building.instantEffect[0] == undefined) {
 
         move.events.setStage("completeQuest");
       }
       //alle möglichen building instant effects mit name und inhalt der Funktion
-      const instantEffects = [
-        {
-          name: "resetQuestCards",
-          effect: function resetQuestCards(move) {}
-        },
-        {
-          name: "chooseQuestCard", //player action
-          effect: function canChooseQuestCards(move) {
-            move.events.setStage("chooseQuestCard");
-          },
-        },
-        { name: "setStartPlayer", effect: function resetQuestCards(move) {
-          move.G.startPlayer = move.playerID
-        } },
-        { name: "drawIntrigueCard", effect: function resetQuestCards(move) {} },
-        {
-          name: "playIntrigueCard", //player action
-          effect: function resetQuestCards(move) {},
-        },
-        {
-          name: "buyBuilding", //player action
-          effect: function canBuyBuilding(move) {
-            move.events.setStage("buyBuilding");
-          },
-        },
-      ];
 
       for (let i = 0; i <= instantEffects.length - 1; i++) {
         if (
-          move.G.buildingList[plotId].instantEffect.includes(
+          move.G.buildingCardsList[plotId].instantEffect.includes(
             instantEffects[i].name
           )
         ) {
           instantEffects[i].effect(move);
         }
-      }*/
+      }
       move.G.players[move.playerID].leftAgents -= 1;
-      move.events.setStage('completeQuest') 
+      //move.events.setStage('completeQuest') 
     }
    else {
     move.events.endTurn();
@@ -441,7 +415,7 @@ export const LordsOfWaterdeep = {
   disableUndo: true,
 
   endIf: (endIf) => {
-    if (endIf.G.roundCounter == 5) {
+    if (endIf.G.roundCounter == 2) {
       let vpList = [];
       for (let i = 0; i <= endIf.ctx.numPlayers - 1; i++) {
         let a = 0;
