@@ -261,7 +261,9 @@ class GameClient {
           buildingPosition = 9 - i;
         }
         ctx.fillRect(400 + j * 750, 480 + i * 180, 250, 150);
-        
+        onClick(400 + j * 750, 480 + i * 180, 250, 150, () => {
+          this.client.moves.placeAgent("nonPlayer", buildingPosition);
+        } )
 
       }
     }
