@@ -58,6 +58,7 @@ function roundedRect(ctx, x, y, width, height) {
 }
 
 function goldIcon(ctx, x, y) {
+  let preColor = ctx.fillStyle;
   let edgeLength = 24;
   ctx.lineWidth = 1;
   roundedRect(
@@ -72,6 +73,7 @@ function goldIcon(ctx, x, y) {
   ctx.arc(x, y, edgeLength / 6, 0, 2 * Math.PI, true);
   ctx.stroke();
   ctx.fill();
+  ctx.fillStyle = preColor;
 }
 function adventurerIconList(ctx, inputArray, x, y) {
   ctx.font = "20px sans-serif";
@@ -86,14 +88,19 @@ function adventurerIconList(ctx, inputArray, x, y) {
 }
 function shortedIconList(ctx, inputArray, x, y) {
   let xPosition = x;
-  for (let j = 0; j <= 4; j++) {
+  for (let j = 0; j <= 3; j++) {
     let adventureColorList = ["white", "orange", "black", "purple"];
 
     if (inputArray[j] != 0) {
       ctx.fillText(`${inputArray[j]}x`, xPosition, y + 7);
       adventurerIcon(ctx, xPosition + 25, y, adventureColorList[j]);
+
       xPosition += 53;
     }
+  }
+  if (inputArray[4] != 0) {
+    ctx.fillText(`${inputArray[4]}x`, xPosition, y + 7)
+    goldIcon(ctx, xPosition + 25, y,)
   }
 }
 class GameClient {
