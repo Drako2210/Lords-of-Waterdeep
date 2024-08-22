@@ -168,7 +168,7 @@ export const intrigueCardsList = [];
 export const questCardsList = [
   {
     id: 0,
-    name: "Take Over Rival Organization",
+    name: "Take Over Organization",
     type: "Skullduggery",
     requirements: [
       0, 1, 2, 1, 6, 0,
@@ -198,7 +198,7 @@ export const questCardsList = [
   },
   {
     id: 2,
-    name: "Retrieve Ancient Artifacts",
+    name: "Retrieve Artifacts",
     type: "Arcana",
     requirements: [
       0, 2, 1, 2, 0, 0,
@@ -243,7 +243,7 @@ export const questCardsList = [
   },
   {
     id: 5,
-    name: "Infiltrate Halaster's Circle",
+    name: "Infiltrate Circle",
     type: "Arcana",
     requirements: [
       0, 0, 0, 5, 2, 0,
@@ -258,7 +258,7 @@ export const questCardsList = [
   },
   {
     id: 6,
-    name: "Recruit For Blackstaff Academy",
+    name: "Recruit For Academy",
     type: "Arcana",
     requirements: [
       0, 1, 1, 2, 4, 0,
@@ -303,7 +303,7 @@ export const questCardsList = [
   },
   {
     id: 9,
-    name: "Heal Fallen Gray Hand Soldiers",
+    name: "Heal Fallen Soldiers",
     type: "Piety",
     requirements: [
       2, 0, 0, 1, 4, 0,
@@ -483,7 +483,7 @@ export const questCardsList = [
   },
   {
     id: 21,
-    name: "Defeat Uprising From Undermountain",
+    name: "Defeat Uprising",
     type: "Warfare",
     requirements: [
       1, 3, 1, 0, 2, 0,
@@ -513,7 +513,7 @@ export const questCardsList = [
   },
   {
     id: 23,
-    name: "Deliver Weapons To Selune's Temple",
+    name: "Deliver Weapons To Temple",
     type: "Warfare",
     requirements: [
       0, 4, 1, 1, 2, 0,
@@ -556,21 +556,7 @@ export const questCardsList = [
     instantEffect: [],
     passiveEffect: {},
   },
-  {
-    id: 26,
-    name: "test quest",
-    type: "Commerce",
-    requirements: [
-      0, 0, 0, 0, 0, 0,
-    ] /*white, orange, black, purple, gold, victorypoints*/,
-    rewards: [
-      0, 0, 0, 0, 0, 0,
-    ] /*white, orange, black, purple, gold, victorypoints*/,
-    //open: false,
-    solved: false,
-    instantEffect: [],
-    passiveEffect: {},
-  },
+
 ];
 
 
