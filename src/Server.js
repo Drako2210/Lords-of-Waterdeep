@@ -1,6 +1,6 @@
 import { Server } from "boardgame.io/server"
 import serve from "koa-static"
-import { Cascadia } from "./cascadia"
+import {LordsOfWaterdeep} from "./LordsOfWaterdeep";
 
 function makeId(length) {
   let result = ""
@@ -15,7 +15,7 @@ function makeId(length) {
 }
 
 const server = Server({
-  games: [Cascadia],
+  games: [LordsOfWaterdeep],
   origins: [/.*/],
   uuid: () => makeId(6),
   generateCredentials: () => makeId(64),
