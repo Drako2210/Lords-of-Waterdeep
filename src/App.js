@@ -217,11 +217,17 @@ class GameClient {
     //Buildings, großes oben in der Mitte
     ctx.fillStyle = `rgb(255 0 0)`;
     ctx.fillRect(475, 300, 250, 150);
+    ctx.fillStyle=`rgb(235 217 184)`
+    roundedRect(ctx,475-5,300+75,70,70)
+    
+    ctx.fill()
+    ctx.stroke()
+    ctx.fillStyle = `rgb(255 0 0)`;
     if (state.G.buildingList[0].occupied != null) {
       drawPicture(
         ctx,
         `${playerColors[state.G.buildingList[0].occupied]}_agent.png`,
-        475,
+        480,
         380,
         60,
         60
@@ -231,7 +237,7 @@ class GameClient {
       drawPicture(
         ctx,
         `${playerColors[state.G.buildingList[1].occupied]}_agent.png`,
-        775,
+        780,
         380,
         60,
         60
@@ -241,7 +247,7 @@ class GameClient {
       drawPicture(
         ctx,
         `${playerColors[state.G.buildingList[2].occupied]}_agent.png`,
-        1075,
+        1080,
         380,
         60,
         60
@@ -249,6 +255,14 @@ class GameClient {
     }
     ctx.fillRect(775, 300, 250, 150);
     ctx.fillRect(1075, 300, 250, 150);
+    ctx.fillStyle=`rgb(235 217 184)`
+    roundedRect(ctx,775,300+75,70,70)
+    ctx.fill()
+    ctx.stroke()
+    roundedRect(ctx,1075,300+75,70,70)
+    ctx.fill()
+    ctx.stroke()
+    ctx.fillStyle = `rgb(255 0 0)`;
     onClick(475, 300, 250, 150, () => {
       this.client.moves.placeAgent("nonPlayer", 0);
     });
@@ -270,23 +284,33 @@ class GameClient {
           buildingPosition = 9 - i;
         }
         ctx.fillRect(400 + j * 750, 480 + i * 180, 250, 150);
-        onClick(400 + j * 750, 480 + i * 180, 250, 150, () => {
-          this.client.moves.placeAgent("nonPlayer", buildingPosition);
-        });
-        if (state.G.buildingList[buildingPosition].occupied != null) {
-          drawPicture(
-            ctx,
-            `${
-              playerColors[state.G.buildingList[buildingPosition].occupied]
-            }_agent.png`,
-            400 + j * 750,
-            560 + i * 180,
-            60,
-            60
-          );
-        }
+        ctx.fillStyle=`rgb(235 217 184)`
+        roundedRect(ctx,400 + j * 750,480 + i * 180+75,70,70)
+    
+        ctx.fill()
+        ctx.stroke()
+        ctx.fillStyle = `rgb(255 0 0)`; 
+
       }
     }
+
+    onClick(400 + j * 750, 480 + i * 180, 250, 150, () => {
+      this.client.moves.placeAgent("nonPlayer", buildingPosition);
+    });
+    if (state.G.buildingList[buildingPosition].occupied != null) {
+      drawPicture(
+        ctx,
+        `${
+          playerColors[state.G.buildingList[buildingPosition].occupied]
+        }_agent.png`,
+        400 + j * 750,
+        560 + i * 180,
+        60,
+        60
+      );
+    }
+  }
+}
     //Building: Builders Hall
     ctx.fillRect(700, 900, 400, 150);
     onClick(700, 920, 400, 100, () => {
