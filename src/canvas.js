@@ -57,7 +57,7 @@ canvas.addEventListener(
         called = true;
         if (debug) {
           console.log(
-            `calling handler for x: ${x}, y: ${y}, with bounds x: ${element.x}, y: ${element.y}, width: ${element.width}, height: ${element.height}`,
+            `calling handler for x: ${x}, y: ${y}, with bounds x: ${element.x}, y: ${element.y}, width: ${element.width}, height: ${element.height}`
           );
         }
         element.handler();
@@ -68,13 +68,17 @@ canvas.addEventListener(
       console.log(`no handler for x: ${x}, y: ${y} found, ignoting click`);
     }
   },
-  false,
+  false
 );
 
 export function drawPicture(ctx, path, ...args) {
-  const img = new Image();
-  img.onload = function () {
-    ctx.drawImage(img, ...args);
-  };
-  img.src = "/img/" + path;
+  const promise = new Promise((resolve) => {
+    const img = new Image();
+    img.onload = function () {
+      ctx.drawImage(img, ...args);
+      resolve();
+    };
+    img.src = "/img/" + path;
+  });
+  return promise;
 }

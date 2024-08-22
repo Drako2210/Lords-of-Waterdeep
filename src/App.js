@@ -107,10 +107,11 @@ class GameClient {
     this.client.start();
   }
 
-  update(state) {
+  async update(state) {
     resetOnClicks();
     //console.log(state);
     //console.log(state.ctx.currentPlayer)
+    ctx.fillStyle= "black"
     ctx.fillRect(0, 0, 2000, 3000);
     //offene Quests
     adventurerIcon(ctx, 300, 300, "purple");
@@ -122,7 +123,7 @@ class GameClient {
     ctx.textAlign = "center";
     for (let i = 0; i <= 3; i++) {
       ctx.fillStyle = `rgb(255 255 255)`;
-      ctx.fillRect(400 + i * 350, 50, 300, 150);
+      await drawPicture(ctx, "quest2.png", 400 + i * 350, 50, 300, 150)
       // center (550,125)
       onClick(400 + i * 350, 50, 300, 150, () => {
         this.client.moves.chooseQuestCard(i);
@@ -132,10 +133,17 @@ class GameClient {
         ctx,
         state.G.openedQuestCards[i].requirements,
         550 + i * 350,
-        125
+        120
       );
       ctx.fillStyle = "black"
-      ctx.fillText(state.G.openedQuestCards[i].name, 550 + i * 350, 90)
+      ctx.font = "bold 20px sans-serif"
+      ctx.fillText(state.G.openedQuestCards[i].name, 550 + i * 350, 80)
+      ctx.font = "14px sans-serif"
+      ctx.fillText("Requirements", 470 + i * 350, 103)
+      ctx.beginPath()
+      ctx.moveTo(425+i*350, 140)
+      ctx.lineTo(675+i*350, 140)
+      ctx.stroke()
       /* ctx.fillText(state.G.openedQuestCards[i].type, 450 + i * 350, 100);
       ctx.fillText(
         "Requirements:" + state.G.openedQuestCards[i].requirements,
@@ -191,30 +199,31 @@ class GameClient {
     }
     //Buildings, großes oben in der Mitte
     ctx.fillStyle = `rgb(255 0 0)`;
-    ctx.fillRect(625, 350, 550, 100);
-    onClick(625, 350, 550 / 3, 100, () => {
+    ctx.fillRect(475 , 300, 250, 150);
+    ctx.fillRect(775, 300, 250, 150);
+    ctx.fillRect(1075, 300, 250, 150);
+    onClick(475 , 300, 250, 150, () => {
       this.client.moves.placeAgent("nonPlayer", 0);
     });
-    onClick(625 + 550 / 3, 350, 550 / 3, 100, () => {
+    onClick(775, 300, 250, 150, () => {
       this.client.moves.placeAgent("nonPlayer", 1);
     });
-    onClick(625 + 1100 / 3, 350, 550 / 3, 100, () => {
+    onClick(1075, 300, 250, 150, () => {
       this.client.moves.placeAgent("nonPlayer", 2);
     });
     //Buildings, kleine
     for (let j = 0; j <= 1; j++) {
       for (let i = 0; i <= 2; i++) {
-        ctx.fillRect(625 + j * 400, 500 + i * 150, 150, 75);
-        if (i == 2) {
-          ctx.fillRect(825, 500 + i * 150, 150, 75);
-        }
+        ctx.fillRect(400 + j * 750, 480 + i * 180, 250, 150);
+        
+
       }
     }
     onClick(1025, 500, 150, 75, () => {
       this.client.moves.placeAgent("nonPlayer", 3);
     });
     //Building: Builders Hall
-    ctx.fillRect(700, 920, 400, 100);
+    ctx.fillRect(700, 900, 400, 150);
     onClick(700, 920, 400, 100, () => {
       this.client.moves.placeAgent("nonPlayer", 6);
     });
