@@ -114,7 +114,8 @@ class GameClient {
     //console.log(state);
     //console.log(state.ctx.currentPlayer)
     ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, 2000, 3000);
+   
+    await drawPicture(ctx, "board.png", 0, 0, 2000, 3000)
     //offene Quests
     adventurerIcon(ctx, 300, 300, "purple");
     //roundedRect(ctx,320,300,10, 10)
