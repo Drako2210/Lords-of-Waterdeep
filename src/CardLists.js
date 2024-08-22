@@ -143,20 +143,13 @@ export const buildingList = [
   },
   {
     id: 7,
-    name: "Waterdeep Harbor",
-    reward: [0, 0, 0, 0, 0, 0],
-    instantEffect: [], //intrigue card playn
-    occupied: null, // besonders
-  },
-  {
-    id: 8,
     name: "Castle Waterdeep",
-    reward: [0, 0, 0, 0, 0, 0],
-    instantEffect: ["setStartPlayer","drawIntrigueCard"],
+    reward: [0, 0, 0, 0, 1, 0],
+    instantEffect: ["setStartPlayer"],
     occupied: null, // IntrigueCard ziehen und Startspieler ändern
   },
   {
-    id: 9,
+    id: 8,
     name: "Blackstaff Tower",
     reward: [0, 0, 0, 1, 0, 0],
     instantEffect: [],
@@ -164,7 +157,7 @@ export const buildingList = [
   },
 
   {
-    id: 10,
+    id: 9,
     name: "Field of Triumph",
     reward: [0, 2, 0, 0, 0, 0],
     instantEffect: [],

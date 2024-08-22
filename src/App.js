@@ -12,6 +12,8 @@ const multiplayerServer =
 
 const canvas = document.getElementById("canvas");
 
+let playerColors = ["yellow", "blue", "red", "green", "black"];
+
 const ctx = canvas.getContext("2d");
 const multiplayer = isMultiplayer
   ? SocketIO({ server: multiplayerServer })
@@ -80,7 +82,7 @@ function adventurerIconList(ctx, inputArray, x, y) {
     adventurerIcon(ctx, x - 93 + 53 * i, y, adventureColorList[i]);
   }
   ctx.fillText(`${inputArray[4]}x`, x - 118 + 212, y + 7);
-  goldIcon(ctx, x - 90 + 53 * 4, y)
+  goldIcon(ctx, x - 90 + 53 * 4, y);
 }
 
 class GameClient {
@@ -111,7 +113,7 @@ class GameClient {
     resetOnClicks();
     //console.log(state);
     //console.log(state.ctx.currentPlayer)
-    ctx.fillStyle= "black"
+    ctx.fillStyle = "black";
     ctx.fillRect(0, 0, 2000, 3000);
     //offene Quests
     adventurerIcon(ctx, 300, 300, "purple");
@@ -123,7 +125,7 @@ class GameClient {
     ctx.textAlign = "center";
     for (let i = 0; i <= 3; i++) {
       ctx.fillStyle = `rgb(255 255 255)`;
-      await drawPicture(ctx, "quest2.png", 400 + i * 350, 50, 300, 150)
+      await drawPicture(ctx, "quest2.png", 400 + i * 350, 50, 300, 150);
       // center (550,125)
       onClick(400 + i * 350, 50, 300, 150, () => {
         this.client.moves.chooseQuestCard(i);
@@ -135,15 +137,15 @@ class GameClient {
         550 + i * 350,
         120
       );
-      ctx.fillStyle = "black"
-      ctx.font = "bold 20px sans-serif"
-      ctx.fillText(state.G.openedQuestCards[i].name, 550 + i * 350, 80)
-      ctx.font = "14px sans-serif"
-      ctx.fillText("Requirements", 470 + i * 350, 103)
-      ctx.beginPath()
-      ctx.moveTo(425+i*350, 140)
-      ctx.lineTo(675+i*350, 140)
-      ctx.stroke()
+      ctx.fillStyle = "black";
+      ctx.font = "bold 20px sans-serif";
+      ctx.fillText(state.G.openedQuestCards[i].name, 550 + i * 350, 80);
+      ctx.font = "14px sans-serif";
+      ctx.fillText("Requirements", 470 + i * 350, 103);
+      ctx.beginPath();
+      ctx.moveTo(425 + i * 350, 140);
+      ctx.lineTo(675 + i * 350, 140);
+      ctx.stroke();
       /* ctx.fillText(state.G.openedQuestCards[i].type, 450 + i * 350, 100);
       ctx.fillText(
         "Requirements:" + state.G.openedQuestCards[i].requirements,
@@ -199,10 +201,40 @@ class GameClient {
     }
     //Buildings, großes oben in der Mitte
     ctx.fillStyle = `rgb(255 0 0)`;
-    ctx.fillRect(475 , 300, 250, 150);
+    ctx.fillRect(475, 300, 250, 150);
+    if (state.G.buildingList[0].occupied != null) {
+      drawPicture(
+        ctx,
+        `${playerColors[state.G.buildingList[0].occupied]}_agent.png`,
+        475,
+        380,
+        60,
+        60
+      );
+    }
+    if (state.G.buildingList[1].occupied != null) {
+      drawPicture(
+        ctx,
+        `${playerColors[state.G.buildingList[1].occupied]}_agent.png`,
+        775,
+        380,
+        60,
+        60
+      );
+    }
+    if (state.G.buildingList[2].occupied != null) {
+      drawPicture(
+        ctx,
+        `${playerColors[state.G.buildingList[2].occupied]}_agent.png`,
+        1075,
+        380,
+        60,
+        60
+      );
+    }
     ctx.fillRect(775, 300, 250, 150);
     ctx.fillRect(1075, 300, 250, 150);
-    onClick(475 , 300, 250, 150, () => {
+    onClick(475, 300, 250, 150, () => {
       this.client.moves.placeAgent("nonPlayer", 0);
     });
     onClick(775, 300, 250, 150, () => {
@@ -212,15 +244,28 @@ class GameClient {
       this.client.moves.placeAgent("nonPlayer", 2);
     });
     //Buildings, kleine
+
     for (let j = 0; j <= 1; j++) {
       for (let i = 0; i <= 2; i++) {
+        let buildingPosition = null;
+        if (j == 1) {
+          buildingPosition = i + 3;
+        }
+        if (j == 0) {
+          buildingPosition = 9 - i;
+        }
         ctx.fillRect(400 + j * 750, 480 + i * 180, 250, 150);
-        
-
+        onClick(400 + j * 750, 480 + i * 180, 250, 150, () => {
+          this.client.moves.placeAgent("nonPlayer", buildingPosition);
+        });
       }
     }
-    onClick(1025, 500, 150, 75, () => {
+
+    onClick(1150, 480, 250, 150, () => {
       this.client.moves.placeAgent("nonPlayer", 3);
+    });
+    onClick(1025, 500, 150, 75, () => {
+      this.client.moves.placeAgent("nonPlayer", 4);
     });
     //Building: Builders Hall
     ctx.fillRect(700, 900, 400, 150);
