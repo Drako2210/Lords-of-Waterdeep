@@ -141,17 +141,18 @@ class GameClient {
         ctx,
         state.G.openedQuestCards[i].rewards,
         550 + i * 350,
-        173)
-      ctx.fillStyle = "black"
-      ctx.font = "bold 20px sans-serif"
-      ctx.fillText(state.G.openedQuestCards[i].name, 550 + i * 350, 80)
-      ctx.font = "14px sans-serif"
-      ctx.fillText("Requirements", 470 + i * 350, 103)
-      ctx.fillText("Rewards", 454 + i * 350, 156)
-      ctx.beginPath()
-      ctx.moveTo(425+i*350, 140)
-      ctx.lineTo(675+i*350, 140)
-      ctx.stroke()
+        173
+      );
+      ctx.fillStyle = "black";
+      ctx.font = "bold 20px sans-serif";
+      ctx.fillText(state.G.openedQuestCards[i].name, 550 + i * 350, 80);
+      ctx.font = "14px sans-serif";
+      ctx.fillText("Requirements", 470 + i * 350, 103);
+      ctx.fillText("Rewards", 454 + i * 350, 156);
+      ctx.beginPath();
+      ctx.moveTo(425 + i * 350, 140);
+      ctx.lineTo(675 + i * 350, 140);
+      ctx.stroke();
       /* ctx.fillText(state.G.openedQuestCards[i].type, 450 + i * 350, 100);
       ctx.fillText(
         "Requirements:" + state.G.openedQuestCards[i].requirements,
@@ -176,6 +177,7 @@ class GameClient {
         150,
         150
       );
+      drawPicture(ctx, "building1.png", 50,50)
       onClick(
         50 + 1550 * Math.floor(i / 5),
         250 + i * 200 - 1000 * Math.floor(i / 5),
@@ -285,12 +287,23 @@ class GameClient {
       }
     }
 
-    onClick(1150, 480, 250, 150, () => {
-      this.client.moves.placeAgent("nonPlayer", 3);
+    onClick(400 + j * 750, 480 + i * 180, 250, 150, () => {
+      this.client.moves.placeAgent("nonPlayer", buildingPosition);
     });
-    onClick(1025, 500, 150, 75, () => {
-      this.client.moves.placeAgent("nonPlayer", 4);
-    });
+    if (state.G.buildingList[buildingPosition].occupied != null) {
+      drawPicture(
+        ctx,
+        `${
+          playerColors[state.G.buildingList[buildingPosition].occupied]
+        }_agent.png`,
+        400 + j * 750,
+        560 + i * 180,
+        60,
+        60
+      );
+    }
+  }
+}
     //Building: Builders Hall
     ctx.fillRect(700, 900, 400, 150);
     onClick(700, 920, 400, 100, () => {
@@ -384,7 +397,14 @@ class GameClient {
       //Quest Cards der SPIELER
       for (let j = 0; j <= state.G.players[i].quests.length - 1; j++) {
         ctx.fillStyle = `rgb(255 255 255)`;
-        await drawPicture(ctx, "quest2.png", 100 + i * 800, 1550 + j * 200, 300, 150)
+        await drawPicture(
+          ctx,
+          "quest2.png",
+          100 + i * 800,
+          1550 + j * 200,
+          300,
+          150
+        );
         // center (550,125)
         //new center(250,1625)
         onClick(100 + i * 800, 1550 + j * 200, 300, 150, () => {
@@ -397,23 +417,28 @@ class GameClient {
           ctx,
           state.G.players[i].quests[j].requirements,
           250 + i * 800,
-          1620+j*200
+          1620 + j * 200
         );
         adventurerIconList(
           ctx,
           state.G.players[i].quests[j].rewards,
           250 + i * 800,
-          1673+j*200)
-        ctx.fillStyle = "black"
-        ctx.font = "bold 20px sans-serif"
-        ctx.fillText(state.G.players[i].quests[j].name, 250 + i * 800, 1580+j*200)
-        ctx.font = "14px sans-serif"
-        ctx.fillText("Requirements", 170 + i * 800, 1603+j*200)
-        ctx.fillText("Rewards", 154 + i * 800 , 1656+j*200)
-        ctx.beginPath()
-        ctx.moveTo(125+i*800, 1640+j*200)
-        ctx.lineTo(175+i*800, 1640+j*200)
-        ctx.stroke()
+          1673 + j * 200
+        );
+        ctx.fillStyle = "black";
+        ctx.font = "bold 20px sans-serif";
+        ctx.fillText(
+          state.G.players[i].quests[j].name,
+          250 + i * 800,
+          1580 + j * 200
+        );
+        ctx.font = "14px sans-serif";
+        ctx.fillText("Requirements", 170 + i * 800, 1603 + j * 200);
+        ctx.fillText("Rewards", 154 + i * 800, 1656 + j * 200);
+        ctx.beginPath();
+        ctx.moveTo(125 + i * 800, 1640 + j * 200);
+        ctx.lineTo(175 + i * 800, 1640 + j * 200);
+        ctx.stroke();
         /* 
         ctx.fillStyle = "white";
         ctx.fillRect(100 + i * 800, 1550 + j * 200, 300, 150);
@@ -439,7 +464,8 @@ class GameClient {
           150 + i * 800,
           1650 + j * 200
         );
-      } */}
+      } */
+      }
 
       for (let j = 0; j <= state.G.players[i].intrigueCards.length - 1; j++) {
         ctx.fillStyle = "white";
