@@ -167,7 +167,8 @@ class GameClient {
     }
 
     ctx.fillStyle = `rgb(50 50 50)`;
-    ctx.fillRect(50, 50, 300, 150);
+    
+    drawPicture(ctx, "cardback-quest1.png",50, 50, 300, 150)
     //gebaute PlayerBuilings links und rechts
     for (let i = 0; i <= 9; i++) {
       
@@ -290,27 +291,27 @@ class GameClient {
         ctx.fill()
         ctx.stroke()
         ctx.fillStyle = `rgb(255 0 0)`; 
-
+        onClick(400 + j * 750, 480 + i * 180, 250, 150, () => {
+          this.client.moves.placeAgent("nonPlayer", buildingPosition);
+        });
+        if (state.G.buildingList[buildingPosition].occupied != null) {
+          drawPicture(
+            ctx,
+            `${
+              playerColors[state.G.buildingList[buildingPosition].occupied]
+            }_agent.png`,
+            400 + j * 750,
+            560 + i * 180,
+            60,
+            60
+          );
+        }
       }
+      
     }
 
-    onClick(400 + j * 750, 480 + i * 180, 250, 150, () => {
-      this.client.moves.placeAgent("nonPlayer", buildingPosition);
-    });
-    if (state.G.buildingList[buildingPosition].occupied != null) {
-      drawPicture(
-        ctx,
-        `${
-          playerColors[state.G.buildingList[buildingPosition].occupied]
-        }_agent.png`,
-        400 + j * 750,
-        560 + i * 180,
-        60,
-        60
-      );
-    }
-  }
-}
+    
+  
     //Building: Builders Hall
     ctx.fillRect(700, 900, 400, 150);
     onClick(700, 920, 400, 100, () => {
