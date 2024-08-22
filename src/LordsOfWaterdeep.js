@@ -97,9 +97,16 @@ function endRound(move) {
       move.G.openedBuildings[i].victorypoints += 1;
       // als instant rewards noch hinzufügen
     }
+/*     let i=0
+    while(i!=move.G.startPlayer){
+      move.events.endTurn()
+      i++
+    }
+    console.log(i) */
   }
 }
 function placeAgent(move, buildingType, plotId) {
+  
   const instantEffects = [
     {
       name: "resetQuestCards",
@@ -120,6 +127,9 @@ function placeAgent(move, buildingType, plotId) {
     },
     { name: "setStartPlayer", effect: function resetQuestCards(move) {
       move.G.startPlayer = move.playerID
+      console.log(move.G.startPlayer)
+      move.events.setStage("completeQuest")
+
     } },
     { name: "drawIntrigueCard", effect: function resetQuestCards(move) {} },
     {
