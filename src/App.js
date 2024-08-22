@@ -47,6 +47,7 @@ function adventurerIcon(ctx, x, y, color) {
   //console.log(ctx.fillStyle)
 }
 function roundedRect(ctx, x, y, width, height) {
+  ctx.strokeStyle = "black"
   let radius = (width + height) / 10;
 
   ctx.beginPath();
@@ -411,11 +412,14 @@ class GameClient {
         
         await drawPicture(ctx, "prebuilt.png", 400 + j * 750, 480 + i * 180, 250, 150)
         ctx.fillStyle = "black"
+        ctx.strokeStyle = "black"
+
         ctx.font = "bold 20px arial"
         //ctx.fillText(state.G.buildingList[0].reward, 500, 320)
         ctx.fillText(state.G.buildingList[buildingPosition].name, 525 + j * 750, 510 + i * 180)
         shortedIconList(ctx,state.G.buildingList[buildingPosition].reward, 525 + j * 750, 600 + i * 180)
         ctx.fillStyle = `rgb(235 217 184)`;
+
         roundedRect(ctx, 400 + j * 750, 480 + i * 180 + 75, 70, 70);
 
         ctx.fill();
