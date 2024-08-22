@@ -220,7 +220,7 @@ function buyBuilding(move, plotId) {
         i += 1;
         
       }
-      console.log(i)
+      
       move.G.players[move.playerID].resources[4] -=
         move.G.openedBuildings[plotId].cost;
       move.G.players[move.playerID].resources[5] +=
@@ -253,7 +253,8 @@ function completeQuest(move, questPosition) {
       move.G.players[move.playerID].quests.splice(questPosition, 1)[0]
     );
   }
-  //move.events.endStage()
+  console.log(move.playerID)
+  move.events.endStage()
   move.events.endTurn()
   endRound(move);
   ;
@@ -414,7 +415,7 @@ export const LordsOfWaterdeep = {
   disableUndo: true,
 
   endIf: (endIf) => {
-    if (endIf.G.roundCounter == 9) {
+    if (endIf.G.roundCounter == 2) {
       let vpList = [];
       for (let i = 0; i <= endIf.ctx.numPlayers - 1; i++) {
         let a = 0;
