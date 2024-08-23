@@ -47,7 +47,7 @@ function adventurerIcon(ctx, x, y, color) {
   //console.log(ctx.fillStyle)
 }
 function roundedRect(ctx, x, y, width, height) {
-  ctx.strokeStyle = "black"
+  ctx.strokeStyle = "black";
   let radius = (width + height) / 10;
 
   ctx.beginPath();
@@ -249,7 +249,6 @@ class GameClient {
 
     drawPicture(ctx, "cardback-quest1.png", 50, 50, 300, 150);
 
-
     //gebaute PlayerBuilings links und rechts
 
     for (let i = 0; i <= 9; i++) {
@@ -291,7 +290,7 @@ class GameClient {
       }
 
       if (state.G.buildingPlots[i].building != null) {
-        ;
+        ctx.fillStyle = "white";
         //console.log(state.G.buildingPlots[i].building.playerReward);
         shortedIconList(
           ctx,
@@ -305,13 +304,18 @@ class GameClient {
           105 + 1550 * Math.floor(i / 5),
           355 + i * 200 - 1000 * Math.floor(i / 5)
         );
-        ctx.fillStyle = state.G.players[state.G.buildingPlots[i].building.owner].playerColor
-        ctx.beginPath()
-        ctx.arc(190 + 1550 * Math.floor(i / 5),
-        390 + i * 200 - 1000 * Math.floor(i / 5),
-        20,0,2*Math.PI,true
-        )
-         ctx.fill()
+        ctx.fillStyle =
+          state.G.players[state.G.buildingPlots[i].building.owner].playerColor;
+        ctx.beginPath();
+        ctx.arc(
+          190 + 1550 * Math.floor(i / 5),
+          390 + i * 200 - 1000 * Math.floor(i / 5),
+          20,
+          0,
+          2 * Math.PI,
+          true
+        );
+        ctx.fill();
         /*console.log(state.G.players[state.G.buildingPlots[i].building.owner].playerColor)
         ctx.fillStyle = "black"
         ctx.fillText(
@@ -319,7 +323,7 @@ class GameClient {
             100 + 1550 * Math.floor(i / 5),
             300 + i * 200 - 1000 * Math.floor(i / 5)
           ); */
-        ctx.font = "16px sans-serif"
+        ctx.font = "16px sans-serif";
         ctx.fillStyle = "white";
         ctx.fillText(
           "Rewards:",
@@ -332,7 +336,7 @@ class GameClient {
           325 + i * 200 - 1000 * Math.floor(i / 5)
         );
         ctx.fillText(
-         "Rewards",
+          "Rewards",
           132 + 1550 * Math.floor(i / 5),
           339 + i * 200 - 1000 * Math.floor(i / 5)
         );
@@ -340,7 +344,7 @@ class GameClient {
     }
     //Buildings, großes oben in der Mitte
 
-    if (state.G.buildingList[0].occupied==null) {
+    if (state.G.buildingList[0].occupied == null) {
       onClick(475, 300, 250, 150, () => {
         this.client.moves.placeAgent("nonPlayer", 0);
       });
@@ -350,8 +354,10 @@ class GameClient {
     ctx.font = "bold 20px arial";
     //ctx.fillText(state.G.buildingList[0].reward, 500, 320)
     ctx.fillText(state.G.buildingList[0].name, 600, 330);
-    shortedIconList(ctx, state.G.buildingList[0].reward, 570, 400);
-    if (state.G.buildingList[1].occupied==null) {
+    ctx.font = "bold 14px arial";
+    ctx.fillText("Wähle eine Questkarte", 635, 430);
+    shortedIconList(ctx, state.G.buildingList[0].reward, 570, 390);
+    if (state.G.buildingList[1].occupied == null) {
       onClick(775, 300, 250, 150, () => {
         this.client.moves.placeAgent("nonPlayer", 1);
       });
@@ -360,18 +366,25 @@ class GameClient {
     ctx.fillStyle = "black";
     ctx.font = "bold 20px arial";
     //ctx.fillText(state.G.buildingList[0].reward, 500, 320)
-    ctx.fillText(state.G.buildingList[1].name, 900, 330)
-    shortedIconList(ctx,state.G.buildingList[0].reward,870,400)
-    if (state.G.buildingList[2].occupied==null) {
+    ctx.fillText(state.G.buildingList[1].name, 900, 330);
+    ctx.font = "bold 14px arial";
+    ctx.fillText("Wähle eine Questkarte", 935, 430);
+    shortedIconList(ctx, state.G.buildingList[1].reward, 870, 390);
+    if (state.G.buildingList[2].occupied == null) {
       onClick(1075, 300, 250, 150, () => {
         this.client.moves.placeAgent("nonPlayer", 2);
       });
-    }    await drawPicture(ctx, "prebuilt.png", 1075, 300, 250, 150)
-    ctx.fillStyle = "black"
-    ctx.font = "bold 20px arial"
+    }
+    await drawPicture(ctx, "prebuilt.png", 1075, 300, 250, 150);
+    ctx.fillStyle = "black";
+    ctx.font = "bold 20px arial";
     //ctx.fillText(state.G.buildingList[0].reward, 500, 320)
-    ctx.fillText(state.G.buildingList[2].name, 1200, 330)
-    shortedIconList(ctx,state.G.buildingList[0].reward,1170,400)
+    ctx.fillText(state.G.buildingList[2].name, 1200, 330);
+    ctx.font = "bold 14px arial";
+    ctx.fillText("Reset und", 1235, 420);
+    ctx.fillText("Wähle eine Questkarte", 1235, 435);
+    ctx.font = "bold 14px arial";
+    shortedIconList(ctx, state.G.buildingList[2].reward, 1170, 390);
     ctx.fillStyle = `rgb(235 217 184)`;
     roundedRect(ctx, 475, 300 + 75, 70, 70);
     ctx.fill();
@@ -427,15 +440,31 @@ class GameClient {
           buildingPosition = 9 - i;
         }
         ctx.fillRect(400 + j * 750, 480 + i * 180, 250, 150);
-        
-        await drawPicture(ctx, "prebuilt.png", 400 + j * 750, 480 + i * 180, 250, 150)
-        ctx.fillStyle = "black"
-        ctx.strokeStyle = "black"
 
-        ctx.font = "bold 20px arial"
+        await drawPicture(
+          ctx,
+          "prebuilt.png",
+          400 + j * 750,
+          480 + i * 180,
+          250,
+          150
+        );
+        ctx.fillStyle = "black";
+        ctx.strokeStyle = "black";
+
+        ctx.font = "bold 20px arial";
         //ctx.fillText(state.G.buildingList[0].reward, 500, 320)
-        ctx.fillText(state.G.buildingList[buildingPosition].name, 525 + j * 750, 510 + i * 180)
-        shortedIconList(ctx,state.G.buildingList[buildingPosition].reward, 525 + j * 750, 600 + i * 180)
+        ctx.fillText(
+          state.G.buildingList[buildingPosition].name,
+          525 + j * 750,
+          510 + i * 180
+        );
+        shortedIconList(
+          ctx,
+          state.G.buildingList[buildingPosition].reward,
+          525 + j * 750,
+          600 + i * 180
+        );
         ctx.fillStyle = `rgb(235 217 184)`;
 
         roundedRect(ctx, 400 + j * 750, 480 + i * 180 + 75, 70, 70);
@@ -443,7 +472,7 @@ class GameClient {
         ctx.fill();
         ctx.stroke();
         ctx.fillStyle = `rgb(255 0 0)`;
-        if (state.G.buildingList[buildingPosition].occupied==null) {
+        if (state.G.buildingList[buildingPosition].occupied == null) {
           onClick(400 + j * 750, 480 + i * 180, 250, 150, () => {
             this.client.moves.placeAgent("nonPlayer", buildingPosition);
           });
@@ -454,7 +483,7 @@ class GameClient {
             `${
               playerColors[state.G.buildingList[buildingPosition].occupied]
             }_agent.png`,
-            400 + j * 750,
+            405 + j * 750,
             560 + i * 180,
             60,
             60
@@ -464,15 +493,16 @@ class GameClient {
     }
     //Building: Builders Hall
     ctx.fillRect(700, 900, 400, 150);
-    await drawPicture(ctx, "prebuilt.png", 700, 900, 400, 150)
-    if (state.G.buildingList[6].occupied==null) {
+    await drawPicture(ctx, "prebuilt.png", 700, 900, 400, 150);
+    if (state.G.buildingList[6].occupied == null) {
       onClick(700, 920, 400, 100, () => {
         this.client.moves.placeAgent("nonPlayer", 6);
       });
-    }    ctx.fillStyle = "black"
-    ctx.font = "bold 20px arial"
+    }
+    ctx.fillStyle = "black";
+    ctx.font = "bold 20px arial";
     //ctx.fillText(state.G.buildingList[0].reward, 500, 320)
-    ctx.fillText(state.G.buildingList[6].name, 900, 930 )
+    ctx.fillText(state.G.buildingList[6].name, 900, 930);
     ctx.fillStyle = `rgb(235 217 184)`;
     roundedRect(ctx, 700, 900 + 75, 70, 70);
     ctx.fill();
@@ -488,6 +518,9 @@ class GameClient {
         60
       );
     }
+    ctx.fillStyle = "black";
+    ctx.font = "bold 17px sans-serif";
+    ctx.fillText("Baue ein Gebäude", 900, 1000);
 
     //offene nicht gebaute Buildings
     for (let i = 0; i <= 2; i++) {
@@ -496,7 +529,7 @@ class GameClient {
       await drawPicture(ctx, "building1.png", 625 + 200 * i, 1100, 150, 150);
       if (state.G.openedBuildings[i] != null) {
         ctx.fillStyle = "white";
-        ctx.font = "bold 20px arial"
+        ctx.font = "bold 20px arial";
         ctx.fillText(state.G.openedBuildings[i].cost, 760 + i * 200, 1120);
         //center 700,1175
         //center old 125,325
@@ -506,50 +539,39 @@ class GameClient {
           state.G.openedQuestCards[i].requirements,
           440 + i * 350,
           120); */
-          shortedIconList(
-            ctx,
-            state.G.openedBuildings[i].playerReward,
-            58+575 + 200 * i,
-            300 +850
-          );
-          shortedIconList(
-            ctx,
-            state.G.openedBuildings[i].ownerReward,
-            105 +575+ 200 * i,
-            355 +850
-          );
-          /* ctx.fillStyle = state.G.players[state.G.openedBuildings[i].building.owner].playerColor
+        victoryPointsIcon(ctx,732+200 * i,1114,state.G.openedBuildings[i].victorypoints)
+        shortedIconList(
+          ctx,
+          state.G.openedBuildings[i].playerReward,
+          58 + 575 + 200 * i,
+          300 + 850
+        );
+        shortedIconList(
+          ctx,
+          state.G.openedBuildings[i].ownerReward,
+          105 + 575 + 200 * i,
+          355 + 850
+        );
+        /* ctx.fillStyle = state.G.players[state.G.openedBuildings[i].building.owner].playerColor
           ctx.beginPath()
           ctx.arc(190 +575+ i * 350,
           390 +850,
           20,0,2*Math.PI,true
           ) */
-          /*  ctx.fill() */
-          /*console.log(state.G.players[state.G.buildingPlots[i].building.owner].playerColor)
+        /*  ctx.fill() */
+        /*console.log(state.G.players[state.G.buildingPlots[i].building.owner].playerColor)
           ctx.fillStyle = "black"
           ctx.fillText(
               "OWNER:" + state.G.buildingPlots[i].building.owner,
               100 + 1550 * Math.floor(i / 5),
               300 + i * 200 - 1000 * Math.floor(i / 5)
             ); */
-          ctx.font = "16px sans-serif"
-          ctx.fillStyle = "white";
-          ctx.fillText(
-            "Rewards:",
-            105 +575+200 * i,
-            280 +850
-          );
-          ctx.fillText(
-            "Owner",
-            130 +575+200 * i,
-            325 +850
-          );
-          ctx.fillText(
-           "Rewards",
-            132+575 + 200 * i,
-            339 +850
-          );
-       
+        ctx.font = "16px sans-serif";
+        ctx.fillStyle = "white";
+        ctx.fillText("Rewards", 100 + 575 + 200 * i, 280 + 850);
+        ctx.fillText("Owner", 130 + 575 + 200 * i, 325 + 850);
+        ctx.fillText("Rewards", 132 + 575 + 200 * i, 339 + 850);
+
         /* ctx.fillText(
           "Rewards:" + state.G.openedBuildings[i].playerReward,
           700 + i * 200,
@@ -685,7 +707,7 @@ class GameClient {
         ctx.fillText("Rewards", 154 + i * 800, 1656 + j * 200);
         ctx.beginPath();
         ctx.moveTo(125 + i * 800, 1640 + j * 200);
-        ctx.lineTo(175 + i * 800, 1640 + j * 200);
+        ctx.lineTo(375 + i * 800, 1640 + j * 200);
         ctx.stroke();
         /* 
         ctx.fillStyle = "white";
